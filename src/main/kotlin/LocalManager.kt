@@ -32,10 +32,7 @@ class LocalManager<T> (private val DB: PriorityQueue<T>): CollectionManager<T>{
 
     override fun show(): String {
         var out = ""
-        DB.forEach {
-            out += "$it\n"
-            println(it)
-        }
+        DB.forEach { out += "$it\n" }
         return out
     }
 

@@ -1,10 +1,10 @@
 import java.util.PriorityQueue
 
 /**
- * Class for managing PriorityQueue
+ * Класс для управления коллекцией PriorityQueue
  *
- * @param T the type of elements of PriorityQueue
- * @param DB PriorityQueue of T type elements.
+ * @param T тип элементов содержащихся в коллекции
+ * @param DB PriorityQueue, управление которой будет осуществляться
  */
 class LocalManager<T> (private val DB: PriorityQueue<T>): CollectionManager<T>{
     override fun help(): String {
@@ -36,7 +36,7 @@ class LocalManager<T> (private val DB: PriorityQueue<T>): CollectionManager<T>{
         return out
     }
 
-    override fun updateId(index: Int) {
+    override fun update(index: Int, e: T) {
         TODO("Not yet implemented")
     }
 

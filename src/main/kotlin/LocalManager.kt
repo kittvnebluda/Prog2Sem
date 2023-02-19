@@ -45,7 +45,9 @@ class LocalManager<T> (private val DB: PriorityQueue<T>): CollectionManager<T>{
         if (e != null) DB.remove(e) else println("No such index in data base")
     }
 
-    override fun add(e: T): Boolean = DB.add(e)
+    override fun add(p: String): Boolean  {
+        return true
+    }
 
     override fun clear() = DB.clear()
 

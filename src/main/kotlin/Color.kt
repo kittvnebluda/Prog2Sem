@@ -1,3 +1,7 @@
 enum class Color {
-    GREEN, RED, BLUE, WHITE
+    GREEN,
+    RED,
+    BLACK,
+    YELLOW,
+    BROWN;
 }

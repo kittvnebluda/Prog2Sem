@@ -2,7 +2,7 @@ interface Command {
     fun execute(args: List<String>)
 }
 
-class HelpCommand (private val manager: CollectionManager<*>) : Command {
+class HelpCommand (private val manager: ClientCommands) : Command {
     override fun execute(args: List<String>) {
         println(manager.help())
     }
@@ -20,7 +20,7 @@ class ShowCommand (private val manager: CollectionManager<*>): Command {
     }
 }
 
-class AddCommand<T> (private val manager: CollectionManager<T>): Command {
+class AddCommand(private val manager: CollectionManager<*>): Command {
     override fun execute(args: List<String>) {
         try {
             val name = if(args.isNotEmpty()) args[0] else throw BadUserInputException("Не указано имя класса")

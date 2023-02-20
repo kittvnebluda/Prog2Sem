@@ -1,7 +1,5 @@
-import kotlin.collections.HashSet
-
 fun main(args: Array<String>) {
-    val manager = object : CollectionManager<Person> {
+    val collManager = object : CollectionManager<Person> {
         override fun info(): String {
             TODO("Not yet implemented")
         }
@@ -11,7 +9,8 @@ fun main(args: Array<String>) {
         }
 
         override fun add(p: String): Boolean {
-            TODO("Not yet implemented")
+            println(p)
+            return true
         }
 
         override fun update(index: Int, p: String) {
@@ -52,8 +51,10 @@ fun main(args: Array<String>) {
 
     }
     val clientCommands = object : ClientCommands {
-        override fun help(): String {
-            TODO("Not yet implemented")
+        override fun help() {
+            println("help    : описание команд\n" +
+                    "add {element name} :   добавление элемента в коллекцию\n" +
+                    "exit   : завершение программы")
         }
 
         override fun executeScript(filename: String) {
@@ -61,26 +62,32 @@ fun main(args: Array<String>) {
         }
 
         override fun exit() {
-            TODO("Not yet implemented")
+            ISQUIT = true
         }
 
         override fun history() {
-            TODO("Not yet implemented")
+            HISTORY.forEach { println(it) }
         }
-
     }
 
     val help = HelpCommand(clientCommands)
-    val info = InfoCommand(manager)
-    val show = ShowCommand(manager)
-    val add = AddCommand(manager)
+    val exit = ExitCommand(clientCommands)
+    val history = HistoryCommand(clientCommands)
 
-    val server = ServerTalker()
+    val info = InfoCommand(collManager)
+    val show = ShowCommand(collManager)
+    val add = AddCommand(collManager)
 
-    server.put("help", help)
-    server.put("info", info)
-    server.put("show", show)
-    server.put("add", add)
+    val talker = Talker()
 
-    server.proceed("add")
+    talker.put(help)
+    talker.put(info)
+    talker.put(show)
+    talker.put(add)
+    talker.put(exit)
+    talker.put(history)
+
+    val cc = CustomConsole(talker)
+
+    cc.loop()
 }

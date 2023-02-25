@@ -1,3 +1,6 @@
+/**
+ * Класс хранящий и вызывающий команды
+ */
 class Talker: Invoker {
     override val cmdMap = HashMap<String, Command>()
 
@@ -6,9 +9,8 @@ class Talker: Invoker {
     }
 
     override fun proceed(cmd: String) {
-        val postCmd = cmd.split(" ")
-        postCmd.forEach { println(it) }
-        val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("Неизвестная команда: $cmd")
+        val postCmd = cmd.trim().replace("\\s+".toRegex(), " ").split(" ")
+        val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
         command.execute(postCmd.slice(1 until postCmd.size))
     }
 }

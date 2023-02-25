@@ -3,6 +3,8 @@
  */
 class CustomConsole(private val invoker: Invoker) {
     companion object {
+        const val red = "\u001b[31m"
+        const val reset = "\u001b[0m"
         /**
          * Выводит [offers], принимает количество строк в консоли, равное количеству [offers] и возвращает их.
          * @param offers запросы к пользователю
@@ -26,11 +28,13 @@ class CustomConsole(private val invoker: Invoker) {
             val greeting = when(kotlin.random.Random.nextInt(3)) {
                 0 -> "Здравствуйте, пользователь."
                 1 -> "ПРИВЕТСТВУЮ!"
-                2 -> "У меня все отлично. А у Вас?"
+                2 -> "ВСЕ Х О Р О Ш О ?"
                 else -> "Вы точно хотите знать зачем я нужен?"
             }
-            println(greeting)
-            println("Введите команду или 'help' для помощи.")
+            println("#############################################")
+            println("# $greeting")
+            println("# Введите команду или 'help' для помощи.")
+            println("#############################################")
         }
     }
 
@@ -44,8 +48,8 @@ class CustomConsole(private val invoker: Invoker) {
                 invoker.proceed(readln())
             }
             catch (e: InvalidUserInputException) {
-                println(e.message)
-                println("Введите 'help' для помощи")
+                println(red + e.message)
+                println(red + "Введите 'help' для помощи" + reset)
             }
         }
     }

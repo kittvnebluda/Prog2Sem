@@ -1,12 +1,14 @@
-import java.util.LinkedList
+import java.util.*
 
-const val MAX_HISTORY_SIZE = 12
 
 val HISTORY = LinkedList<String>()
 var ISQUIT = false
 
 /** Интерфейс всех команд */
 interface Command {
+    companion object {
+        const val MAX_HISTORY_SIZE = 12
+    }
     val name: String
     fun execute(args: List<String>) {
         HISTORY.add(name)
@@ -14,7 +16,7 @@ interface Command {
     }
 }
 
-/** Реализация вызова команды помощи */
+/** Вызов команды помощи */
 class HelpCommand (private val commands: ClientCommands, override val name: String = "help") : Command {
     override fun execute(args: List<String>) {
         super.execute(args)
@@ -22,7 +24,7 @@ class HelpCommand (private val commands: ClientCommands, override val name: Stri
     }
 }
 
-/** Реализация вызова команды завершения программы */
+/** Вызов команды завершения программы */
 class ExitCommand (private val commands: ClientCommands, override val name: String = "exit"): Command {
     override fun execute(args: List<String>) {
         super.execute(args)
@@ -30,11 +32,22 @@ class ExitCommand (private val commands: ClientCommands, override val name: Stri
     }
 }
 
-/** Реализация вызова истории выполненных команд*/
+/** Вызов истории выполненных команд */
 class HistoryCommand(private val commands: ClientCommands, override val name: String = "history") : Command {
     override fun execute(args: List<String>) {
         println(commands.history())
         super.execute(args)
+    }
+}
+
+/** Вызов выполнения скрипта */
+class ExecuteScriptCommand(private val commands: ClientCommands, private val talker: Talker, override val name: String = "execute"): Command {
+    override fun execute(args: List<String>) {
+        super.execute(args)
+        if (args.isNotEmpty())
+            commands.executeScript(args[0], talker)
+        else
+            throw InvalidUserInputException("В команде пропущен путь файла")
     }
 }
 

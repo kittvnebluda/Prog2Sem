@@ -50,35 +50,17 @@ fun main(args: Array<String>) {
         }
 
     }
-    val clientCommands = object : ClientCommands {
-        override fun help() {
-            println("help    : описание команд\n" +
-                    "add {element name} :   добавление элемента в коллекцию\n" +
-                    "exit   : завершение программы")
-        }
-
-        override fun executeScript(filename: String) {
-            TODO("Not yet implemented")
-        }
-
-        override fun exit() {
-            ISQUIT = true
-        }
-
-        override fun history() {
-            HISTORY.forEach { println(it) }
-        }
-    }
+    val clientCommands = ConsoleClientCommands()
+    val talker = Talker()
 
     val help = HelpCommand(clientCommands)
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
+    val execute = ExecuteScriptCommand(clientCommands, talker)
 
     val info = InfoCommand(collManager)
     val show = ShowCommand(collManager)
     val add = AddCommand(collManager)
-
-    val talker = Talker()
 
     talker.put(help)
     talker.put(info)
@@ -86,6 +68,7 @@ fun main(args: Array<String>) {
     talker.put(add)
     talker.put(exit)
     talker.put(history)
+    talker.put(execute)
 
     val cc = CustomConsole(talker)
 

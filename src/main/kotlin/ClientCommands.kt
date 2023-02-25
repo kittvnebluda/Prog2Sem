@@ -9,7 +9,7 @@ interface ClientCommands {
      * В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме
      * @param filename имя файла
      */
-    fun executeScript(filename: String)
+    fun executeScript(filename: String, talker: Talker)
     /**
      * Обеспечивает завершение программы без сохранения в файл
      */

@@ -20,6 +20,10 @@ class CustomConsole(private val invoker: Invoker) {
             }
             return userInput
         }
+        /** Возвращает случайный ANSI escape код (91 - 96) */
+        fun randBrightColor(): String {
+            return "\u001b[${kotlin.random.Random.nextInt(91, 96)}m"
+        }
 
         /**
          * Парочка приветственных слов
@@ -28,7 +32,7 @@ class CustomConsole(private val invoker: Invoker) {
             val greeting = when(kotlin.random.Random.nextInt(3)) {
                 0 -> "Здравствуйте, пользователь."
                 1 -> "ПРИВЕТСТВУЮ!"
-                2 -> "ВСЕ Х О Р О Ш О ?"
+                2 -> "ВСЕ ${randBrightColor()}Х ${randBrightColor()}О ${randBrightColor()}Р ${randBrightColor()}О ${randBrightColor()}Ш ${randBrightColor()}О \u001b[0m?"
                 else -> "Вы точно хотите знать зачем я нужен?"
             }
             println("#############################################")
@@ -48,8 +52,7 @@ class CustomConsole(private val invoker: Invoker) {
                 invoker.proceed(readln())
             }
             catch (e: InvalidUserInputException) {
-                println(red + e.message)
-                println(red + "Введите 'help' для помощи" + reset)
+                println(red + e.message + reset)
             }
         }
     }

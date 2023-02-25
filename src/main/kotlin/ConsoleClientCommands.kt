@@ -26,7 +26,7 @@ class ConsoleClientCommands: ClientCommands {
             }
             sc.close()
         } catch (e: FileNotFoundException) {
-            throw InvalidUserInputException("Файл не найден")
+            throw InvalidUserInputException("$filename: файл не найден")
         }
     }
 

@@ -22,7 +22,7 @@ class CustomConsole(private val invoker: Invoker) {
         }
         /** Возвращает случайный ANSI escape код (91 - 96) */
         fun randBrightColor(): String {
-            return "\u001b[${kotlin.random.Random.nextInt(91, 96)}m"
+            return "\u001b[${kotlin.random.Random.nextInt(91, 97)}m"
         }
 
         /**

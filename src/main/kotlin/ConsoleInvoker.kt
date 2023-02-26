@@ -1,7 +1,7 @@
 /**
  * Класс хранящий и вызывающий команды
  */
-class Talker: Invoker {
+class ConsoleInvoker: Invoker {
     override val cmdMap = HashMap<String, Command>()
 
     override fun put(command: Command) {

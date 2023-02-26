@@ -11,7 +11,7 @@ class ConsoleClientCommands: ClientCommands {
                 "execute {filename}\t\t\t: исполнение скрипта из указанного файла")
     }
 
-    override fun executeScript(filename: String, talker: Talker) {
+    override fun executeScript(filename: String, consoleInvoker: ConsoleInvoker) {
         val file = File(filename)
 
         try {
@@ -22,7 +22,7 @@ class ConsoleClientCommands: ClientCommands {
                 if (filename in command)
                     throw InvalidUserInputException("Не стоит вызывать в файле себя же!")
                 else
-                    talker.proceed(command)
+                    consoleInvoker.proceed(command)
             }
             sc.close()
         } catch (e: FileNotFoundException) {

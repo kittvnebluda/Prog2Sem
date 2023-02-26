@@ -51,26 +51,26 @@ fun main(args: Array<String>) {
 
     }
     val clientCommands = ConsoleClientCommands()
-    val talker = Talker()
+    val consoleInvoker = ConsoleInvoker()
 
     val help = HelpCommand(clientCommands)
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
-    val execute = ExecuteScriptCommand(clientCommands, talker)
+    val execute = ExecuteScriptCommand(clientCommands, consoleInvoker)
 
     val info = InfoCommand(collManager)
     val show = ShowCommand(collManager)
     val add = AddCommand(collManager)
 
-    talker.put(help)
-    talker.put(info)
-    talker.put(show)
-    talker.put(add)
-    talker.put(exit)
-    talker.put(history)
-    talker.put(execute)
+    consoleInvoker.put(help)
+    consoleInvoker.put(info)
+    consoleInvoker.put(show)
+    consoleInvoker.put(add)
+    consoleInvoker.put(exit)
+    consoleInvoker.put(history)
+    consoleInvoker.put(execute)
 
-    val cc = CustomConsole(talker)
+    val cc = CustomConsole(consoleInvoker)
 
     cc.loop()
 }

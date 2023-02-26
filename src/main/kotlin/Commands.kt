@@ -41,11 +41,16 @@ class HistoryCommand(private val commands: ClientCommands, override val name: St
 }
 
 /** Вызов выполнения скрипта */
-class ExecuteScriptCommand(private val commands: ClientCommands, private val talker: Talker, override val name: String = "execute"): Command {
+class ExecuteScriptCommand(private val commands: ClientCommands,
+                           private val consoleInvoker: ConsoleInvoker,
+                           override val name: String = "execute"): Command {
+    /**
+     * @throws InvalidUserInputException
+     */
     override fun execute(args: List<String>) {
         super.execute(args)
         if (args.isNotEmpty())
-            commands.executeScript(args[0], talker)
+            commands.executeScript(args[0], consoleInvoker)
         else
             throw InvalidUserInputException("В команде пропущен путь файла")
     }
@@ -69,12 +74,13 @@ class ShowCommand (private val manager: CollectionManager<*>, override val name:
 
 /** Реализация вызова команды добавления элемента в коллекцию */
 class AddCommand(private val manager: CollectionManager<*>, override val name: String = "add"): Command {
+    /**
+     * @throws InvalidUserInputException
+     */
     override fun execute(args: List<String>) {
         super.execute(args)
-        try {
-            val name = if(args.isNotEmpty()) args[0] else throw InvalidUserInputException("Не указано имя класса")
-            val userInput = CustomConsole.readlines("Введите рост: ", "Введите возраст: ")
-            manager.add(arrayOf(name, *userInput).joinToString(" "))
-        } catch (_: InvalidUserInputException) {}
+        val name = if(args.isNotEmpty()) args[0] else throw InvalidUserInputException("Не указано имя класса")
+        val userInput = CustomConsole.readlines("Введите рост: ", "Введите возраст: ")
+        manager.add(arrayOf(name, *userInput).joinToString(" "))
     }
 }

@@ -2,6 +2,9 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
 
+/**
+ * Класс консольных работающих без сервера команд пользователя.
+ */
 class ConsoleClientCommands: ClientCommands {
     companion object {
         private val openedScripts = LinkedList<String>()

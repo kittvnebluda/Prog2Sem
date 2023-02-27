@@ -1,6 +1,7 @@
 /** Интерфейс всех команд */
 interface Command {
     val name: String
+    /** Метод, обеспечивающий, выполнение команды */
     fun execute(args: List<String>)
 }
 
@@ -57,8 +58,9 @@ class ShowCommand (private val manager: CollectionManager<*>, override val name:
 /** Реализация вызова команды добавления элемента в коллекцию */
 class AddCommand(private val manager: CollectionManager<*>, override val name: String = "add"): Command {
     /**
+     * Метод, обеспечивающий, выполнение команды.
      * @throws InvalidUserInputException
-     */
+     * */
     override fun execute(args: List<String>) {
         val name = if(args.isNotEmpty()) args[0] else throw InvalidUserInputException("Не указано имя класса")
         val userInput = CustomConsole.readlines("Введите рост: ", "Введите возраст: ")

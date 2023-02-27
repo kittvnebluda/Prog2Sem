@@ -11,6 +11,11 @@ class ConsoleInvoker: Invoker {
     override fun proceed(cmd: String) {
         val postCmd = cmd.trim().replace("\\s+".toRegex(), " ").split(" ")
         val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
+
         command.execute(postCmd.slice(1 until postCmd.size))
+
+        HISTORY.add(command.name)
+        if (HISTORY.size > MAX_HISTORY_SIZE)
+            HISTORY.remove()
     }
 }

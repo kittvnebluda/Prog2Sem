@@ -1,3 +1,11 @@
+import java.util.*
+
+const val MAX_HISTORY_SIZE = 12
+
+val HISTORY = LinkedList<String>()
+var ISQUIT = false
+var HELP = ""
+
 fun main(args: Array<String>) {
     val collManager = object : CollectionManager<Person> {
         override fun info(): String {
@@ -69,6 +77,8 @@ fun main(args: Array<String>) {
     consoleInvoker.put(exit)
     consoleInvoker.put(history)
     consoleInvoker.put(execute)
+
+    CustomConsole.generateHelp(clientCommands)
 
     val cc = CustomConsole(consoleInvoker)
 

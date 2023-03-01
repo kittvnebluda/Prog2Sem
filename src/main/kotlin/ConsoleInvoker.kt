@@ -9,7 +9,7 @@ class ConsoleInvoker: Invoker {
     }
 
     override fun proceed(cmd: String) {
-        val postCmd = cmd.trim().replace("\\s+".toRegex(), " ").split(" ")
+        val postCmd = CustomConsole.splitSpaces(cmd)
         val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
 
         command.execute(postCmd.slice(1 until postCmd.size))

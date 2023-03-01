@@ -1,7 +1,10 @@
 /** Интерфейс всех команд */
 interface Command {
     val name: String
-    /** Метод, обеспечивающий выполнение команды */
+    /**
+     * Метод, обеспечивающий выполнение команды
+     * @throws InvalidUserInputException
+     */
     fun execute(args: List<String>)
 }
 
@@ -15,6 +18,7 @@ class HelpCommand (private val commands: ClientCommands, override val name: Stri
 /** Вызов команды завершения программы */
 class ExitCommand (private val commands: ClientCommands, override val name: String = "exit"): Command {
     override fun execute(args: List<String>) {
+        println("Удачи!")
         commands.exit()
     }
 }
@@ -30,10 +34,7 @@ class HistoryCommand(private val commands: ClientCommands, override val name: St
 class ExecuteScriptCommand(private val commands: ClientCommands,
                            private val invoker: Invoker,
                            override val name: String = "execute"): Command {
-    /**
-     * Метод, обеспечивающий выполнение команды.
-     * @throws InvalidUserInputException
-     */
+
     override fun execute(args: List<String>) {
         if (args.isNotEmpty())
             commands.executeScript(args[0], invoker)
@@ -43,28 +44,78 @@ class ExecuteScriptCommand(private val commands: ClientCommands,
 }
 
 /** Реализация вызова команды получения информации о коллекции */
-class InfoCommand (private val manager: CollectionManager<*>, override val name: String = "info"): Command {
+class InfoCommand (private val manager: DataBaseCommands<*>, override val name: String = "info"): Command {
     override fun execute(args: List<String>) {
         println(manager.info())
     }
 }
 
 /** Реализация вызова команды show */
-class ShowCommand (private val manager: CollectionManager<*>, override val name: String = "show"): Command {
+class ShowCommand (private val manager: DataBaseCommands<*>, override val name: String = "show"): Command {
     override fun execute(args: List<String>) {
         println(manager.show())
     }
 }
 
 /** Реализация вызова команды добавления элемента в коллекцию */
-class AddCommand(private val manager: CollectionManager<*>, override val name: String = "add"): Command {
-    /**
-     * Метод, обеспечивающий выполнение команды.
-     * @throws InvalidUserInputException
-     */
+class AddCommand(private val manager: DataBaseCommands<*>, override val name: String = "add"): Command {
     override fun execute(args: List<String>) {
-        val name = if(args.isNotEmpty()) args[0] else throw InvalidUserInputException("Не указано имя класса")
-        val userInput = CustomConsole.readlines("Введите рост: ", "Введите возраст: ")
-        manager.add(arrayOf(name, *userInput).joinToString(" "))
+        manager.add(cc.createPerson())
+    }
+}
+
+class UpdateCommand(private val manager: DataBaseCommands<*>, override val name: String = "update"): Command {
+    override fun execute(args: List<String>) {
+        val index = if(args.isNotEmpty()) args[0].toInt()
+        else throw InvalidUserInputException("Не указаны индекс класса и его имя")
+        manager.update(index, cc.createPerson())
+    }
+}
+
+class RemoveIdCommand(private val manager: DataBaseCommands<*>, override val name: String = "remove"): Command {
+    override fun execute(args: List<String>) {
+        val index = if(args.isNotEmpty()) args[0].toInt()
+        else throw InvalidUserInputException("Не указан индекс класса")
+        manager.removeId(index)
+    }
+}
+
+class ClearCommand(private val manager: DataBaseCommands<*>, override val name: String = "clear"): Command {
+    override fun execute(args: List<String>) {
+        manager.clear()
+    }
+}
+
+class SaveCommand(private val manager: DataBaseCommands<*>, override val name: String = "save"): Command {
+    override fun execute(args: List<String>) {
+        manager.save()
+    }
+}
+
+class AddIfMinCommand(private val manager: DataBaseCommands<*>, override val name: String = "add_if_min"): Command {
+    override fun execute(args: List<String>) {
+        manager.addIfMin(cc.createPerson())
+    }
+}
+
+class RemoveGreaterCommand(private val manager: DataBaseCommands<*>,
+                           override val name: String = "remove_greater"): Command {
+    override fun execute(args: List<String>) {
+        manager.removeGreater(cc.createPerson())
+    }
+}
+
+class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands<*>,
+                                        override val name: String = "filter_by_hair"): Command {
+    override fun execute(args: List<String>) {
+        val color = if(args.isEmpty()) null else Color.valueOf(args[0].uppercase())
+        manager.filterGreaterThanHairColor(color)
+    }
+}
+
+class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands<*>,
+                                          override val name: String = "print_hair"): Command {
+    override fun execute(args: List<String>) {
+        manager.printFieldAscendingHairColor()
     }
 }

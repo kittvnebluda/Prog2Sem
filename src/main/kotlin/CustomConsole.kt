@@ -1,3 +1,7 @@
+import java.lang.Exception
+import java.lang.NumberFormatException
+import java.time.format.DateTimeParseException
+
 /**
  * Класс для упрощения работы с консолью
  */
@@ -11,12 +15,14 @@ class CustomConsole(private val invoker: Invoker) {
          * @param offers запросы к пользователю
          * @return ввод пользователя
          */
-        fun readlines(vararg offers: String?): Array<String?> {
+        fun readlines(vararg offers: String): Array<String> {
             val userInput = arrayOf(*offers)
-            var inputText: String?
             offers.forEachIndexed { index, offer ->
-                println(offer)
-                inputText = readlnOrNull()
+                var inputText: String? = null
+                while (inputText == null) {
+                    println(offer)
+                    inputText = readlnOrNull()
+                }
                 userInput[index] = inputText
             }
             return userInput
@@ -70,8 +76,23 @@ class CustomConsole(private val invoker: Invoker) {
                 }
             }
         }
-    }
+        /** Удаляет лишние пробелы и разделяет строку по пробелам */
+        fun splitSpaces(s: String): List<String> {
+            return s.trim().replace("\\s+".toRegex(), " ").split(" ")
+        }
+        /** Создает Person из пользовательского ввода */
+        fun createPerson(): Person {
+            val userInput = readlines("Введите имя человека",
+                "Введите координаты x и y: ",
+                "Введите рост ",
+                "Введите день рождения, пример: \"2011-12-03T10:15:30+01:00[Europe/Paris]\" ",
+                "Введите вес ",
+                "Введите цвет волос: green, red, black, yellow или brown" ,
+                "Введите местонахождение x, y, z и название места (не обязательно)")
 
+            return Person.personFromStrings(userInput)
+        }
+    }
     /**
      * Главная функция класса, реализующая постоянное "общение" с пользователем
      */
@@ -80,9 +101,15 @@ class CustomConsole(private val invoker: Invoker) {
         while (!ISQUIT) {
             try {
                 invoker.proceed(readln())
-            }
-            catch (e: InvalidUserInputException) {
-                println("${red}Ошибка | ${e.message}$reset")
+            } catch (e: Exception) {
+                when (e) {
+                    is InvalidUserInputException,
+                    is DateTimeParseException,
+                    is NumberFormatException -> {
+                        println("${red}Ошибка | ${e.message}$reset")
+                    }
+                    else -> throw e
+                }
             }
         }
     }

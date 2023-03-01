@@ -1,0 +1,1 @@
+data class Callback(val success: Boolean, val msg: Any, val error: String = "")

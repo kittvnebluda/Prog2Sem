@@ -92,6 +92,20 @@ class CustomConsole(private val invoker: Invoker) {
 
             return Person.personFromStrings(userInput)
         }
+        /** Обработка колбэка строки */
+        fun callString(callback: Callback<String>) {
+            if (callback.success)
+                println(callback.msg)
+            else
+                println(red + callback.errorMsg + reset)
+        }
+        /** Обработка колбэка булиана */
+        fun callBool(callback: Callback<Boolean>) {
+            if (callback.success)
+                println("${cc.green}Успех!${cc.reset}")
+            else
+                println(callback.errorMsg)
+        }
     }
     /**
      * Главная функция класса, реализующая постоянное "общение" с пользователем

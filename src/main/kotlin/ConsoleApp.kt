@@ -96,8 +96,6 @@ fun main(args: Array<String>) {
 
     cc.generateHelp(clientCommands)
 
-    args.forEach { println(it) }
-
     val cc = CustomConsole(consoleInvoker)
 
     cc.loop()

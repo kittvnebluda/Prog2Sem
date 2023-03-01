@@ -46,21 +46,22 @@ class ExecuteScriptCommand(private val commands: ClientCommands,
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand (private val manager: DataBaseCommands<*>, override val name: String = "info"): Command {
     override fun execute(args: List<String>) {
-        println(manager.info())
+        cc.callString(manager.info())
+
     }
 }
 
 /** Реализация вызова команды show */
 class ShowCommand (private val manager: DataBaseCommands<*>, override val name: String = "show"): Command {
     override fun execute(args: List<String>) {
-        println(manager.show())
+        cc.callString(manager.show())
     }
 }
 
 /** Реализация вызова команды добавления элемента в коллекцию */
 class AddCommand(private val manager: DataBaseCommands<*>, override val name: String = "add"): Command {
     override fun execute(args: List<String>) {
-        manager.add(cc.createPerson())
+        cc.callBool(manager.add(cc.createPerson()))
     }
 }
 
@@ -68,7 +69,7 @@ class UpdateCommand(private val manager: DataBaseCommands<*>, override val name:
     override fun execute(args: List<String>) {
         val index = if(args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указаны индекс класса и его имя")
-        manager.update(index, cc.createPerson())
+        cc.callBool(manager.update(index, cc.createPerson()))
     }
 }
 
@@ -76,32 +77,32 @@ class RemoveIdCommand(private val manager: DataBaseCommands<*>, override val nam
     override fun execute(args: List<String>) {
         val index = if(args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указан индекс класса")
-        manager.removeId(index)
+        cc.callBool(manager.removeId(index))
     }
 }
 
 class ClearCommand(private val manager: DataBaseCommands<*>, override val name: String = "clear"): Command {
     override fun execute(args: List<String>) {
-        manager.clear()
+        cc.callBool(manager.clear())
     }
 }
 
 class SaveCommand(private val manager: DataBaseCommands<*>, override val name: String = "save"): Command {
     override fun execute(args: List<String>) {
-        manager.save()
+        cc.callBool(manager.save())
     }
 }
 
 class AddIfMinCommand(private val manager: DataBaseCommands<*>, override val name: String = "add_if_min"): Command {
     override fun execute(args: List<String>) {
-        manager.addIfMin(cc.createPerson())
+        cc.callBool(manager.addIfMin(cc.createPerson()))
     }
 }
 
 class RemoveGreaterCommand(private val manager: DataBaseCommands<*>,
                            override val name: String = "remove_greater"): Command {
     override fun execute(args: List<String>) {
-        manager.removeGreater(cc.createPerson())
+        cc.callBool(manager.removeGreater(cc.createPerson()))
     }
 }
 
@@ -109,13 +110,21 @@ class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands<*>
                                         override val name: String = "filter_by_hair"): Command {
     override fun execute(args: List<String>) {
         val color = if(args.isEmpty()) null else Color.valueOf(args[0].uppercase())
-        manager.filterGreaterThanHairColor(color)
+        val res = manager.filterGreaterThanHairColor(color)
+        if (res.success)
+            res.msg.forEach { println(it) }
+        else
+            println(cc.red + res.errorMsg + cc.reset)
     }
 }
 
 class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands<*>,
                                           override val name: String = "print_hair"): Command {
     override fun execute(args: List<String>) {
-        manager.printFieldAscendingHairColor()
+        val res = manager.printFieldAscendingHairColor()
+        if (res.success)
+            res.msg.forEach { println(it) }
+        else
+            println(cc.red + res.errorMsg + cc.reset)
     }
 }

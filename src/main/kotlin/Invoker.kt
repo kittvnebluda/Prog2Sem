@@ -10,6 +10,11 @@ interface Invoker {
     fun put(command: Command)
 
     /**
+     * Запомнить команду
+     */
+    fun putAll(vararg commands: Command)
+
+    /**
      * Выполнить команду с ее аргументами
      */
     fun proceed(cmd: String)

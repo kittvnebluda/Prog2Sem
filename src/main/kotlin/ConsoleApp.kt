@@ -79,11 +79,11 @@ fun main(args: Array<String>) {
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
 
-    consoleInvoker.putAll(arrayOf(
+    consoleInvoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, save, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor))
+        removeByLocation, filterByColor, printHairColor)
 
-    cc.generateHelp(clientCommands)
+    consoleInvoker.genHelp()
 
     val cc = CustomConsole(consoleInvoker)
 

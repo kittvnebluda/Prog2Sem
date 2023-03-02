@@ -8,7 +8,7 @@ class ConsoleInvoker: Invoker {
         cmdMap[command.name] = command
     }
 
-    fun putAll(commands: Array<Command>) {
+    override fun putAll(vararg commands: Command) {
         commands.forEach { put(it) }
     }
 
@@ -21,5 +21,14 @@ class ConsoleInvoker: Invoker {
         HISTORY.add(command.name)
         if (HISTORY.size > MAX_HISTORY_SIZE)
             HISTORY.remove()
+    }
+
+    fun genHelp() {
+        cmdMap.values.forEach { command ->
+            HELP += "${command.name} ${command.methodsDesc.keys.joinToString(" ")}\t\t\t\t\t\t\t\t\t\t\t\t : ${command.desc}\n"
+            command.methodsDesc.forEach { (name, desc) ->
+                HELP += "\t\t\t\t\t\t\t\t\t\t\t\t$name : $desc\n"
+            }
+        }
     }
 }

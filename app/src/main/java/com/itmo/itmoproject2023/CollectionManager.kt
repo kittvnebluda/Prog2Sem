@@ -3,7 +3,7 @@ package com.itmo.itmoproject2023
 /**
  * Интерфейс команд пользователя
  */
-interface CollectionManager<T> {
+interface CollectionManager {
     /**
      * Возвращает информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
      * @return информацию о коллекции в виде текста
@@ -19,56 +19,52 @@ interface CollectionManager<T> {
      * @param e элемент добавляемый в коллекцию
      * @return true если коллекция изменилась
      */
-    fun add(e: T): Boolean
+    fun add(e: Person): String
     /**
      * Обновляет значение элемента коллекции, id которого равен заданному
      * @param index индекс элемента коллекции
      * @param e замещающий элемент
      */
-    fun update(index: Int, e: T)
+    fun update(index: Int, e: Person): String
     /**
      * Обеспечивает удаление элемента из коллекции по его id
      * @param index индекс элемента коллекции
      */
-    fun removeId(index: Int)
+    fun removeId(id: Int): String
     /**
      * Обеспечивает очистку коллекции
      */
-    fun clear()
+    fun clear(): String
     /**
      * Обеспечивает сохранение коллекции в файл
      */
-    fun save()
+    fun save(filePath:String): String
     /**
      * Обеспечивает чтение и исполнение скрипта из указанного файла.
      * В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме
      * @param filename имя файла
      */
-    fun executeScript(filename: String)
-    /**
-     * Обеспечивает удаление первого элемента из коллекции
-     */
-    fun removeFirst()
+    fun removeGreater(e: Person): String
     /**
      * Обеспечивает добавление нового элемента в коллекцию, если его значение превышает значение наибольшего элемента этой коллекции
      * @param e добавляемый класс [T]
      */
-    fun addIfMax(e: T)
+    fun addIfMin(e: Person): String
     /**
      * Возвращает сумму значений поля height для всех элементов коллекции
      * @return сумма значений height
      */
-    fun sumOfHeight(): Long
+    fun removeAllByLocation(location: Location): String
     /**
      * Возвращает количество элементов, значение поля hairColor которых равно заданному
      * @param color цвет волос, может быть null
      * @return количество подходящих элементов
      */
-    fun countByHairColor(color: Color?): Int
+    fun filterGreaterThanHairColor(color: Color?): String
     /**
      * Возвращает количество элементов, значение поля hairColor которых меньше заданного
      * @param color цвет волос, может быть null
      * @return количество подходящих элементов
      */
-    fun countLessThanHairColor(color: Color?): Int
+    fun printFieldAscendingHairColor(): String
 }

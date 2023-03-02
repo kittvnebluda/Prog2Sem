@@ -1,7 +1,7 @@
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Location (private val x: Float = 0f,
-                     private val y: Float = 0f,
-                     private val z: Int = 0,
-                     private val name: String? = null)
+data class Location (val x: Float = 0f,
+                     val y: Float = 0f,
+                     val z: Int = 0,
+                     val name: String? = null)

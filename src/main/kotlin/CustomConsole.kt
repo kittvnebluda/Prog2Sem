@@ -31,36 +31,6 @@ class CustomConsole(private val invoker: Invoker) {
             println("#############################################")
         }
 
-        /**
-         * Генерирует текст для команды помощи.
-         * @param classes классы, методы которых будут проверены
-         */
-        fun generateHelp(vararg classes: Any) {
-            // Проходимся по всем классам
-            for (c in classes) {
-                // Проходимся по всем методам класса
-                c.javaClass.methods.forEach {method ->
-
-                    val inHelp = method.getAnnotation(InHelp::class.java)
-
-                    if (inHelp != null) {
-                        val params = LinkedHashMap<String, String>()
-                        // Проходимся по всем параметрам метода
-                        method.parameters.forEach {param ->
-
-                            val inHelpParam = param.getAnnotation(InHelp::class.java)
-                            if (inHelpParam != null)
-                                params[param.name] = inHelpParam.desc
-                        }
-                        HELP += "${method.name} ${params.keys.joinToString(" ")}\t\t\t\t : ${inHelp.desc}\n"
-                        // Добавляем описания параметров
-                        params.forEach { (key, value) ->
-                            HELP += "\t\t\t\t$key : $value\n"
-                        }
-                    }
-                }
-            }
-        }
         /** Удаляет лишние пробелы и разделяет строку по пробелам */
         fun splitSpaces(s: String): List<String> = s.trim().replace("\\s+".toRegex(), " ").split(" ")
         /** Создает Person из пользовательского ввода */
@@ -158,6 +128,7 @@ class CustomConsole(private val invoker: Invoker) {
 
             return Person(name!!, coordinates, height, birthday, weight, hairColor, location)
         }
+        /** Создать Location из пользовательского ввода */
         fun createLocation(strField: String? = null): Location {
             var input = strField
             var location: Location
@@ -182,6 +153,7 @@ class CustomConsole(private val invoker: Invoker) {
             }
             return location
         }
+        /** Создать Color из пользовательского ввода */
         fun createColor(strField: String? = null): Color {
             var input = strField
             var color: Color

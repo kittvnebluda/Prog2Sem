@@ -9,12 +9,10 @@ class ConsoleClientCommands: ClientCommands {
     companion object {
         private val openedScripts = LinkedList<String>()
     }
-    @InHelp(desc = "описание команд")
     override fun help() {
         println(HELP)
     }
-    @InHelp(desc = "исполнение скрипта из указанного файла")
-    override fun executeScript(@InHelp(desc = "путь к файлу") filename: String, invoker: Invoker) {
+    override fun executeScript(filename: String, invoker: Invoker) {
         val file = File(filename)
 
         try {
@@ -38,11 +36,9 @@ class ConsoleClientCommands: ClientCommands {
             throw InvalidUserInputException("$filename: файл не найден")
         }
     }
-    @InHelp(desc = "завершение программы")
     override fun exit() {
         ISQUIT = true
     }
-    @InHelp(desc = "обеспечивает вывод последних 12 команд без их аргументов")
     override fun history() {
         println(HISTORY.slice(0 until HISTORY.size).joinToString("\n"))
     }

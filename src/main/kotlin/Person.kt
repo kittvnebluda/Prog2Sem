@@ -6,14 +6,14 @@ import java.time.ZonedDateTime
  * @throws InvalidUserInputException
  */
 @Serializable
-data class Person(private val name: String,
-                  private val coordinates: Coordinates,
-                  private val height: Long,
+data class Person(val name: String,
+                  val coordinates: Coordinates,
+                  val height: Long,
                   @Serializable(KZonedDateTimeSerializer::class)
-                  private val birthday: ZonedDateTime,
-                  private val weight: Int,
-                  private val hairColor: Color,
-                  private val location: Location) {
+                  val birthday: ZonedDateTime,
+                  val weight: Int,
+                  val hairColor: Color,
+                  val location: Location) {
     init {
         if (height < 1) throw InvalidUserInputException("Высота человека должна быть больше 0")
         if (weight < 1) throw InvalidUserInputException("Вес человека должен быть больше 0")

@@ -8,6 +8,10 @@ class ConsoleInvoker: Invoker {
         cmdMap[command.name] = command
     }
 
+    fun putAll(commands: Array<Command>) {
+        commands.forEach { put(it) }
+    }
+
     override fun proceed(cmd: String) {
         val postCmd = CustomConsole.splitSpaces(cmd)
         val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")

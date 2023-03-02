@@ -106,6 +106,13 @@ class RemoveGreaterCommand(private val manager: DataBaseCommands<*>,
     }
 }
 
+class RemoveAllByLocationCommand(private val manager: DataBaseCommands<*>,
+                                 override val name: String = "remove_by_loc"): Command {
+    override fun execute(args: List<String>) {
+        cc.callBool(manager.removeAllByLocation(cc.createLocation(args.joinToString(" "))))
+    }
+}
+
 class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands<*>,
                                         override val name: String = "filter_by_hair"): Command {
     override fun execute(args: List<String>) {

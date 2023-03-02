@@ -75,24 +75,13 @@ fun main(args: Array<String>) {
     val save = SaveCommand(dbCommands)
     val addIdMax = AddIfMinCommand(dbCommands)
     val removeGreater = RemoveGreaterCommand(dbCommands)
+    val removeByLocation = RemoveAllByLocationCommand(dbCommands)
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
 
-    consoleInvoker.put(help)
-    consoleInvoker.put(info)
-    consoleInvoker.put(show)
-    consoleInvoker.put(add)
-    consoleInvoker.put(exit)
-    consoleInvoker.put(history)
-    consoleInvoker.put(execute)
-    consoleInvoker.put(update)
-    consoleInvoker.put(remove)
-    consoleInvoker.put(clear)
-    consoleInvoker.put(save)
-    consoleInvoker.put(addIdMax)
-    consoleInvoker.put(removeGreater)
-    consoleInvoker.put(filterByColor)
-    consoleInvoker.put(printHairColor)
+    consoleInvoker.putAll(arrayOf(
+        help, info, show, add, exit, history, execute, update, remove, clear, save, addIdMax, removeGreater,
+        removeByLocation, filterByColor, printHairColor))
 
     cc.generateHelp(clientCommands)
 

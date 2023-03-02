@@ -168,7 +168,12 @@ class CustomConsole(private val invoker: Invoker) {
             }
 
             // Получаем местоположение
-            input = null
+            val location = createLocation()
+
+            return Person(name!!, coordinates, height, birthday, weight, hairColor, location)
+        }
+        fun createLocation(input: String? = null): Location {
+            var input = input
             var location: Location
             while (true) {
                 if (input == null || input == "")
@@ -177,7 +182,7 @@ class CustomConsole(private val invoker: Invoker) {
                     try {
                         val fineInput = cc.splitSpaces(input)
                         if (fineInput.size < 3)
-                            throw InvalidUserInputException("Нужно ввести минимум три числа через пробел")
+                            throw InvalidUserInputException("Нужно ввести минимум три числа через пробел. Попробуйте еще раз!")
                         val locName = if (fineInput.size > 3) fineInput[3] else null
                         location = Location(fineInput[0].toFloat(), fineInput[1].toFloat(), fineInput[2].toInt(), locName)
                         break
@@ -189,7 +194,7 @@ class CustomConsole(private val invoker: Invoker) {
                 }
                 input = readlnOrNull()
             }
-            return Person(name!!, coordinates, height, birthday, weight, hairColor, location)
+            return location
         }
         /** Обработка колбэка строки */
         fun callString(callback: Callback<String>) {

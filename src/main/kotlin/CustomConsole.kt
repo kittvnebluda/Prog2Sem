@@ -151,29 +151,15 @@ class CustomConsole(private val invoker: Invoker) {
             }
 
             // Получаем цвет волос
-            input = null
-            var hairColor: Color
-            while (true) {
-                if (input == null || input == "")
-                    println("Выберите цвет волос: ${Color.values().joinToString(", ")}")
-                else {
-                    try {
-                        hairColor = Color.valueOf(input.trim().uppercase())
-                        break
-                    } catch (e: IllegalArgumentException) {
-                        printerr("Не найден цвет. Попробуйте еще раз!")
-                    }
-                }
-                input = readlnOrNull()
-            }
+            val hairColor = createColor()
 
             // Получаем местоположение
             val location = createLocation()
 
             return Person(name!!, coordinates, height, birthday, weight, hairColor, location)
         }
-        fun createLocation(input: String? = null): Location {
-            var input = input
+        fun createLocation(strField: String? = null): Location {
+            var input = strField
             var location: Location
             while (true) {
                 if (input == null || input == "")
@@ -195,6 +181,24 @@ class CustomConsole(private val invoker: Invoker) {
                 input = readlnOrNull()
             }
             return location
+        }
+        fun createColor(strField: String? = null): Color {
+            var input = strField
+            var color: Color
+            while (true) {
+                if (input == null || input == "")
+                    println("Выберите цвет: ${Color.values().joinToString(", ")}")
+                else {
+                    try {
+                        color = Color.valueOf(input.trim().uppercase())
+                        break
+                    } catch (e: IllegalArgumentException) {
+                        printerr("Не найден цвет ${input.trim().uppercase()}. Попробуйте еще раз!")
+                    }
+                }
+                input = readlnOrNull()
+            }
+            return color
         }
         /** Обработка колбэка строки */
         fun callString(callback: Callback<String>) {

@@ -116,8 +116,7 @@ class RemoveAllByLocationCommand(private val manager: DataBaseCommands<*>,
 class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands<*>,
                                         override val name: String = "filter_by_hair"): Command {
     override fun execute(args: List<String>) {
-        val color = if(args.isEmpty()) null else Color.valueOf(args[0].uppercase())
-        val res = manager.filterGreaterThanHairColor(color)
+        val res = manager.filterGreaterThanHairColor(cc.createColor(args.joinToString(" ")))
         if (res.success)
             res.msg.forEach { println(it) }
         else

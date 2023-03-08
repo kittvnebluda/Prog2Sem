@@ -42,6 +42,8 @@ class ConsoleClientCommands: ClientCommands {
         ISQUIT = true
     }
     override fun history() {
-        println(HISTORY.slice(0 until HISTORY.size).joinToString("\n"))
+        HISTORY.forEachIndexed { index, s ->
+            println("${index + 1}. $s")
+        }
     }
 }

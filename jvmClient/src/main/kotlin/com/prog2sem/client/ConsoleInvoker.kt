@@ -20,9 +20,11 @@ class ConsoleInvoker: Invoker {
         val postCmd = CustomConsole.splitSpaces(cmd)
         val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
 
-        command.execute(postCmd.slice(1 until postCmd.size))
+        val args = postCmd.slice(1 until postCmd.size)
 
-        HISTORY.add(command.name)
+        command.execute(args)
+
+        HISTORY.add("${command.name} ${args.joinToString(" ")}")
         if (HISTORY.size > MAX_HISTORY_SIZE)
             HISTORY.remove()
     }

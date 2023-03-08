@@ -104,15 +104,20 @@ class LocalManager(filename: String): CollectionManager {
     }
 
     override fun filterGreaterThanHairColor(color: Color?): String {
-        if (color == null) return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString()))
-        val sb = StringBuilder()
-        dataBaseSim.forEach { if (it.hairColor > color)  sb.append(it.toString())}
-        return json.encodeToString(ServerAnswer(answerMessage = sb.toString()))
+        if (color == null)
+            return json.encodeToString(ServerAnswer(answerMessage = json.encodeToString(dataBaseSim.toArray())))
+
+        val valid = mutableListOf<Person>()
+        dataBaseSim.forEach {
+            if (it.hairColor > color)
+                valid.add(it)
+        }
+        return json.encodeToString(ServerAnswer(answerMessage = json.encodeToString(valid)))
     }
 
     override fun printFieldAscendingHairColor(): String {
         Person.colors.sort()
-        return json.encodeToString(ServerAnswer(answerMessage = Person.colors.toString()))
+        return json.encodeToString(ServerAnswer(answerMessage = json.encodeToString(Person.colors)))
     }
 
     override fun addIfMin(e: Person): String {

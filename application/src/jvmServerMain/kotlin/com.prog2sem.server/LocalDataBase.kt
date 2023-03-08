@@ -8,6 +8,7 @@ import com.prog2sem.common.Response
 import com.prog2sem.common.JsonWorker
 import com.prog2sem.common.SimpleResponse
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 /**
  * @param filename путь к файлу сохранения
@@ -78,12 +79,12 @@ class LocalDataBase(private val filename: String) : DataBaseCommands {
     override fun filterGreaterThanHairColor(color: Color?): Response<Array<Person>> {
         val jsonString = manager.filterGreaterThanHairColor(color)
         val sa: ServerAnswer = JsonWorker.json.decodeFromString(jsonString)
-        return Response<Array<Person>>(sa.isSuccess, emptyArray())
+        return Response(sa.isSuccess, Json.decodeFromString(sa.answerMessage))
     }
 
     override fun printFieldAscendingHairColor(): Response<Array<Color>> {
         val jsonString = manager.printFieldAscendingHairColor()
         val sa: ServerAnswer = JsonWorker.json.decodeFromString(jsonString)
-        return Response<Array<Color>>(sa.isSuccess, emptyArray())
+        return Response(sa.isSuccess, Json.decodeFromString(sa.answerMessage))
     }
 }

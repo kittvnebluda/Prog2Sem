@@ -28,7 +28,6 @@ class ExitCommand (private val commands: ClientCommands, override val name: Stri
     override val desc: String = "завершение программы"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        println("Удачи!")
         commands.exit()
     }
 }

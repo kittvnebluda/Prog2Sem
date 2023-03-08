@@ -30,12 +30,12 @@ class CustomConsole(private val invoker: Invoker) {
             val greeting = when(kotlin.random.Random.nextInt(3)) {
                 0 -> "Здравствуйте, пользователь."
                 1 -> "ПРИВЕТСТВУЮ!"
-                2 -> "ВСЕ ${rBC()}Х ${rBC()}О ${rBC()}Р ${rBC()}О ${rBC()}Ш ${rBC()}О \u001b[0m?"
+                2 -> "ВСЕ ${rBC()}Х ${rBC()}О ${rBC()}Р ${rBC()}О ${rBC()}Ш ${rBC()}О \u001b[0m!"
                 else -> "Вы точно хотите знать зачем я нужен?"
             }
             println("#############################################")
             println("# $greeting")
-            println("# Введите команду или 'help' для помощи.")
+            println("# Если Вам нужна помощь, введите \"help\"")
             println("#############################################")
         }
 
@@ -207,13 +207,12 @@ class CustomConsole(private val invoker: Invoker) {
         greetings()
         while (!ISQUIT) {
             try {
+                print("${rBC()}> $reset")
                 invoker.proceed(readln())
             } catch (e: Exception) {
                 when (e) {
-                    is InvalidUserInputException,
-                    is DateTimeParseException,
-                    is NumberFormatException -> {
-                        println(red + e.message + reset)
+                    is InvalidUserInputException -> {
+                        e.message?.let { printerr(it) }
                     }
                     else -> throw e
                 }

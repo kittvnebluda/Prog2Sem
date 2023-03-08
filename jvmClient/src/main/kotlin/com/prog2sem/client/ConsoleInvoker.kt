@@ -1,5 +1,7 @@
 package com.prog2sem.client
 
+import kotlin.math.max
+
 /**
  * Класс хранящий и вызывающий команды
  */
@@ -26,10 +28,19 @@ class ConsoleInvoker: Invoker {
     }
 
     fun genHelp() {
+        var maxNameLen = 0
         cmdMap.values.forEach { command ->
-            HELP += "${command.name} ${command.methodsDesc.keys.joinToString(" ")}\t\t\t\t\t\t\t\t\t\t\t\t : ${command.desc}\n"
+            var nameLen = command.name.length + command.methodsDesc.size
+            command.methodsDesc.forEach { (name, _) ->
+                nameLen += name.length
+            }
+            maxNameLen = max(maxNameLen, nameLen)
+        }
+        cmdMap.values.forEach { command ->
+            val methods = command.methodsDesc.keys.joinToString(" ")
+            HELP += "${command.name} $methods ${" ".repeat(maxNameLen - command.name.length - methods.length)} : ${command.desc}\n"
             command.methodsDesc.forEach { (name, desc) ->
-                HELP += "\t\t\t\t\t\t\t\t\t\t\t\t$name : $desc\n"
+                HELP += "${" ".repeat(maxNameLen - name.length)}  $name : $desc\n"
             }
         }
     }

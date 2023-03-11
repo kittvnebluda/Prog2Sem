@@ -1,5 +1,8 @@
 package com.prog2sem.client
 
+import com.prog2sem.client.CustomConsole.Companion.isLoadTempSave
+import com.prog2sem.client.CustomConsole.Companion.printGreen
+import com.prog2sem.client.CustomConsole.Companion.printerr
 import java.util.*
 
 const val MAX_HISTORY_SIZE = 12
@@ -13,6 +16,7 @@ fun main(args: Array<String>) {
     val clientCommands = ConsoleClientCommands()
     val invoker = ConsoleInvoker()
 
+    // Создаем экземпляры команд
     val help = HelpCommand(clientCommands)
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
@@ -32,11 +36,23 @@ fun main(args: Array<String>) {
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
 
+    // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, save, addIdMax, removeGreater,
         removeByLocation, filterByColor, printHairColor, addTest)
 
-    invoker.genHelp()
+    invoker.genHelp() // Генерируем строку помощи
+
+    // Временное сохранение прошлой сессии
+    val existMsg = dbCommands.isTempSaveExist()
+    if (existMsg.success && isLoadTempSave()) {
+        val loadMsg = dbCommands.loadTempSave()
+        if (loadMsg.success)
+            printGreen("Сохранение загружено!")
+        else
+            printerr(loadMsg.error)
+    } else
+        printerr(existMsg.error)
 
     val cc = CustomConsole(invoker)
 

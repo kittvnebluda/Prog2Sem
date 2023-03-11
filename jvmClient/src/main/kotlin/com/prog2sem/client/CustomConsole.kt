@@ -6,7 +6,6 @@ import com.prog2sem.common.Location
 import com.prog2sem.common.Person
 import com.prog2sem.common.Response
 import com.prog2sem.common.SimpleResponse
-import java.lang.Exception
 import java.lang.NumberFormatException
 import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
@@ -186,20 +185,43 @@ class CustomConsole(private val invoker: Invoker) {
             if (response.success)
                 println(response.msg)
             else
-                println(red + response.errorMessage + reset)
+                println(red + response.error + reset)
         }
         /** Обработка колбэка булиана */
         fun callBool(response: SimpleResponse) {
             if (response.success)
                 println("${green}Успех!$reset")
             else
-                println(response.errorMessage)
+                println(response.error)
         }
         /** Вывод текста красным в стандартный поток выхода */
         fun printerr(s: String) {
             println(red + s + reset)
         }
+        /** Вывод текста зеленым в стандартный поток */
+        fun printGreen(s: String) {
+            println(green + s + reset)
+        }
+        /**
+         * Спрашиваем пользователя не хочет ли он загрузить последний сейв
+         * @return true, если пользователь хочет загрузить сохранение
+         */
+        fun isLoadTempSave(): Boolean {
+            println("Загрузить последнее сохранение коллекции? y/n")
+            while (true) {
+                var ans = readln()
+                if (ans.isNotEmpty()) {
+                    ans = ans.trim().lowercase()
+                    when (ans) {
+                        "y" -> return true
+                        "n" -> return false
+                        else -> println("Введите 'y' или 'n'")
+                    }
+                } else println("Загрузить последнее сохранение коллекции? y/n")
+            }
+        }
     }
+
     /**
      * Главная функция класса, реализующая постоянное "общение" с пользователем
      */
@@ -209,13 +231,8 @@ class CustomConsole(private val invoker: Invoker) {
             try {
                 print("${rBC()}> $reset") // Просто красивая штучка
                 invoker.proceed(readln())
-            } catch (e: Exception) {
-                when (e) {
-                    is InvalidUserInputException -> {
-                        e.message?.let { printerr(it) }
-                    }
-                    else -> throw e
-                }
+            } catch (e: InvalidUserInputException) {
+                e.message?.let { printerr(it) }
             }
         }
     }

@@ -154,7 +154,7 @@ class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
         if (res.success)
             res.msg.forEach { println(it) }
         else
-            println(CustomConsole.red + res.errorMessage + CustomConsole.reset)
+            println(CustomConsole.red + res.error + CustomConsole.reset)
     }
 }
 
@@ -167,7 +167,7 @@ class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
         if (res.success)
             res.msg.forEach { println(it) }
         else
-            println(CustomConsole.red + res.errorMessage + CustomConsole.reset)
+            println(CustomConsole.red + res.error + CustomConsole.reset)
     }
 }
 /** Реализация вызова команды добавления готового элемента в коллекцию */

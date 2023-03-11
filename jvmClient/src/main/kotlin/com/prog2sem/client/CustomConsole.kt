@@ -203,11 +203,11 @@ class CustomConsole(private val invoker: Invoker) {
     /**
      * Главная функция класса, реализующая постоянное "общение" с пользователем
      */
-    fun loop() {
+    fun talkWithUserForever() {
         greetings()
         while (!ISQUIT) {
             try {
-                print("${rBC()}> $reset")
+                print("${rBC()}> $reset") // Просто красивая штучка
                 invoker.proceed(readln())
             } catch (e: Exception) {
                 when (e) {

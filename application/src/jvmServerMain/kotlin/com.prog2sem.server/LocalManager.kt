@@ -37,7 +37,7 @@ class LocalManager(filename: String): CollectionManager {
     override fun update(index: Int, e: Person): String {
 //        dataBaseSim.sortedDescending()
         val el = dataBaseSim.elementAtOrNull(index - 1) ?:
-            return json.encodeToString(ServerAnswer(false, "com.prog2sem.common.Person with this id does not exist"))
+            return json.encodeToString(ServerAnswer(false, "Person with this id does not exist"))
         with(el){
             name = e.name
             coordinates = e.coordinates

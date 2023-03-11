@@ -1,6 +1,7 @@
 package com.prog2sem.client
 
-import com.prog2sem.common.DataBaseCommands
+import com.prog2sem.common.*
+import java.time.ZonedDateTime
 
 /** Интерфейс всех команд */
 interface Command {
@@ -167,5 +168,20 @@ class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
             res.msg.forEach { println(it) }
         else
             println(CustomConsole.red + res.errorMessage + CustomConsole.reset)
+    }
+}
+/** Реализация вызова команды добавления готового элемента в коллекцию */
+class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_test"): Command {
+    override val desc: String = "добавить готовый элемент в коллекцию"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>) {
+        CustomConsole.callBool(manager.add(Person(
+            "Noname",
+            Coordinates(42f, 21.0),
+            255,
+            ZonedDateTime.now(),
+            666,
+            Color.BLACK,
+            Location(11f, 22f, 44))))
     }
 }

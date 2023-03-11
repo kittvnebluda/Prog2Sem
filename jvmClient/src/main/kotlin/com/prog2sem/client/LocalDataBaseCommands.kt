@@ -1,19 +1,15 @@
-package com.prog2sem.server
+package com.prog2sem.client
 
-import com.prog2sem.common.Color
-import com.prog2sem.common.DataBaseCommands
-import com.prog2sem.common.Location
-import com.prog2sem.common.Person
-import com.prog2sem.common.Response
-import com.prog2sem.common.JsonWorker
-import com.prog2sem.common.SimpleResponse
+import com.prog2sem.common.*
+import com.prog2sem.server.LocalManager
+import com.prog2sem.server.ServerAnswer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 /**
  * @param filename путь к файлу сохранения
  */
-class LocalDataBase(private val filename: String) : DataBaseCommands {
+class LocalDataBaseCommands(private val filename: String) : DataBaseCommands, TempSaveDBCommands {
     private val manager = LocalManager(filename)
 
     override fun info(): Response<String> {
@@ -86,5 +82,13 @@ class LocalDataBase(private val filename: String) : DataBaseCommands {
         val jsonString = manager.printFieldAscendingHairColor()
         val sa: ServerAnswer = JsonWorker.json.decodeFromString(jsonString)
         return Response(sa.isSuccess, Json.decodeFromString(sa.answerMessage))
+    }
+
+    override fun isTempSaveExist(): SimpleResponse {
+        TODO("Not yet implemented")
+    }
+
+    override fun loadTempSave(): SimpleResponse {
+        TODO("Not yet implemented")
     }
 }

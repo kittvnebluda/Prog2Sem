@@ -1,9 +1,6 @@
 package com.prog2sem.client
 
-import com.prog2sem.server.LocalDataBase
 import java.util.*
-
-typealias cc = CustomConsole
 
 const val MAX_HISTORY_SIZE = 12
 
@@ -12,18 +9,19 @@ var ISQUIT = false
 var HELP = ""
 
 fun main(args: Array<String>) {
-    val dbCommands = LocalDataBase(if (args.isNotEmpty()) args[0] else "")
+    val dbCommands = LocalDataBaseCommands(if (args.isNotEmpty()) args[0] else "")
     val clientCommands = ConsoleClientCommands()
-    val consoleInvoker = ConsoleInvoker()
+    val invoker = ConsoleInvoker()
 
     val help = HelpCommand(clientCommands)
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
-    val execute = ExecuteScriptCommand(clientCommands, consoleInvoker)
+    val execute = ExecuteScriptCommand(clientCommands, invoker)
 
     val info = InfoCommand(dbCommands)
     val show = ShowCommand(dbCommands)
     val add = AddCommand(dbCommands)
+    val addTest = AddTestCommand(dbCommands)
     val update = UpdateCommand(dbCommands)
     val remove = RemoveIdCommand(dbCommands)
     val clear = ClearCommand(dbCommands)
@@ -34,13 +32,13 @@ fun main(args: Array<String>) {
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
 
-    consoleInvoker.putAll(
+    invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, save, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor)
+        removeByLocation, filterByColor, printHairColor, addTest)
 
-    consoleInvoker.genHelp()
+    invoker.genHelp()
 
-    val cc = CustomConsole(consoleInvoker)
+    val cc = CustomConsole(invoker)
 
-    cc.loop()
+    cc.talkWithUserForever()
 }

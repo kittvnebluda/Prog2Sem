@@ -1,7 +1,7 @@
 package com.prog2sem.common
 
 /**
- * Интерфейс команд пользователя
+ * Интерфейс команд базы данных
  */
 interface DataBaseCommands {
     /**

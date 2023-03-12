@@ -68,7 +68,7 @@ class LocalManager(filename: String): CollectionManager {
 
     override fun clear(): String {
         dataBaseSim.clear()
-        Person.clear()
+        Person.resetId()
         return json.encodeToString(ServerAnswer())
     }
 

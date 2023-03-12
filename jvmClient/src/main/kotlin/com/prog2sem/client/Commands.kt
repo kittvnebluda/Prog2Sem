@@ -1,7 +1,6 @@
 package com.prog2sem.client
 
 import com.prog2sem.common.*
-import java.time.ZonedDateTime
 
 /** Интерфейс всех команд */
 interface Command {
@@ -61,7 +60,7 @@ class InfoCommand (private val manager: DataBaseCommands, override val name: Str
     override val desc: String = "вывести информацию о коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callString(manager.info())
+        CustomConsole.handleStrResponse(manager.info())
     }
 }
 
@@ -70,7 +69,7 @@ class ShowCommand (private val manager: DataBaseCommands, override val name: Str
     override val desc: String = "вывести все элементы коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callString(manager.show())
+        CustomConsole.handleStrResponse(manager.show())
     }
 }
 
@@ -79,95 +78,103 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
     override val desc: String = "добавить элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.add(CustomConsole.createPerson()))
+        val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.handleSimpleResponse(manager.add(person))
     }
 }
 
+/** Реализация вызова команды обновления элемента коллекции */
 class UpdateCommand(private val manager: DataBaseCommands, override val name: String = "update"): Command {
     override val desc: String = "обновить элемент коллекции"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id обновляемого элемента"))
     override fun execute(args: List<String>) {
         val index = if(args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указаны индекс класса и его имя")
-        CustomConsole.callBool(manager.update(index, CustomConsole.createPerson()))
+
+        val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.handleSimpleResponse(manager.update(index, person))
     }
 }
 
+/** Реализация вызова команды удаления элемента коллекции */
 class RemoveIdCommand(private val manager: DataBaseCommands, override val name: String = "remove"): Command {
     override val desc: String = "удалить элемент из коллекции по его id"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id удаляемого элемента"))
     override fun execute(args: List<String>) {
         val index = if(args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указан индекс класса")
-        CustomConsole.callBool(manager.removeId(index))
+        CustomConsole.handleSimpleResponse(manager.removeId(index))
     }
 }
 
+/** Реализация вызова команды отчистки коллекции */
 class ClearCommand(private val manager: DataBaseCommands, override val name: String = "clear"): Command {
     override val desc: String = "очистить коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.clear())
+        CustomConsole.handleSimpleResponse(manager.clear())
     }
 }
 
+/** Реализация вызова команды сохранения коллекции */
 class SaveCommand(private val manager: DataBaseCommands, override val name: String = "save"): Command {
     override val desc: String = "сохранить коллекцию в файл"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.save())
+        CustomConsole.handleSimpleResponse(manager.save())
     }
 }
 
+/** Реализация вызова команды добавления элемента в коллекцию с условием */
 class AddIfMinCommand(private val manager: DataBaseCommands, override val name: String = "add_if_min"): Command {
     override val desc: String = "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.addIfMin(CustomConsole.createPerson()))
+        val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.handleSimpleResponse(manager.addIfMin(person))
     }
 }
 
+/** Реализация вызова команды удаления наибольшего элемента коллекции */
 class RemoveGreaterCommand(private val manager: DataBaseCommands,
                            override val name: String = "remove_greater"): Command {
     override val desc: String = "удалить из коллекции все элементы, превышающие заданный"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.removeGreater(CustomConsole.createPerson()))
+        val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.handleSimpleResponse(manager.removeGreater(person))
     }
 }
 
+/** Реализация вызова команды удаления элемента коллекции по его локации*/
 class RemoveAllByLocationCommand(private val manager: DataBaseCommands,
                                  override val name: String = "remove_by_loc"): Command {
     override val desc: String = "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.removeAllByLocation(CustomConsole.createLocation(args.joinToString(" "))))
+        CustomConsole.handleSimpleResponse(manager.removeAllByLocation(CustomConsole.locationFromConsoleInput(args.joinToString(" "))))
     }
 }
 
+/** Реализация вызова команды вывода элементов коллекции */
 class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
                                         override val name: String = "filter_by_hair"): Command {
     override val desc: String = "вывести элементы, значение поля hairColor которых больше заданного"
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
     override fun execute(args: List<String>) {
-        val res = manager.filterGreaterThanHairColor(CustomConsole.createColor(args.joinToString(" ")))
-        if (res.success)
-            res.msg.forEach { println(it) }
-        else
-            println(CustomConsole.red + res.error + CustomConsole.reset)
+        val res = manager.filterGreaterThanHairColor(CustomConsole.colorFromConsoleInput(args.joinToString(" ")))
+        CustomConsole.handleIterableResponse(res)
     }
 }
 
+/** Реализация вызова команды вывода полей элементов коллекции */
 class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
                                           override val name: String = "print_hair"): Command {
     override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val res = manager.printFieldAscendingHairColor()
-        if (res.success)
-            res.msg.forEach { println(it) }
-        else
-            println(CustomConsole.red + res.error + CustomConsole.reset)
+        CustomConsole.handleIterableResponse(res)
     }
 }
 /** Реализация вызова команды добавления готового элемента в коллекцию */
@@ -175,13 +182,7 @@ class AddTestCommand(private val manager: DataBaseCommands, override val name: S
     override val desc: String = "добавить готовый элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.callBool(manager.add(Person(
-            "Noname",
-            Coordinates(42f, 21.0),
-            255,
-            ZonedDateTime.now(),
-            666,
-            Color.BLACK,
-            Location(11f, 22f, 44))))
+        val person = PersonDirector(NoNamePersonBuilder()).createPerson()
+        CustomConsole.handleSimpleResponse(manager.add(person))
     }
 }

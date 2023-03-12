@@ -14,29 +14,28 @@ data class Person(var name: String,
                   var birthday: ZonedDateTime,
                   var weight: Int,
                   var hairColor: Color,
-                  var location: Location
-)
-{
+                  var location: Location) {
+
     companion object {
-        var previous_id: Int = 0
-        var maxId = 1
         val colors = mutableListOf<Color>()
 
-        fun clear() {
-            previous_id = 0
-        }
-    }
-    init {
-        previous_id = maxId
+        var maxId = 1
+        var previousId: Int = 0
 
+        fun resetId() { previousId = 0 }
+    }
+
+    init {
+        previousId = maxId
         if (colors.indexOf(hairColor) < 0)
             colors.add(hairColor)
     }
+
     val id: Int =
         if (DataBaseSim.removedIds.size != 0)
             DataBaseSim.removedIds.remove()
         else {
-            ++previous_id; maxId++
+            ++previousId; maxId++
         }
 
     @Serializable(KZonedDateTimeSerializer::class)
@@ -64,6 +63,7 @@ data class Person(var name: String,
 
         return true
     }
+
     override fun hashCode(): Int {
         var result = name.hashCode()
         result = 31 * result + coordinates.hashCode()

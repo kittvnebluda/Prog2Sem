@@ -8,12 +8,12 @@ import kotlinx.serialization.decodeFromString
 
 object DataBaseSim {
     private val creationDate = ZonedDateTime.now()
+
     var removedIds:Queue<Int> = LinkedList()
     var dataBaseSim: HashSet<Person> = hashSetOf()
 
     /**
-     * @param filePath
-     * @return
+     * @param filePath путь к файлу
      */
     fun readDataFromFile(filePath: String){
         val jsonString = FileWorker.readFileFromEnterFilePath(filePath)
@@ -21,10 +21,6 @@ object DataBaseSim {
         dataBaseSim = json.decodeFromString(jsonString)
     }
 
-    /**
-     * @param
-     * @return
-     */
     override fun toString(): String {
         return StringBuilder().append(
             "Type of DataBase: ", dataBaseSim.javaClass.typeName, "\n",

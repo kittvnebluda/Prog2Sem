@@ -131,6 +131,12 @@ class CustomConsole(private val invoker: Invoker) {
                 } else println("Загрузить последнее сохранение коллекции? y/n")
             }
         }
+
+        /** Добавление сложного аргумента в историю для последней команды */
+        fun addArgToHistory(arg: String) {
+            val lastCmd = HISTORY[HISTORY.lastIndex]
+            HISTORY[HISTORY.lastIndex] = "$lastCmd\n$arg"
+        }
     }
 
     /**

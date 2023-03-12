@@ -79,6 +79,7 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.addArgToHistory(person.toString())
         CustomConsole.handleSimpleResponse(manager.add(person))
     }
 }
@@ -92,6 +93,7 @@ class UpdateCommand(private val manager: DataBaseCommands, override val name: St
         else throw InvalidUserInputException("Не указаны индекс класса и его имя")
 
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.addArgToHistory(person.toString())
         CustomConsole.handleSimpleResponse(manager.update(index, person))
     }
 }
@@ -131,6 +133,7 @@ class AddIfMinCommand(private val manager: DataBaseCommands, override val name: 
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.addArgToHistory(person.toString())
         CustomConsole.handleSimpleResponse(manager.addIfMin(person))
     }
 }
@@ -142,6 +145,7 @@ class RemoveGreaterCommand(private val manager: DataBaseCommands,
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.addArgToHistory(person.toString())
         CustomConsole.handleSimpleResponse(manager.removeGreater(person))
     }
 }
@@ -152,7 +156,9 @@ class RemoveAllByLocationCommand(private val manager: DataBaseCommands,
     override val desc: String = "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
     override fun execute(args: List<String>) {
-        CustomConsole.handleSimpleResponse(manager.removeAllByLocation(CustomConsole.locationFromConsoleInput(args.joinToString(" "))))
+        val location = CustomConsole.locationFromConsoleInput(args.joinToString(" "))
+        CustomConsole.addArgToHistory(location.toString())
+        CustomConsole.handleSimpleResponse(manager.removeAllByLocation(location))
     }
 }
 
@@ -162,7 +168,9 @@ class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
     override val desc: String = "вывести элементы, значение поля hairColor которых больше заданного"
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
     override fun execute(args: List<String>) {
-        val res = manager.filterGreaterThanHairColor(CustomConsole.colorFromConsoleInput(args.joinToString(" ")))
+        val color = CustomConsole.colorFromConsoleInput(args.joinToString(" "))
+        CustomConsole.addArgToHistory(color.toString())
+        val res = manager.filterGreaterThanHairColor(color)
         CustomConsole.handleIterableResponse(res)
     }
 }
@@ -183,6 +191,7 @@ class AddTestCommand(private val manager: DataBaseCommands, override val name: S
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(NoNamePersonBuilder()).createPerson()
+        CustomConsole.addArgToHistory(person.toString())
         CustomConsole.handleSimpleResponse(manager.add(person))
     }
 }

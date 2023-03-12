@@ -23,12 +23,12 @@ class ConsoleInvoker: Invoker {
 
         val args = postCmd.slice(1 until postCmd.size)
 
-        command.execute(args) // Выполняем команду
-
         // Добавляем команду в историю
         HISTORY.add("${command.name} ${args.joinToString(" ")}")
         if (HISTORY.size > MAX_HISTORY_SIZE)
-            HISTORY.remove()
+            HISTORY.removeFirst()
+
+        command.execute(args) // Выполняем команду
     }
 
     fun genHelp() {

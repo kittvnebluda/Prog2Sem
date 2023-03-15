@@ -99,7 +99,7 @@ class UpdateCommand(private val manager: DataBaseCommands, override val name: St
 }
 
 /** Реализация вызова команды удаления элемента коллекции */
-class RemoveIdCommand(private val manager: DataBaseCommands, override val name: String = "remove"): Command {
+class RemoveIdCommand(private val manager: DataBaseCommands, override val name: String = "remove_by_id"): Command {
     override val desc: String = "удалить элемент из коллекции по его id"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id удаляемого элемента"))
     override fun execute(args: List<String>) {
@@ -152,7 +152,7 @@ class RemoveGreaterCommand(private val manager: DataBaseCommands,
 
 /** Реализация вызова команды удаления элемента коллекции по его локации*/
 class RemoveAllByLocationCommand(private val manager: DataBaseCommands,
-                                 override val name: String = "remove_by_loc"): Command {
+                                 override val name: String = "remove_all_by_location"): Command {
     override val desc: String = "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
     override fun execute(args: List<String>) {
@@ -164,7 +164,7 @@ class RemoveAllByLocationCommand(private val manager: DataBaseCommands,
 
 /** Реализация вызова команды вывода элементов коллекции */
 class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
-                                        override val name: String = "filter_by_hair"): Command {
+                                        override val name: String = "filter_greater_than_hair_color"): Command {
     override val desc: String = "вывести элементы, значение поля hairColor которых больше заданного"
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
     override fun execute(args: List<String>) {
@@ -177,7 +177,7 @@ class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
 
 /** Реализация вызова команды вывода полей элементов коллекции */
 class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
-                                          override val name: String = "print_hair"): Command {
+                                          override val name: String = "print_field_ascending_hair_color"): Command {
     override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -186,7 +186,7 @@ class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
     }
 }
 /** Реализация вызова команды добавления готового элемента в коллекцию */
-class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_test"): Command {
+class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_noname"): Command {
     override val desc: String = "добавить готовый элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {

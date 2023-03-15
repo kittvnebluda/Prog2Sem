@@ -46,7 +46,7 @@ class ConsoleInvoker: Invoker {
             val methods = command.methodsDesc.keys.joinToString(" ")
             HELP += "${command.name} $methods ${" ".repeat(maxNameLen - command.name.length - methods.length)} : ${command.desc}\n"
             command.methodsDesc.forEach { (name, desc) ->
-                HELP += "${" ".repeat(maxNameLen - name.length)}  $name : $desc\n"
+                HELP += "${" ".repeat(command.name.length)} $name : $desc\n"
             }
         }
     }

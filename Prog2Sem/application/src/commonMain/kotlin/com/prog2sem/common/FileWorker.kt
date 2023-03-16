@@ -14,14 +14,17 @@ object FileWorker {
      * @return
      */
     fun readFileFromEnterFilePath(filePath: String): String {
-        val file = File(filePath)
+        var file = File(filePath)
         val intputStr = StringBuilder()
 
         if (file.exists())
             Scanner(file).forEach { intputStr.append(it) }
         else {
             var j = 0
-            while (!createFileWithEnterPath(filePath).exists() || j != COUNT_OF_TRYING) j++
+            while (!file.exists() && j != COUNT_OF_TRYING) {
+                j++
+                file = createFileWithEnterPath(filePath)
+            }
         }
         return intputStr.toString()
     }
@@ -34,17 +37,19 @@ object FileWorker {
 
     fun writeFileFromEnterFilePath(filePath: String, vararg args: Any): Boolean {
 
-        val file = File(filePath)
+        var file = File(filePath)
+
+        var j = 0
+        while (!file.exists() && j != COUNT_OF_TRYING) {
+            j++
+            file = createFileWithEnterPath(filePath)
+        }
+        if (j == COUNT_OF_TRYING) {
+            return false
+        }
+
         val outputStr = FileOutputStream(file)
 
-        if (!file.exists()) {
-            var j = 0
-            while (!createFileWithEnterPath(filePath).exists() || j != COUNT_OF_TRYING) j++
-            if (j == COUNT_OF_TRYING) {
-                outputStr.close()
-                return false
-            }
-        }
         args.forEach { outputStr.write(it.toString().toByteArray()) }
         outputStr.close()
         return true

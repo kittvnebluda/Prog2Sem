@@ -1,5 +1,7 @@
 package com.prog2sem.common
 
+import application.src.commonMain.kotlin.com.prog2sem.common.CustomSerialazers.KZonedDateTimeSerializer
+import application.src.commonMain.kotlin.com.prog2sem.common.Important.idGen
 import java.time.ZonedDateTime
 import kotlinx.serialization.Serializable
 
@@ -18,26 +20,15 @@ data class Person(var name: String,
 )
 {
     companion object {
-        var previous_id: Int = 0
-        var maxId = 1
         val colors = mutableListOf<Color>()
-
-        fun clear() {
-            previous_id = 0
-        }
     }
     init {
-        previous_id = maxId
 
         if (colors.indexOf(hairColor) < 0)
             colors.add(hairColor)
     }
-    val id: Int =
-        if (DataBaseSim.removedIds.size != 0)
-            DataBaseSim.removedIds.remove()
-        else {
-            ++previous_id; maxId++
-        }
+    val id = idGen.getId()
+
 
     @Serializable(KZonedDateTimeSerializer::class)
     var creationDate: ZonedDateTime = ZonedDateTime.now()
@@ -45,6 +36,8 @@ data class Person(var name: String,
     operator fun compareTo(other: Person): Int {
         return this.id.compareTo(other.id)
     }
+
+
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -64,6 +57,7 @@ data class Person(var name: String,
 
         return true
     }
+
     override fun hashCode(): Int {
         var result = name.hashCode()
         result = 31 * result + coordinates.hashCode()
@@ -75,5 +69,18 @@ data class Person(var name: String,
         result = 31 * result + id.hashCode()
         result = 31 * result + creationDate.hashCode()
         return result
+    }
+
+    override fun toString(): String {
+        return StringBuilder().append("Person@$id\n").append(
+                "Name: $name\n" +
+                "CreationDate: $creationDate\n" +
+                "Height: $height\n" +
+                "Weight: $weight\n" +
+                "Birthday: $birthday\n" +
+                "HairColor: $hairColor\n" +
+                "Location:\n\t${location.toString().replace("\n", "\n\t")}\n" +
+                "Coordinates:\n\t${coordinates.toString().replace("\n", "\n\t")}\n"
+        ).toString()
     }
 }

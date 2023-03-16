@@ -1,9 +1,9 @@
 package com.prog2sem.client
 
-import com.prog2sem.common.Color
-import com.prog2sem.common.Location
-import com.prog2sem.common.Response
-import com.prog2sem.common.SimpleResponse
+import com.prog2sem.shared.Color
+import com.prog2sem.shared.Location
+import com.prog2sem.shared.Response
+import com.prog2sem.shared.SimpleResponse
 
 /**
  * Класс для упрощения работы с консолью
@@ -36,7 +36,7 @@ class CustomConsole(private val invoker: Invoker) {
         /** Удаляет лишние пробелы и разделяет строку по пробелам */
         fun splitSpaces(s: String): List<String> = s.trim().replace("\\s+".toRegex(), " ").split(" ")
 
-        /** Создать com.prog2sem.common.Location из пользовательского ввода */
+        /** Создать Location из пользовательского ввода */
         fun locationFromConsoleInput(strField: String? = null): Location {
             var input = strField
             var location: Location
@@ -62,7 +62,7 @@ class CustomConsole(private val invoker: Invoker) {
             }
             return location
         }
-        /** Создать com.prog2sem.common.Color из пользовательского ввода */
+        /** Создать Color из пользовательского ввода */
         fun colorFromConsoleInput(strField: String? = null): Color {
             var input = strField
             var color: Color

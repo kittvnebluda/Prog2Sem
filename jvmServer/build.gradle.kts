@@ -7,12 +7,6 @@ plugins {
 group = "com.prog2sem"
 version = "1.0-SNAPSHOT"
 
-dependencies {
-    implementation(project(":shared"))
-    implementation(project(":jvmServer"))
-    testImplementation(kotlin("test"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-}
 repositories {
     mavenCentral()
 }
@@ -25,8 +19,14 @@ kotlin {
     jvmToolchain(16)
 }
 
+dependencies {
+    implementation(project(":shared"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation(kotlin("test"))
+}
+
 application {
-    mainClass.set("com.prog2sem.client.MainKt")
+    mainClass.set("com.prog2sem.application.ServerKt")
 }
 
 tasks.withType<Jar> {

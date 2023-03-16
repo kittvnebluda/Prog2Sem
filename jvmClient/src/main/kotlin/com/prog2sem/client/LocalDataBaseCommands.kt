@@ -1,6 +1,6 @@
 package com.prog2sem.client
 
-import com.prog2sem.common.*
+import com.prog2sem.shared.*
 import com.prog2sem.server.LocalManager
 import com.prog2sem.server.ServerAnswer
 import com.prog2sem.server.main

@@ -1,6 +1,6 @@
 package com.prog2sem.client
 
-import com.prog2sem.common.*
+import com.prog2sem.shared.*
 import java.time.ZonedDateTime
 
 /**

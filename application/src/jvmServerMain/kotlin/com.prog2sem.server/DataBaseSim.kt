@@ -1,15 +1,13 @@
-package com.prog2sem.common
+package com.prog2sem.server
 
+import com.prog2sem.common.FileWorker
 import java.time.ZonedDateTime
-import java.util.LinkedList
-import java.util.Queue
 import com.prog2sem.common.JsonWorker.json
+import com.prog2sem.common.Person
 import kotlinx.serialization.decodeFromString
 
 object DataBaseSim {
     private val creationDate = ZonedDateTime.now()
-
-    var removedIds:Queue<Int> = LinkedList()
     var dataBaseSim: HashSet<Person> = hashSetOf()
 
     /**
@@ -17,7 +15,7 @@ object DataBaseSim {
      */
     fun readDataFromFile(filePath: String){
         val jsonString = FileWorker.readFileFromEnterFilePath(filePath)
-        if (jsonString == "") return
+        if (jsonString.length < 2) return
         dataBaseSim = json.decodeFromString(jsonString)
     }
 

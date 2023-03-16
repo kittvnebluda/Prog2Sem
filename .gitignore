@@ -1,8 +1,10 @@
-# Project exclude paths
-/.gradle/
+*.iml
+.gradle
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
 /.idea/
-/build/
-/gradle/
-/jvmClient/build/
-/androidClient/build/
-/application/build/

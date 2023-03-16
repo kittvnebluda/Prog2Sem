@@ -67,4 +67,5 @@ interface CollectionManager {
      * @return количество подходящих элементов
      */
     fun printFieldAscendingHairColor(): String
+
 }

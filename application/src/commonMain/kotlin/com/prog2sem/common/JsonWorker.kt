@@ -12,6 +12,7 @@ object JsonWorker {
     val json = Json {
         prettyPrint = true
         encodeDefaults = true
+
     }
 
     /*fun packObject(obj: JsonElement): String {

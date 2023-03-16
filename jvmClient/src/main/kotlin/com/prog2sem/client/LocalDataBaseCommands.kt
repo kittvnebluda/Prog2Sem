@@ -3,25 +3,30 @@ package com.prog2sem.client
 import com.prog2sem.common.*
 import com.prog2sem.server.LocalManager
 import com.prog2sem.server.ServerAnswer
-import kotlinx.serialization.decodeFromString
+import com.prog2sem.server.main
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.decodeFromString
 
 /**
  * @param filename путь к файлу сохранения
  */
 class LocalDataBaseCommands(private val filename: String) : DataBaseCommands, TempSaveDBCommands {
-    private val manager = LocalManager(filename)
+    private val manager = LocalManager()
+
+    init {
+        main(arrayOf(filename))
+    }
 
     override fun info(): Response<String> {
         val jsonString = manager.info()
         val sa: ServerAnswer = JsonWorker.json.decodeFromString(jsonString)
-        return Response(sa.isSuccess, sa.answerMessage, "")
+        return Response(sa.isSuccess, sa.answerMessage, sa.answerMessage)
     }
 
     override fun show(): Response<String> {
         val jsonString = manager.show()
         val sa: ServerAnswer = JsonWorker.json.decodeFromString(jsonString)
-        return Response(sa.isSuccess, sa.answerMessage, "")
+        return Response(sa.isSuccess, sa.answerMessage, sa.answerMessage)
     }
 
     override fun add(p: Person): SimpleResponse {
@@ -85,10 +90,11 @@ class LocalDataBaseCommands(private val filename: String) : DataBaseCommands, Te
     }
 
     override fun isTempSaveExist(): SimpleResponse {
-        TODO("Not yet implemented")
+        return SimpleResponse(success = manager.isAutoSaved(), error = "Нет информации об ошибке")
     }
 
     override fun loadTempSave(): SimpleResponse {
-        TODO("Not yet implemented")
+        manager.loadAutoSave()
+        return SimpleResponse(success = true, error = "Нет информации об ошибке")
     }
 }

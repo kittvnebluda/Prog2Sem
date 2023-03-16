@@ -11,7 +11,7 @@ var ISQUIT = false
 var HELP = ""
 
 fun main(args: Array<String>) {
-    val dbCommands = LocalDataBaseCommands(if (args.isNotEmpty()) args[0] else "")
+    val dbCommands = LocalDataBaseCommands(if (args.isNotEmpty()) args[0] else "DEFAULT_NAME")
     val clientCommands = ConsoleClientCommands()
     val invoker = ConsoleInvoker()
 
@@ -50,8 +50,7 @@ fun main(args: Array<String>) {
             printGreen("Сохранение загружено!")
         else
             printerr(loadMsg.error)
-    } else
-        printerr(existMsg.error)
+    }
 
     val cc = CustomConsole(invoker)
 

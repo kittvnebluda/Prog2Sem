@@ -1,43 +1,33 @@
 package com.prog2sem.server
 
+import com.prog2sem.common.Important
+import com.prog2sem.common.Important.autoSaveFileName
+import com.prog2sem.common.Important.idGen
+import com.prog2sem.common.Important.isSaved
+import com.prog2sem.common.Important.loadAuto
 import com.prog2sem.common.Color
-import com.prog2sem.common.DataBaseSim.dataBaseSim
-import com.prog2sem.common.DataBaseSim.removedIds
+import com.prog2sem.server.DataBaseSim.dataBaseSim
 import com.prog2sem.common.JsonWorker.json
 import com.prog2sem.common.*
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import java.util.*
 
 /**
  * Class for managing DataBase
  */
-class LocalManager(filename: String): CollectionManager {
-    init {
-        if (filename.isNotEmpty())
-            DataBaseSim.readDataFromFile(filename)
-
-        val jsonString = FileWorker.readFileFromEnterFilePath(ImportantVal().filePath)
-
-        if (jsonString != "") {
-            val impval: ImportantVal = json.decodeFromString(jsonString)
-            removedIds = LinkedList(impval.removesIds)
-            Person.maxId = impval.maxId
-        }
-    }
+class LocalManager : CollectionManager {
 
     override fun info(): String {
         return json.encodeToString(ServerAnswer(answerMessage = DataBaseSim.toString()))
     }
 
     override fun show(): String {
-        return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString()))
+        return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString().filter { it != '[' && it != ']'}.replace(", ", "")))
     }
 
     override fun update(index: Int, e: Person): String {
 //        dataBaseSim.sortedDescending()
         val el = dataBaseSim.elementAtOrNull(index - 1) ?:
-            return json.encodeToString(ServerAnswer(false, "Person with this id does not exist"))
+            return json.encodeToString(ServerAnswer(false, "com.prog2sem.common.Person with this id does not exist"))
         with(el){
             name = e.name
             coordinates = e.coordinates
@@ -54,7 +44,7 @@ class LocalManager(filename: String): CollectionManager {
     override fun removeId(id: Int): String {
         val size = dataBaseSim.size
         dataBaseSim.removeIf { it.id == id }
-        removedIds.add(id)
+        idGen.newRemovedId(id)
         return json.encodeToString(
             ServerAnswer(size != dataBaseSim.size,
             if (size != dataBaseSim.size) "All Okay" else "Can not find this $id id")
@@ -68,24 +58,18 @@ class LocalManager(filename: String): CollectionManager {
 
     override fun clear(): String {
         dataBaseSim.clear()
-        Person.resetId()
+        idGen.clear()
         return json.encodeToString(ServerAnswer())
     }
 
     override fun save(filePath: String): String {
+        if (filePath != autoSaveFileName) isSaved = true
         val isSuccess = FileWorker.writeFileFromEnterFilePath(
             filePath, json.encodeToString(
                 dataBaseSim
             )
         )
-        FileWorker.writeFileFromEnterFilePath(
-            ImportantVal().filePath, json.encodeToString(
-                ImportantVal(
-                    maxId = Person.maxId,
-                    removesIds = removedIds.toMutableList()
-                )
-            )
-        )
+        Important.save()
         return json.encodeToString(
             ServerAnswer(isSuccess,
             if (isSuccess) "All Okay"
@@ -94,30 +78,25 @@ class LocalManager(filename: String): CollectionManager {
     }
 
     override fun removeGreater(e: Person): String {
-        dataBaseSim.removeIf { val check = it > e; if (check) removedIds.add(it.id); return@removeIf check }
+        dataBaseSim.removeIf { val check = it > e; if (check) idGen.newRemovedId(it.id); return@removeIf check }
         return json.encodeToString(ServerAnswer())
     }
 
     override fun removeAllByLocation(location: Location): String {
-        dataBaseSim.removeIf { val check = it.location == location; if (check) removedIds.add(it.id); return@removeIf check}
+        dataBaseSim.removeIf { val check = it.location == location; if (check) idGen.newRemovedId(it.id); return@removeIf check}
         return json.encodeToString(ServerAnswer())
     }
 
     override fun filterGreaterThanHairColor(color: Color?): String {
-        if (color == null)
-            return json.encodeToString(ServerAnswer(answerMessage = json.encodeToString(dataBaseSim.toArray())))
-
-        val valid = mutableListOf<Person>()
-        dataBaseSim.forEach {
-            if (it.hairColor > color)
-                valid.add(it)
-        }
-        return json.encodeToString(ServerAnswer(answerMessage = json.encodeToString(valid)))
+        if (color == null) return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString()))
+        val sb = StringBuilder()
+        dataBaseSim.forEach { if (it.hairColor > color)  sb.append(it.toString())}
+        return json.encodeToString(ServerAnswer(answerMessage = sb.toString()))
     }
 
     override fun printFieldAscendingHairColor(): String {
         Person.colors.sort()
-        return json.encodeToString(ServerAnswer(answerMessage = json.encodeToString(Person.colors)))
+        return json.encodeToString(ServerAnswer(answerMessage = Person.colors.toString()))
     }
 
     override fun addIfMin(e: Person): String {
@@ -125,5 +104,14 @@ class LocalManager(filename: String): CollectionManager {
         if (minPerson.id < e.id) return json.encodeToString(ServerAnswer(false, "This person is not minimal"))
         dataBaseSim.add(e)
         return json.encodeToString(ServerAnswer())
+    }
+
+    fun isAutoSaved(): Boolean {
+        return isSaved
+    }
+
+    fun loadAutoSave() {
+        DataBaseSim.readDataFromFile(autoSaveFileName)
+        loadAuto()
     }
 }

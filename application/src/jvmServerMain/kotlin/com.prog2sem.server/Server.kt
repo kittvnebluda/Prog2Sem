@@ -1,23 +1,21 @@
 package com.prog2sem.server
 
-import com.prog2sem.common.JsonWorker.json
-import com.prog2sem.common.DataBaseSim
-import com.prog2sem.common.FileWorker
-import com.prog2sem.common.Person
-import kotlinx.serialization.decodeFromString
-import java.util.LinkedList
+import application.src.commonMain.kotlin.com.prog2sem.common.Important
+import application.src.commonMain.kotlin.com.prog2sem.common.Important.autoSaveFileName
+import application.src.commonMain.kotlin.com.prog2sem.common.Important.isSaved
+import application.src.commonMain.kotlin.com.prog2sem.common.Important.loadAutoSave
 
 fun main(args:Array<String>) {
 //    com.prog2sem.common.FileWorker.clearFile(ImportantVal().filePath)
-    if (args.isNotEmpty())
+    if (!args.isNotEmpty())
 //        com.prog2sem.common.FileWorker.clearFile(args[0])
-        DataBaseSim.readDataFromFile(args[0])
+        args[0] = "DEFAULT_NAME"
 
-    val jsonString = FileWorker.readFileFromEnterFilePath(ImportantVal().filePath)
+    DataBaseSim.readDataFromFile(args[0])
+    Important.load()
 
-    if (jsonString != "") {
-        val impval: ImportantVal = json.decodeFromString(jsonString)
-        DataBaseSim.removedIds = LinkedList(impval.removesIds)
-        Person.maxId = impval.maxId
-    }
+    Runtime.getRuntime().addShutdownHook(Thread {
+        Important.save()
+        if (!isSaved) LocalManager().save(autoSaveFileName)
+    })
 }

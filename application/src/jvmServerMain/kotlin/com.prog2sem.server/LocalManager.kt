@@ -107,7 +107,7 @@ class LocalManager : CollectionManager {
     }
 
     fun isAutoSaved(): Boolean {
-        return isSaved
+        return !isSaved
     }
 
     fun loadAutoSave() {

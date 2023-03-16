@@ -1,4 +1,4 @@
-package application.src.commonMain.kotlin.com.prog2sem.common
+package com.prog2sem.common
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -8,7 +8,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.time.ZonedDateTime
 
-object CustomSerialazers {
+object CustomSerializers {
     object KZonedDateTimeSerializer : KSerializer<ZonedDateTime> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ZonedDateTime", PrimitiveKind.STRING)
 

@@ -118,7 +118,7 @@ class CustomConsole(private val invoker: Invoker) {
          * @return true, если пользователь хочет загрузить сохранение
          */
         fun isLoadTempSave(): Boolean {
-            println("Загрузить последнее сохранение коллекции? y/n")
+            print("Загрузить несохраненную коллекцию? y/n\n> ")
             while (true) {
                 var ans = readln()
                 if (ans.isNotEmpty()) {
@@ -126,9 +126,9 @@ class CustomConsole(private val invoker: Invoker) {
                     when (ans) {
                         "y" -> return true
                         "n" -> return false
-                        else -> println("Введите 'y' или 'n'")
+                        else -> println("Введите 'y' или 'n'\n> ")
                     }
-                } else println("Загрузить последнее сохранение коллекции? y/n")
+                } else print("Загрузить последнее сохранение коллекции? y/n\n> ")
             }
         }
 

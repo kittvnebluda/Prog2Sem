@@ -1,6 +1,6 @@
 package com.prog2sem.common
 
-import application.src.commonMain.kotlin.com.prog2sem.common.CustomSerialazers.KZonedDateTimeSerializer
+import com.prog2sem.common.CustomSerializers.KZonedDateTimeSerializer
 import com.prog2sem.common.Important.idGen
 import java.time.ZonedDateTime
 import kotlinx.serialization.Serializable

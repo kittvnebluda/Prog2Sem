@@ -38,7 +38,8 @@ fun main(args: Array<String>) {
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, save, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addTest)
+        removeByLocation, filterByColor, printHairColor, addTest
+    )
 
     invoker.genHelp() // Генерируем строку помощи
 

@@ -6,6 +6,7 @@ interface TempSaveDBCommands {
      * @return true, если сохранение существует
      */
     fun isTempSaveExist(): SimpleResponse
+
     /**
      * Обеспечивает загрузку временного сохранения
      * @return true, если сохранение было загружено

@@ -5,7 +5,7 @@ import kotlin.math.max
 /**
  * Класс хранящий и вызывающий команды
  */
-class ConsoleInvoker: Invoker {
+class ConsoleInvoker : Invoker {
     override val cmdMap = HashMap<String, Command>()
 
     override fun put(command: Command) {

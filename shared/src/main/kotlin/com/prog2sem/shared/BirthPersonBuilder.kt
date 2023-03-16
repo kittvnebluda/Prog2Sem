@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 /**
  * Абстрактный класс реализующий метод рождения персоны
  */
-abstract class BirthPersonBuilder: PersonBuilder {
+abstract class BirthPersonBuilder : PersonBuilder {
 
     var name: String? = null
     var coordinates: Coordinates? = null

@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException
 /**
  * Класс создания персоны из стандартного входного потока
  */
-class FromConsolePersonBuilder: BirthPersonBuilder() {
+class FromConsolePersonBuilder : BirthPersonBuilder() {
 
     override fun chooseName(): PersonBuilder {
         while (true) {

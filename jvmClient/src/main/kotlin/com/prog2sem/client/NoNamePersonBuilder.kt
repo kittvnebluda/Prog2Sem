@@ -6,7 +6,7 @@ import java.time.ZonedDateTime
 /**
  * Класс персоны без имени
  */
-class NoNamePersonBuilder: BirthPersonBuilder() {
+class NoNamePersonBuilder : BirthPersonBuilder() {
 
     override fun chooseName(): PersonBuilder {
         name = "Noname"

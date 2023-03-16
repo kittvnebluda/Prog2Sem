@@ -9,14 +9,15 @@ import kotlinx.serialization.Serializable
  * Класс описывающий личность
  */
 @Serializable
-data class Person(var name: String,
-                  var coordinates: Coordinates,
-                  var height: Long,
-                  @Serializable(KZonedDateTimeSerializer::class)
-                  var birthday: ZonedDateTime,
-                  var weight: Int,
-                  var hairColor: Color,
-                  var location: Location
+data class Person(
+    var name: String,
+    var coordinates: Coordinates,
+    var height: Long,
+    @Serializable(KZonedDateTimeSerializer::class)
+    var birthday: ZonedDateTime,
+    var weight: Int,
+    var hairColor: Color,
+    var location: Location
 ) {
 
     companion object {
@@ -31,6 +32,7 @@ data class Person(var name: String,
         if (colors.indexOf(hairColor) < 0)
             colors.add(hairColor)
     }
+
     val id = idGen.getId()
 
 
@@ -75,14 +77,14 @@ data class Person(var name: String,
 
     override fun toString(): String {
         return StringBuilder().append("Person@$id\n").append(
-                "Name: $name\n" +
-                "CreationDate: $creationDate\n" +
-                "Height: $height\n" +
-                "Weight: $weight\n" +
-                "Birthday: $birthday\n" +
-                "HairColor: $hairColor\n" +
-                "Location:\n\t${location.toString().replace("\n", "\n\t")}\n" +
-                "Coordinates:\n\t${coordinates.toString().replace("\n", "\n\t")}\n"
+            "Name: $name\n" +
+                    "CreationDate: $creationDate\n" +
+                    "Height: $height\n" +
+                    "Weight: $weight\n" +
+                    "Birthday: $birthday\n" +
+                    "HairColor: $hairColor\n" +
+                    "Location:\n\t${location.toString().replace("\n", "\n\t")}\n" +
+                    "Coordinates:\n\t${coordinates.toString().replace("\n", "\n\t")}\n"
         ).toString()
     }
 }

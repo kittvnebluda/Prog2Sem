@@ -14,21 +14,21 @@ object FileWorker {
      */
     fun readFileFromEnterFilePath(filePath: String): String {
         var file = File(filePath)
-        val intputStr = StringBuilder()
+        val inputStr = StringBuilder()
 
         if (file.exists())
             if (file.canRead())
-                Scanner(file).forEach { intputStr.append(it) }
+                Scanner(file).forEach { inputStr.append(it) }
             else
                 println("Can't read $filePath file")
         else {
-                var j = 0
-                while (!file.exists() && j != COUNT_OF_TRYING) {
-                    j++
-                    file = createFileWithEnterPath(filePath)
-                }
+            var j = 0
+            while (!file.exists() && j != COUNT_OF_TRYING) {
+                j++
+                file = createFileWithEnterPath(filePath)
             }
-        return intputStr.toString()
+        }
+        return inputStr.toString()
     }
 
     /**
@@ -75,7 +75,7 @@ object FileWorker {
      * @param filePath
      * @return
      */
-    fun clearFile(filePath: String){
+    fun clearFile(filePath: String) {
         val file = File(filePath)
         val outputStr = FileOutputStream(file)
 

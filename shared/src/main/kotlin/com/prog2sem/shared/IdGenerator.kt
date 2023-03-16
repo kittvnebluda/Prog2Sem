@@ -18,7 +18,7 @@ class IdGenerator {
         private var removedIds: Queue<Int> = LinkedList()
     }
 
-    fun getId(): Int{
+    fun getId(): Int {
         return if (removedIds.size != 0)
             removedIds.remove()
         else {
@@ -31,13 +31,13 @@ class IdGenerator {
         removedIds.clear()
     }
 
-    fun save(){
+    fun save() {
         maxId = previous_id
         remIds = removedIds.toList()
     }
 
 
-    fun newRemovedId(id: Int){
+    fun newRemovedId(id: Int) {
         removedIds.add(id)
     }
 

@@ -21,7 +21,7 @@ class CustomConsole(private val invoker: Invoker) {
 
         /** Парочка приветственных слов */
         fun greetings() {
-            val greeting = when(kotlin.random.Random.nextInt(3)) {
+            val greeting = when (kotlin.random.Random.nextInt(3)) {
                 0 -> "Здравствуйте, пользователь."
                 1 -> "ПРИВЕТСТВУЮ!"
                 2 -> "ВСЕ ${rBC()}Х ${rBC()}О ${rBC()}Р ${rBC()}О ${rBC()}Ш ${rBC()}О \u001b[0m!"
@@ -62,6 +62,7 @@ class CustomConsole(private val invoker: Invoker) {
             }
             return location
         }
+
         /** Создать Color из пользовательского ввода */
         fun colorFromConsoleInput(strField: String? = null): Color {
             var input = strField
@@ -89,6 +90,7 @@ class CustomConsole(private val invoker: Invoker) {
             else
                 println(red + response.error + reset)
         }
+
         /** Вывод простого ответа */
         fun handleSimpleResponse(response: SimpleResponse) {
             if (response.success)
@@ -96,6 +98,7 @@ class CustomConsole(private val invoker: Invoker) {
             else
                 println(response.error)
         }
+
         /** Вывод итерабельного ответа */
         fun <T> handleIterableResponse(response: Response<Array<T>>) {
             if (response.success)
@@ -108,6 +111,7 @@ class CustomConsole(private val invoker: Invoker) {
         fun printerr(s: String) {
             println(red + s + reset)
         }
+
         /** Вывод текста зеленым в стандартный поток */
         fun printGreen(s: String) {
             println(green + s + reset)

@@ -38,5 +38,6 @@ object Important {
 
     }
 }
+
 @Serializable
 private data class Ser(var idGen: IdGenerator, var isSaved: Boolean)

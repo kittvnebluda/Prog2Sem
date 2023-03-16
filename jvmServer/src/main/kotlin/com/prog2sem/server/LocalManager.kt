@@ -21,14 +21,19 @@ class LocalManager : CollectionManager {
     }
 
     override fun show(): String {
-        return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString().filter { it != '[' && it != ']'}.replace(", ", "")))
+        return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString().filter { it != '[' && it != ']' }
+            .replace(", ", "")))
     }
 
     override fun update(index: Int, e: Person): String {
 //        dataBaseSim.sortedDescending()
-        val el = dataBaseSim.elementAtOrNull(index - 1) ?:
-            return json.encodeToString(ServerAnswer(false, "Person with this id does not exist"))
-        with(el){
+        val el = dataBaseSim.elementAtOrNull(index - 1) ?: return json.encodeToString(
+            ServerAnswer(
+                false,
+                "Person with this id does not exist"
+            )
+        )
+        with(el) {
             name = e.name
             coordinates = e.coordinates
             birthday = e.birthday
@@ -46,8 +51,10 @@ class LocalManager : CollectionManager {
         dataBaseSim.removeIf { it.id == id }
         idGen.newRemovedId(id)
         return json.encodeToString(
-            ServerAnswer(size != dataBaseSim.size,
-            if (size != dataBaseSim.size) "All Okay" else "Can not find this $id id")
+            ServerAnswer(
+                size != dataBaseSim.size,
+                if (size != dataBaseSim.size) "All Okay" else "Can not find this $id id"
+            )
         )
     }
 
@@ -71,9 +78,11 @@ class LocalManager : CollectionManager {
         )
         Important.save()
         return json.encodeToString(
-            ServerAnswer(isSuccess,
-            if (isSuccess) "All Okay"
-            else "File does not exist on this: \"$filePath\" file path or permission denied")
+            ServerAnswer(
+                isSuccess,
+                if (isSuccess) "All Okay"
+                else "File does not exist on this: \"$filePath\" file path or permission denied"
+            )
         )
     }
 
@@ -83,14 +92,16 @@ class LocalManager : CollectionManager {
     }
 
     override fun removeAllByLocation(location: Location): String {
-        dataBaseSim.removeIf { val check = it.location == location; if (check) idGen.newRemovedId(it.id); return@removeIf check}
+        dataBaseSim.removeIf {
+            val check = it.location == location; if (check) idGen.newRemovedId(it.id); return@removeIf check
+        }
         return json.encodeToString(ServerAnswer())
     }
 
     override fun filterGreaterThanHairColor(color: Color?): String {
         if (color == null) return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString()))
         val sb = StringBuilder()
-        dataBaseSim.forEach { if (it.hairColor > color)  sb.append(it.toString())}
+        dataBaseSim.forEach { if (it.hairColor > color) sb.append(it.toString()) }
         return json.encodeToString(ServerAnswer(answerMessage = sb.toString()))
     }
 

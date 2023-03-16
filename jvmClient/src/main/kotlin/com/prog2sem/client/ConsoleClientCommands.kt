@@ -7,13 +7,15 @@ import java.util.*
 /**
  * Класс консольных работающих без сервера команд пользователя.
  */
-class ConsoleClientCommands: ClientCommands {
+class ConsoleClientCommands : ClientCommands {
     companion object {
         private val openedScripts = LinkedList<String>()
     }
+
     override fun help() {
         println(HELP)
     }
+
     override fun executeScript(filename: String, invoker: Invoker) {
         val file = File(filename)
 
@@ -38,9 +40,11 @@ class ConsoleClientCommands: ClientCommands {
             throw InvalidUserInputException("$filename: файл не найден")
         }
     }
+
     override fun exit() {
         ISQUIT = true
     }
+
     override fun history() {
         HISTORY.forEachIndexed { index, s ->
             println("${index + 1}. $s")

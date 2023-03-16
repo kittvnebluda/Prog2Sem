@@ -4,7 +4,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-    
+
 }
 rootProject.name = "Prog2Sem"
 

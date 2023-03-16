@@ -7,6 +7,7 @@ interface Command {
     val name: String
     val desc: String
     val methodsDesc: Map<String, String>
+
     /**
      * Метод, обеспечивающий выполнение команды
      * @throws InvalidUserInputException
@@ -15,7 +16,7 @@ interface Command {
 }
 
 /** Вызов команды помощи */
-class HelpCommand (private val commands: ClientCommands, override val name: String = "help") : Command {
+class HelpCommand(private val commands: ClientCommands, override val name: String = "help") : Command {
     override val desc: String = "описание команд"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -24,7 +25,7 @@ class HelpCommand (private val commands: ClientCommands, override val name: Stri
 }
 
 /** Вызов команды завершения программы */
-class ExitCommand (private val commands: ClientCommands, override val name: String = "exit"): Command {
+class ExitCommand(private val commands: ClientCommands, override val name: String = "exit") : Command {
     override val desc: String = "завершение программы"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -43,9 +44,11 @@ class HistoryCommand(private val commands: ClientCommands, override val name: St
 }
 
 /** Вызов выполнения скрипта */
-class ExecuteScriptCommand(private val commands: ClientCommands,
-                           private val invoker: Invoker,
-                           override val name: String = "execute"): Command {
+class ExecuteScriptCommand(
+    private val commands: ClientCommands,
+    private val invoker: Invoker,
+    override val name: String = "execute"
+) : Command {
     override val desc: String = "исполнение скрипта из указанного файла"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -57,7 +60,7 @@ class ExecuteScriptCommand(private val commands: ClientCommands,
 }
 
 /** Реализация вызова команды получения информации о коллекции */
-class InfoCommand (private val manager: DataBaseCommands, override val name: String = "info"): Command {
+class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") : Command {
     override val desc: String = "вывести информацию о коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -66,7 +69,7 @@ class InfoCommand (private val manager: DataBaseCommands, override val name: Str
 }
 
 /** Реализация вызова команды show */
-class ShowCommand (private val manager: DataBaseCommands, override val name: String = "show"): Command {
+class ShowCommand(private val manager: DataBaseCommands, override val name: String = "show") : Command {
     override val desc: String = "вывести все элементы коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -75,7 +78,7 @@ class ShowCommand (private val manager: DataBaseCommands, override val name: Str
 }
 
 /** Реализация вызова команды добавления элемента в коллекцию */
-class AddCommand(private val manager: DataBaseCommands, override val name: String = "add"): Command {
+class AddCommand(private val manager: DataBaseCommands, override val name: String = "add") : Command {
     override val desc: String = "добавить элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -86,11 +89,11 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
 }
 
 /** Реализация вызова команды обновления элемента коллекции */
-class UpdateCommand(private val manager: DataBaseCommands, override val name: String = "update"): Command {
+class UpdateCommand(private val manager: DataBaseCommands, override val name: String = "update") : Command {
     override val desc: String = "обновить элемент коллекции"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id обновляемого элемента"))
     override fun execute(args: List<String>) {
-        val index = if(args.isNotEmpty()) args[0].toInt()
+        val index = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указаны индекс класса и его имя")
 
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
@@ -100,18 +103,18 @@ class UpdateCommand(private val manager: DataBaseCommands, override val name: St
 }
 
 /** Реализация вызова команды удаления элемента коллекции */
-class RemoveIdCommand(private val manager: DataBaseCommands, override val name: String = "remove_by_id"): Command {
+class RemoveIdCommand(private val manager: DataBaseCommands, override val name: String = "remove_by_id") : Command {
     override val desc: String = "удалить элемент из коллекции по его id"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id удаляемого элемента"))
     override fun execute(args: List<String>) {
-        val index = if(args.isNotEmpty()) args[0].toInt()
+        val index = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указан индекс класса")
         CustomConsole.handleSimpleResponse(manager.removeId(index))
     }
 }
 
 /** Реализация вызова команды отчистки коллекции */
-class ClearCommand(private val manager: DataBaseCommands, override val name: String = "clear"): Command {
+class ClearCommand(private val manager: DataBaseCommands, override val name: String = "clear") : Command {
     override val desc: String = "очистить коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -120,7 +123,7 @@ class ClearCommand(private val manager: DataBaseCommands, override val name: Str
 }
 
 /** Реализация вызова команды сохранения коллекции */
-class SaveCommand(private val manager: DataBaseCommands, override val name: String = "save"): Command {
+class SaveCommand(private val manager: DataBaseCommands, override val name: String = "save") : Command {
     override val desc: String = "сохранить коллекцию в файл"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -129,8 +132,9 @@ class SaveCommand(private val manager: DataBaseCommands, override val name: Stri
 }
 
 /** Реализация вызова команды добавления элемента в коллекцию с условием */
-class AddIfMinCommand(private val manager: DataBaseCommands, override val name: String = "add_if_min"): Command {
-    override val desc: String = "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента коллекции"
+class AddIfMinCommand(private val manager: DataBaseCommands, override val name: String = "add_if_min") : Command {
+    override val desc: String =
+        "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
@@ -140,8 +144,10 @@ class AddIfMinCommand(private val manager: DataBaseCommands, override val name: 
 }
 
 /** Реализация вызова команды удаления наибольшего элемента коллекции */
-class RemoveGreaterCommand(private val manager: DataBaseCommands,
-                           override val name: String = "remove_greater"): Command {
+class RemoveGreaterCommand(
+    private val manager: DataBaseCommands,
+    override val name: String = "remove_greater"
+) : Command {
     override val desc: String = "удалить из коллекции все элементы, превышающие заданный"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -152,9 +158,12 @@ class RemoveGreaterCommand(private val manager: DataBaseCommands,
 }
 
 /** Реализация вызова команды удаления элемента коллекции по его локации*/
-class RemoveAllByLocationCommand(private val manager: DataBaseCommands,
-                                 override val name: String = "remove_all_by_location"): Command {
-    override val desc: String = "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
+class RemoveAllByLocationCommand(
+    private val manager: DataBaseCommands,
+    override val name: String = "remove_all_by_location"
+) : Command {
+    override val desc: String =
+        "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
     override fun execute(args: List<String>) {
         val location = CustomConsole.locationFromConsoleInput(args.joinToString(" "))
@@ -164,8 +173,10 @@ class RemoveAllByLocationCommand(private val manager: DataBaseCommands,
 }
 
 /** Реализация вызова команды вывода элементов коллекции */
-class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
-                                        override val name: String = "filter_greater_than_hair_color"): Command {
+class FilterGreaterThanHairColorCommand(
+    private val manager: DataBaseCommands,
+    override val name: String = "filter_greater_than_hair_color"
+) : Command {
     override val desc: String = "вывести элементы, значение поля hairColor которых больше заданного"
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
     override fun execute(args: List<String>) {
@@ -177,8 +188,10 @@ class FilterGreaterThanHairColorCommand(private val manager: DataBaseCommands,
 }
 
 /** Реализация вызова команды вывода полей элементов коллекции */
-class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
-                                          override val name: String = "print_field_ascending_hair_color"): Command {
+class PrintFieldAscendingHairColorCommand(
+    private val manager: DataBaseCommands,
+    override val name: String = "print_field_ascending_hair_color"
+) : Command {
     override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
@@ -186,8 +199,9 @@ class PrintFieldAscendingHairColorCommand(private val manager: DataBaseCommands,
         CustomConsole.handleIterableResponse(res)
     }
 }
+
 /** Реализация вызова команды добавления готового элемента в коллекцию */
-class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_noname"): Command {
+class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_noname") : Command {
     override val desc: String = "добавить готовый элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {

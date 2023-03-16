@@ -13,7 +13,7 @@ object DataBaseSim {
     /**
      * @param filePath путь к файлу
      */
-    fun readDataFromFile(filePath: String){
+    fun readDataFromFile(filePath: String) {
         val jsonString = FileWorker.readFileFromEnterFilePath(filePath)
         if (jsonString.length < 2) return
         dataBaseSim = json.decodeFromString(jsonString)
@@ -24,6 +24,7 @@ object DataBaseSim {
             "Type of DataBase: ", dataBaseSim.javaClass.typeName, "\n",
             "Date of creation: ", creationDate.dayOfMonth, " ", creationDate.month, " ", creationDate.year, "\n",
             "Time of creation: ", creationDate.hour, ":", creationDate.minute, ":", creationDate.second, "\n",
-            "Count of elements: ", dataBaseSim.size).toString()
+            "Count of elements: ", dataBaseSim.size
+        ).toString()
     }
 }

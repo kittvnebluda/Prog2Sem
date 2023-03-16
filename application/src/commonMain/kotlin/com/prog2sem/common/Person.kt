@@ -23,8 +23,6 @@ data class Person(var name: String,
 
         var maxId = 1
         var previousId: Int = 0
-
-        fun resetId() { previousId = 0 }
     }
 
     init {

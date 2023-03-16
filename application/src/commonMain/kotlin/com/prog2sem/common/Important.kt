@@ -6,8 +6,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
 object Important {
-    val fileName = "Important"
-    val autoSaveFileName = "Tmp"
+    const val fileName = "Important"
+    const val autoSaveFileName = "Tmp"
     var idGen = IdGenerator()
     var isSaved = false
     var loadAutoSave: Boolean? = null
@@ -22,6 +22,7 @@ object Important {
         if (jsonString.length > 2) {
             val imp: Ser = json.decodeFromString(jsonString)
             idGen = imp.idGen
+            isSaved = imp.isSaved
         }
     }
 

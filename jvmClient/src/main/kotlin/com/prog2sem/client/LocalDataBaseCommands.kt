@@ -56,7 +56,7 @@ class LocalDataBaseCommands(private val filename: String) : DataBaseCommands, Te
     override fun save(): SimpleResponse {
         val jsonString = manager.save(filename)
         val sa: ServerAnswer = JsonWorker.json.decodeFromString(jsonString)
-        return SimpleResponse(sa.isSuccess)
+        return SimpleResponse(sa.isSuccess, sa.answerMessage)
     }
 
     override fun addIfMin(p: Person): SimpleResponse {

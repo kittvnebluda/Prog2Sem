@@ -5,7 +5,7 @@ import java.util.*
 
 @Serializable
 class IdGenerator {
-    private var maxId = 1
+    private var maxId = 0
     private var remIds: List<Int> = listOf()
 
     init {

@@ -6,8 +6,7 @@ import java.util.Scanner
 
 object FileWorker {
 
-    private val TAG = "com.prog2sem.common.FileWorker"
-    private val COUNT_OF_TRYING = 3
+    private const val COUNT_OF_TRYING = 3
 
     /**
      * @param filePath
@@ -18,14 +17,17 @@ object FileWorker {
         val intputStr = StringBuilder()
 
         if (file.exists())
-            Scanner(file).forEach { intputStr.append(it) }
+            if (file.canRead())
+                Scanner(file).forEach { intputStr.append(it) }
+            else
+                println("Can't read $filePath file")
         else {
-            var j = 0
-            while (!file.exists() && j != COUNT_OF_TRYING) {
-                j++
-                file = createFileWithEnterPath(filePath)
+                var j = 0
+                while (!file.exists() && j != COUNT_OF_TRYING) {
+                    j++
+                    file = createFileWithEnterPath(filePath)
+                }
             }
-        }
         return intputStr.toString()
     }
 
@@ -48,11 +50,14 @@ object FileWorker {
             return false
         }
 
-        val outputStr = FileOutputStream(file)
+        if (file.canWrite()) {
+            val outputStr = FileOutputStream(file)
 
-        args.forEach { outputStr.write(it.toString().toByteArray()) }
-        outputStr.close()
-        return true
+            args.forEach { outputStr.write(it.toString().toByteArray()) }
+            outputStr.close()
+            return true
+        }
+        return false
     }
 
     /**
@@ -76,7 +81,7 @@ object FileWorker {
 
         if (!file.exists()) {
             var j = 0
-            while (!createFileWithEnterPath(filePath).exists() || j != COUNT_OF_TRYING) j++
+            while (!createFileWithEnterPath(filePath).exists() && j != COUNT_OF_TRYING) j++
             if (j == COUNT_OF_TRYING) {
                 outputStr.close()
                 return

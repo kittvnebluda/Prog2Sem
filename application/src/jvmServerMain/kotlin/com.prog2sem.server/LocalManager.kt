@@ -73,7 +73,7 @@ class LocalManager : CollectionManager {
         return json.encodeToString(
             ServerAnswer(isSuccess,
             if (isSuccess) "All Okay"
-            else "File does not exist on this: \"$filePath\" file path\n Can not create new file with this file path")
+            else "File does not exist on this: \"$filePath\" file path or permission denied")
         )
     }
 

@@ -20,18 +20,26 @@ jobs:
       - name: Copy jvmClient.jar via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host:
+            from_secret: HOST
+          username:
+            from_secret: USERNAME
+          password:
+            from_secret: PASSWORD
+          port:
+            from_secret: PORT
           source: "jvmClient/build/libs/*.jar"
           target: "~/lab5client"
       - name: Copy jvmServer.jar via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host:
+            from_secret: HOST
+          username:
+            from_secret: USERNAME
+          password:
+            from_secret: PASSWORD
+          port:
+            from_secret: PORT
           source: "jvmServer/build/libs/*.jar"
           target: "~/lab5server"

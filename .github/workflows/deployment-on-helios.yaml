@@ -22,7 +22,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.USERNAME }}
           HOST: ${{ secrets.HOST }}
-          KEY: ${{ secrets.SSH_DEPLOYMENT_KEY }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         with:
           debug: true
           rm: true

@@ -18,22 +18,28 @@ jobs:
       - name: Run gradle jvm server jar task
         run: ./gradlew :jvmServer:jar
 
-      - name: Copy jvmClient.jar via ssh key
-        uses: appleboy/scp-action@master
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          HOST: ${{ secrets.HOST }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Copy jvmClient.jar via ssh password
+        uses: nicklasfrahm/scp-action@main
         with:
-          source: 'jvmClient/build/libs/*.jar'
-          target: '~/lab5client'
+          direction: upload
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: |
+            jvmClient/build/libs/jvmClient-1.0-SNAPSHOT.jar
+          target: ~/lab5client
 
-      - name: Copy jvmServer.jar via ssh key
-        uses: appleboy/scp-action@master
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          HOST: ${{ secrets.HOST }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Copy jvmServer.jar via ssh password
+        uses: nicklasfrahm/scp-action@main
         with:
-          source: 'jvmServer/build/libs/*.jar'
-          target: '~/lab5server'
+          direction: upload
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: |
+            jvmServer/build/libs/jvmServer-1.0-SNAPSHOT.jar
+          target: ~/lab5server

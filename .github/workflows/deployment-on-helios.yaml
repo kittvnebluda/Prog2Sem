@@ -22,6 +22,7 @@ jobs:
         with:
           direction: upload
           insecure_ignore_fingerprint: true
+          insecure_proxy_ignore_fingerprint: true
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           insecure_password: ${{ secrets.PASSWORD }}

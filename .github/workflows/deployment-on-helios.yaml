@@ -21,7 +21,7 @@ jobs:
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
-          insecure_ignore_fingerprint: true
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
@@ -34,7 +34,7 @@ jobs:
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
-          insecure_ignore_fingerprint: true
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}

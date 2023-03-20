@@ -9,21 +9,20 @@ jobs:
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v2
-#      - name: Run build with Gradle Wrapper
-#        run: ./gradlew build
-#      - name: Run gradle jvm client jar task
-#        run: ./gradlew :jvmClient:jar
-#      - name: Run gradle jvm server jar task
-#        run: ./gradlew :jvmServer:jar
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run build with Gradle Wrapper
+        run: ./gradlew build
+      - name: Run gradle jvm client jar task
+        run: ./gradlew :jvmClient:jar
+      - name: Run gradle jvm server jar task
+        run: ./gradlew :jvmServer:jar
       - name: Copy jvmClient.jar via ssh password
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
-          insecure_ignore_fingerprint: true
-          insecure_proxy_ignore_fingerprint: true
           host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           insecure_password: ${{ secrets.PASSWORD }}
           source: |
@@ -35,6 +34,7 @@ jobs:
         with:
           direction: upload
           host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           insecure_password: ${{ secrets.PASSWORD }}
           source: |

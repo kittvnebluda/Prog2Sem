@@ -21,7 +21,7 @@ jobs:
       - name: Copy jvmClient.jar via ssh password
         uses: nicklasfrahm/scp-action@main
         with:
-          direction: download
+          direction: upload
           fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
@@ -29,12 +29,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: |
             jvmClient/build/libs/jvmClient-1.0-SNAPSHOT.jar
-          target: ~/lab5client
+          target: lab5client
 
       - name: Copy jvmServer.jar via ssh password
         uses: nicklasfrahm/scp-action@main
         with:
-          direction: download
+          direction: upload
           fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
@@ -42,4 +42,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: |
             jvmServer/build/libs/jvmServer-1.0-SNAPSHOT.jar
-          target: ~/lab5server
+          target: lab5server

@@ -2,7 +2,8 @@ name: Deploy on Helios
 
 on:
   push:
-
+    branches:
+      - master
 jobs:
   deployment:
     runs-on: ubuntu-latest

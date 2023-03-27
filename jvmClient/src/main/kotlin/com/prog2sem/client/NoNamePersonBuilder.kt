@@ -1,6 +1,8 @@
 package com.prog2sem.client
 
 import com.prog2sem.shared.*
+import com.prog2sem.shared.persona.BirthPersonBuilder
+import com.prog2sem.shared.persona.PersonBuilder
 import java.time.ZonedDateTime
 
 /**

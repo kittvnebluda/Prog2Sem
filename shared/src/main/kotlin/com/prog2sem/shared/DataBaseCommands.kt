@@ -1,5 +1,7 @@
 package com.prog2sem.shared
 
+import com.prog2sem.shared.persona.Person
+
 /**
  * Интерфейс команд базы данных
  */

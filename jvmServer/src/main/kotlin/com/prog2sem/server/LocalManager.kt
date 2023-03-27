@@ -9,6 +9,7 @@ import com.prog2sem.shared.Color
 import com.prog2sem.server.DataBaseSim.dataBaseSim
 import com.prog2sem.shared.JsonWorker.json
 import com.prog2sem.shared.*
+import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.encodeToString
 
 /**

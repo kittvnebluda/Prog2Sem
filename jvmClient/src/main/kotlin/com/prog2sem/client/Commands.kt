@@ -1,6 +1,7 @@
 package com.prog2sem.client
 
 import com.prog2sem.shared.*
+import com.prog2sem.shared.persona.PersonDirector
 
 /** Интерфейс всех команд */
 interface Command {

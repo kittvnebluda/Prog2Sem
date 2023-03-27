@@ -1,4 +1,4 @@
-package com.prog2sem.shared.communication
+package com.prog2sem.shared.net
 
 import java.net.SocketAddress
 

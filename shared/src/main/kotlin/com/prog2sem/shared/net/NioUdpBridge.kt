@@ -1,5 +1,6 @@
-package com.prog2sem.shared.communication
+package com.prog2sem.shared.net
 
+import com.prog2sem.shared.MessageWrapper
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.SocketAddress
@@ -9,19 +10,16 @@ import java.nio.channels.DatagramChannel
 /**
  * Класс обеспечивающий обмен данными с помощью датаграмм и покета nio
  */
-open class NIOUdpBridge (
+open class NioUdpBridge (
     open var bufferCapacity: Int = 1024
 ) : InetBridge {
-
-    protected lateinit var sendToAddress: SocketAddress
-    protected lateinit var channel: DatagramChannel
 
     companion object {
         /**
          * Настраивает сервер в неблокирующем режиме
          */
-        fun startServer(host: InetAddress, port: Int): NIOUdpBridge {
-            val talker = NIOUdpBridge()
+        fun startServer(host: InetAddress, port: Int): NioUdpBridge {
+            val talker = NioUdpBridge()
             talker.channel = DatagramChannel.open()
 
             val address = InetSocketAddress(host, port)
@@ -35,8 +33,8 @@ open class NIOUdpBridge (
         /**
          * Настраивает клиент в блокирующем режиме
          */
-        fun startClient(serverAddress: InetAddress, serverPort: Int): NIOUdpBridge {
-            val talker = NIOUdpBridge()
+        fun startClient(serverAddress: InetAddress, serverPort: Int): NioUdpBridge {
+            val talker = NioUdpBridge()
 
             talker.sendToAddress = InetSocketAddress(serverAddress, serverPort)
             talker.channel = DatagramChannel.open()
@@ -44,6 +42,9 @@ open class NIOUdpBridge (
             return talker
         }
     }
+
+    protected lateinit var sendToAddress: SocketAddress
+    protected lateinit var channel: DatagramChannel
 
     override fun receive(): String {
         val buffer: ByteBuffer = ByteBuffer.allocate(bufferCapacity)

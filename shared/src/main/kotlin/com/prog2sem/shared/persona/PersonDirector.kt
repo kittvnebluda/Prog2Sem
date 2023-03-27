@@ -1,4 +1,4 @@
-package com.prog2sem.shared
+package com.prog2sem.shared.persona
 
 /**
  * Класс использующий строитель персоны для создания такового

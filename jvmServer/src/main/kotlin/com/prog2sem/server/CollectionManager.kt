@@ -1,5 +1,7 @@
-package com.prog2sem.shared
+package com.prog2sem.server
 
+import com.prog2sem.shared.Color
+import com.prog2sem.shared.Location
 import com.prog2sem.shared.persona.Person
 
 /**

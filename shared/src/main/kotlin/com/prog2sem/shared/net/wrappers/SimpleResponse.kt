@@ -1,4 +1,4 @@
-package com.prog2sem.shared
+package com.prog2sem.shared.net.wrappers
 
 import kotlinx.serialization.Serializable
 

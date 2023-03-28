@@ -4,6 +4,10 @@ import com.prog2sem.shared.*
 import com.prog2sem.server.LocalManager
 import com.prog2sem.server.ServerAnswer
 import com.prog2sem.server.main
+import com.prog2sem.shared.DataBaseCommands
+import com.prog2sem.shared.TempSaveDBCommands
+import com.prog2sem.shared.net.wrappers.Response
+import com.prog2sem.shared.net.wrappers.SimpleResponse
 import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString

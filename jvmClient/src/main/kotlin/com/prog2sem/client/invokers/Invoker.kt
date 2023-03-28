@@ -1,4 +1,6 @@
-package com.prog2sem.client
+package com.prog2sem.client.invokers
+
+import com.prog2sem.client.net.console.Command
 
 /**
  * Интерфейс для классов, хранящих и вызывающих команды

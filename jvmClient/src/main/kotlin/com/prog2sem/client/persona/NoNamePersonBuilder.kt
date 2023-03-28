@@ -1,4 +1,4 @@
-package com.prog2sem.client
+package com.prog2sem.client.persona
 
 import com.prog2sem.shared.*
 import com.prog2sem.shared.persona.BirthPersonBuilder

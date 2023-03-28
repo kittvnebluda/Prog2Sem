@@ -1,20 +1,14 @@
-package com.prog2sem.client
+package com.prog2sem.client.net.console
 
-import com.prog2sem.shared.*
+import com.prog2sem.client.CustomConsole
+import com.prog2sem.client.MAX_HISTORY_SIZE
+import com.prog2sem.client.exceptions.InvalidUserInputException
+import com.prog2sem.client.invokers.Invoker
+import com.prog2sem.client.net.ClientCommands
+import com.prog2sem.client.persona.FromConsolePersonBuilder
+import com.prog2sem.client.persona.NoNamePersonBuilder
+import com.prog2sem.shared.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
-
-/** Интерфейс всех команд */
-interface Command {
-    val name: String
-    val desc: String
-    val methodsDesc: Map<String, String>
-
-    /**
-     * Метод, обеспечивающий выполнение команды
-     * @throws InvalidUserInputException
-     */
-    fun execute(args: List<String>)
-}
 
 /** Вызов команды помощи */
 class HelpCommand(private val commands: ClientCommands, override val name: String = "help") : Command {

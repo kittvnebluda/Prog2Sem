@@ -3,9 +3,10 @@ package com.prog2sem.client.net
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.DataBaseCommands
+import com.prog2sem.shared.net.TempSaveCommands
 import com.prog2sem.shared.persona.Person
 
-class InetDataBaseCommands : DataBaseCommands {
+class ExtInetDataBaseCommands : DataBaseCommands, TempSaveCommands {
     override fun info(): String {
         TODO("Not yet implemented")
     }
@@ -47,6 +48,14 @@ class InetDataBaseCommands : DataBaseCommands {
     }
 
     override fun printFieldAscendingHairColor(): Array<Color> {
+        TODO("Not yet implemented")
+    }
+
+    override fun isTempSaveExist(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun loadTempSave(): Boolean {
         TODO("Not yet implemented")
     }
 }

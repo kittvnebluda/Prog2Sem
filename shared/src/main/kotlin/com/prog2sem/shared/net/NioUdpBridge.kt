@@ -1,6 +1,6 @@
 package com.prog2sem.shared.net
 
-import com.prog2sem.shared.MessageWrapper
+import com.prog2sem.shared.net.wrappers.MessageWrapper
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.SocketAddress

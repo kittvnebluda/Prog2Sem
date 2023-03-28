@@ -3,6 +3,9 @@ package com.prog2sem.client
 import com.prog2sem.client.CustomConsole.Companion.isLoadTempSave
 import com.prog2sem.client.CustomConsole.Companion.printGreen
 import com.prog2sem.client.CustomConsole.Companion.printerr
+import com.prog2sem.client.net.console.*
+import com.prog2sem.client.invokers.ConsoleInvoker
+import com.prog2sem.client.net.LocalDataBaseCommands
 
 const val MAX_HISTORY_SIZE = 12
 

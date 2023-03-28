@@ -11,7 +11,7 @@ import java.nio.channels.DatagramChannel
  * Класс обеспечивающий обмен данными с помощью датаграмм и покета nio
  */
 open class NioUdpBridge (
-    open var bufferCapacity: Int = 1024
+    open var bufferCapacity: Int = 1024,
 ) : InetBridge {
 
     companion object {
@@ -41,6 +41,10 @@ open class NioUdpBridge (
 
             return talker
         }
+    }
+
+    constructor(bufferCapacity: Int, timeout: Int) : this(bufferCapacity) {
+        channel.socket().soTimeout = timeout
     }
 
     protected lateinit var sendToAddress: SocketAddress

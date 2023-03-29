@@ -1,7 +1,5 @@
 package com.prog2sem.shared
 
-import com.prog2sem.shared.net.wrappers.SimpleResponse
-
 interface TempSaveDBCommands {
     /**
      * Возвращает есть ли временное сохранение

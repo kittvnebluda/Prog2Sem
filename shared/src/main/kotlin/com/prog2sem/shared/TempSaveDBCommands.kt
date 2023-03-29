@@ -1,5 +1,6 @@
 package com.prog2sem.shared
 
+@Deprecated("Use TempSaveCommands from net package instead")
 interface TempSaveDBCommands {
     /**
      * Возвращает есть ли временное сохранение

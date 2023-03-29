@@ -5,6 +5,7 @@ import com.prog2sem.shared.persona.Person
 /**
  * Интерфейс команд базы данных
  */
+@Deprecated("Use DataBaseCommands from net package instead")
 interface DataBaseCommands {
     /**
      * Возвращает информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)

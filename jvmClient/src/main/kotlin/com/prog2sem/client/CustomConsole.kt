@@ -4,8 +4,8 @@ import com.prog2sem.client.exceptions.InvalidUserInputException
 import com.prog2sem.client.invokers.Invoker
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
-import com.prog2sem.shared.net.wrappers.Response
-import com.prog2sem.shared.net.wrappers.SimpleResponse
+import com.prog2sem.shared.Response
+import com.prog2sem.shared.SimpleResponse
 
 /**
  * Класс для упрощения работы с консолью

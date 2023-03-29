@@ -1,7 +1,5 @@
 package com.prog2sem.shared
 
-import com.prog2sem.shared.net.wrappers.Response
-import com.prog2sem.shared.net.wrappers.SimpleResponse
 import com.prog2sem.shared.persona.Person
 
 /**

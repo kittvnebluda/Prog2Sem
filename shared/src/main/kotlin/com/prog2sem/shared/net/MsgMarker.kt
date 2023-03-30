@@ -1,6 +1,7 @@
 package com.prog2sem.shared.net
 
 import com.prog2sem.shared.exceptions.NotMarkedMsgException
+import com.prog2sem.shared.exceptions.MsgErrorException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -12,6 +13,7 @@ import kotlin.jvm.Throws
  */
 object MsgMarker {
     enum class MarkCodes {
+        GEN,  // Generic message
         ERR,  // Error message
         FWP;  // Function call with parameters
 
@@ -20,10 +22,17 @@ object MsgMarker {
         }
     }
 
-    private fun extract(msg: String): String {
+    fun extract(msg: String): String {
         return msg.substring(3)
     }
-
+    /** Mark generic message, T must be serializable */
+    inline fun <reified T> markGeneric(msg: T): String {
+        return MarkCodes.GEN + Json.encodeToString(msg)
+    }
+    /** Get generic message */
+    inline fun <reified T> getGeneric(msg: String): T {
+        return Json.decodeFromString(extract(msg))
+    }
     /** Mark error message */
     fun markError(error: String): String {
         return MarkCodes.ERR + error
@@ -46,9 +55,15 @@ object MsgMarker {
     @Throws(NotMarkedMsgException::class)
     fun which(msg: String): MarkCodes {
         return when(msg.slice(0..2)) {
+            MarkCodes.GEN.toString() -> MarkCodes.GEN
             MarkCodes.ERR.toString() -> MarkCodes.ERR
             MarkCodes.FWP.toString() -> MarkCodes.FWP
             else -> throw NotMarkedMsgException()
         }
+    }
+    @Throws(MsgErrorException::class)
+    inline fun <reified T> getGenOrException(msg: String): T {
+        return if (which(msg) == MarkCodes.GEN) getGeneric(msg)
+        else throw MsgErrorException(getError(msg))
     }
 }

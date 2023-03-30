@@ -14,7 +14,7 @@ import kotlin.jvm.Throws
 open class NioUdpClient(
     private val bufferCapacity: Int = 1024,
     timeout: Int = 10000
-) : CanReceive, CanSend, CanSendToAddress {
+) : Talker, AddressTalker {
 
     var channel: DatagramChannel = DatagramChannel.open()
 

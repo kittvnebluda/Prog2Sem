@@ -1,11 +1,14 @@
 package com.prog2sem.client
 
-import com.prog2sem.client.CustomConsole.Companion.isLoadTempSave
-import com.prog2sem.client.CustomConsole.Companion.printGreen
-import com.prog2sem.client.CustomConsole.Companion.printerr
-import com.prog2sem.client.net.console.*
-import com.prog2sem.client.invokers.ConsoleInvoker
-import com.prog2sem.client.net.LocalDataBaseCommands
+import com.prog2sem.client.net.InetDataBaseCommands
+import com.prog2sem.client.utils.CustomConsole.Companion.isLoadTempSave
+import com.prog2sem.client.utils.CustomConsole.Companion.printGreen
+import com.prog2sem.client.utils.CustomConsole.Companion.printerr
+import com.prog2sem.client.net.commands.*
+import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.shared.net.NioUdpClient
+import java.net.InetAddress
+import java.net.InetSocketAddress
 
 const val MAX_HISTORY_SIZE = 12
 
@@ -13,8 +16,14 @@ val HISTORY = mutableListOf<String>()
 var ISQUIT = false
 var HELP = ""
 
-fun main(args: Array<String>) {
-    val dbCommands = LocalDataBaseCommands(if (args.isNotEmpty()) args[0] else "DEFAULT_NAME")
+fun main() {
+    val client = NioUdpClient()
+    val host = InetAddress.getLocalHost()
+    val port = 4221
+
+    client.sendToAddress = InetSocketAddress(host, port)
+
+    val dbCommands = InetDataBaseCommands(client)
     val clientCommands = ConsoleClientCommands()
     val invoker = ConsoleInvoker()
 
@@ -31,7 +40,6 @@ fun main(args: Array<String>) {
     val update = UpdateCommand(dbCommands)
     val remove = RemoveIdCommand(dbCommands)
     val clear = ClearCommand(dbCommands)
-    val save = SaveCommand(dbCommands)
     val addIdMax = AddIfMinCommand(dbCommands)
     val removeGreater = RemoveGreaterCommand(dbCommands)
     val removeByLocation = RemoveAllByLocationCommand(dbCommands)
@@ -40,20 +48,20 @@ fun main(args: Array<String>) {
 
     // Добавляем команды в вызыватель
     invoker.putAll(
-        help, info, show, add, exit, history, execute, update, remove, clear, save, addIdMax, removeGreater,
+        help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
         removeByLocation, filterByColor, printHairColor, addTest
     )
 
     invoker.genHelp() // Генерируем строку помощи
 
     // Временное сохранение прошлой сессии
-    val existMsg = dbCommands.isTempSaveExist()
-    if (existMsg.success && isLoadTempSave()) {
-        val loadMsg = dbCommands.loadTempSave()
-        if (loadMsg.success)
+    val isExist = dbCommands.isTempSaveExist()
+    if (isExist && isLoadTempSave()) {
+        val response = dbCommands.loadTempSave()
+        if (response)
             printGreen("Сохранение загружено!")
         else
-            printerr(loadMsg.error)
+            printerr("Не получилось загрузить сохранение")
     }
 
     val cc = CustomConsole(invoker)

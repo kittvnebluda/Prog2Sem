@@ -15,7 +15,7 @@ import kotlinx.serialization.decodeFromString
 /**
  * @param filename путь к файлу сохранения
  */
-@Deprecated("Сделано на коленки, лучше не использовать")
+@Deprecated("Сделано на коленки, лучше не использовать", level = DeprecationLevel.HIDDEN)
 class LocalDataBaseCommands(private val filename: String) : DataBaseCommands, TempSaveDBCommands {
     private val manager = LocalManager()
 

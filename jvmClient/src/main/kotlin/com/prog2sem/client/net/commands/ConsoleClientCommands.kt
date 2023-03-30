@@ -1,9 +1,10 @@
-package com.prog2sem.client.net.console
+package com.prog2sem.client.net.commands
 
 import com.prog2sem.client.*
 import com.prog2sem.client.net.ClientCommands
 import com.prog2sem.client.exceptions.InvalidUserInputException
-import com.prog2sem.client.invokers.Invoker
+import com.prog2sem.client.Invoker
+import com.prog2sem.client.utils.CustomConsole
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.*

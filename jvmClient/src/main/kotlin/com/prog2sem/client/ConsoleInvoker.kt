@@ -1,11 +1,8 @@
-package com.prog2sem.client.invokers
+package com.prog2sem.client
 
-import com.prog2sem.client.CustomConsole
-import com.prog2sem.client.HELP
-import com.prog2sem.client.HISTORY
-import com.prog2sem.client.MAX_HISTORY_SIZE
-import com.prog2sem.client.net.console.Command
+import com.prog2sem.client.net.commands.Command
 import com.prog2sem.client.exceptions.InvalidUserInputException
+import com.prog2sem.client.utils.CustomConsole
 import kotlin.math.max
 
 /**

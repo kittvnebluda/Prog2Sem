@@ -1,4 +1,4 @@
-package com.prog2sem.client.net.console
+package com.prog2sem.client.net.commands
 
 import com.prog2sem.client.exceptions.InvalidUserInputException
 

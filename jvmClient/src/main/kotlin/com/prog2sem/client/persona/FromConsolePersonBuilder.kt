@@ -1,6 +1,6 @@
 package com.prog2sem.client.persona
 
-import com.prog2sem.client.CustomConsole
+import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.client.exceptions.InvalidUserInputException
 import com.prog2sem.shared.*
 import com.prog2sem.shared.persona.BirthPersonBuilder

@@ -1,11 +1,12 @@
-package com.prog2sem.client
+package com.prog2sem.client.utils
 
+import com.prog2sem.client.HISTORY
+import com.prog2sem.client.ISQUIT
+import com.prog2sem.client.Invoker
 import com.prog2sem.client.exceptions.InvalidUserInputException
-import com.prog2sem.client.invokers.Invoker
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
-import com.prog2sem.shared.Response
-import com.prog2sem.shared.SimpleResponse
+import com.prog2sem.shared.exceptions.MsgErrorException
 
 /**
  * Класс для упрощения работы с консолью
@@ -85,28 +86,17 @@ class CustomConsole(private val invoker: Invoker) {
             return color
         }
 
-        /** Вывод ответа со строкой */
-        fun handleStrResponse(response: Response<String>) {
-            if (response.success)
-                println(response.msg)
-            else
-                println(red + response.error + reset)
-        }
-
         /** Вывод простого ответа */
-        fun handleSimpleResponse(response: SimpleResponse) {
-            if (response.success)
+        fun boolResponse(boolean: Boolean) {
+            if (boolean)
                 println("${green}Успех!$reset")
             else
-                println(response.error)
+                printerr("Неудача")
         }
 
         /** Вывод итерабельного ответа */
-        fun <T> handleIterableResponse(response: Response<Array<T>>) {
-            if (response.success)
-                response.msg.forEach { println(it) }
-            else
-                printerr(response.error)
+        fun <T> iterableResponse(array: Array<T>) {
+            array.forEach { println(it) }
         }
 
         /** Вывод текста красным в стандартный поток выхода */
@@ -154,8 +144,11 @@ class CustomConsole(private val invoker: Invoker) {
             try {
                 print("${rBC()}> $reset") // Просто красивая штучка
                 invoker.proceed(readln())
-            } catch (e: InvalidUserInputException) {
-                e.message?.let { printerr(it) }
+            } catch (e: Exception) {
+                when (e) {
+                    is InvalidUserInputException -> println(e.message)
+                    is MsgErrorException -> println(e.message)
+                }
             }
         }
     }

@@ -7,12 +7,18 @@ import java.nio.ByteBuffer
 import java.nio.channels.DatagramChannel
 import kotlin.jvm.Throws
 
+/**
+ * Класс обеспечивающий обмен данными с помощью датаграмм из покета nio.
+ * Настраивает клиент
+ */
 open class NioUdpClient(
     private val bufferCapacity: Int = 1024,
     timeout: Int = 10000
-) : CanReceive, CanSendToAddress {
+) : CanReceive, CanSend, CanSendToAddress {
 
     var channel: DatagramChannel = DatagramChannel.open()
+
+    lateinit var sendToAddress: SocketAddress
 
     init {
         channel.socket().soTimeout = timeout // set timeout
@@ -30,5 +36,9 @@ open class NioUdpClient(
     override fun send(msg: String, address: SocketAddress) {
         val buffer: ByteBuffer = ByteBuffer.wrap(msg.toByteArray())
         channel.send(buffer, address)
+    }
+
+    override fun send(msg: String) {
+        send(msg, sendToAddress)
     }
 }

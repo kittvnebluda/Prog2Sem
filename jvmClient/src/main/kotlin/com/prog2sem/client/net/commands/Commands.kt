@@ -4,6 +4,7 @@ import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.client.MAX_HISTORY_SIZE
 import com.prog2sem.client.exceptions.InvalidUserInputException
 import com.prog2sem.client.Invoker
+import com.prog2sem.client.io.CreateFromStd
 import com.prog2sem.client.net.ClientCommands
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.NoNamePersonBuilder
@@ -79,7 +80,7 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.boolResponse(manager.add(person))
+        CustomConsole.outBool(manager.add(person))
     }
 }
 
@@ -93,7 +94,7 @@ class UpdateCommand(private val manager: DataBaseCommands, override val name: St
 
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.boolResponse(manager.update(index, person))
+        CustomConsole.outBool(manager.update(index, person))
     }
 }
 
@@ -104,7 +105,7 @@ class RemoveIdCommand(private val manager: DataBaseCommands, override val name: 
     override fun execute(args: List<String>) {
         val index = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указан индекс класса")
-        CustomConsole.boolResponse(manager.removeId(index))
+        CustomConsole.outBool(manager.removeId(index))
     }
 }
 
@@ -113,7 +114,7 @@ class ClearCommand(private val manager: DataBaseCommands, override val name: Str
     override val desc: String = "очистить коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.boolResponse(manager.clear())
+        CustomConsole.outBool(manager.clear())
     }
 }
 
@@ -125,7 +126,7 @@ class AddIfMinCommand(private val manager: DataBaseCommands, override val name: 
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.boolResponse(manager.addIfMin(person))
+        CustomConsole.outBool(manager.addIfMin(person))
     }
 }
 
@@ -139,7 +140,7 @@ class RemoveGreaterCommand(
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.boolResponse(manager.removeGreater(person))
+        CustomConsole.outBool(manager.removeGreater(person))
     }
 }
 
@@ -152,9 +153,9 @@ class RemoveAllByLocationCommand(
         "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
     override fun execute(args: List<String>) {
-        val location = CustomConsole.locationFromConsoleInput(args.joinToString(" "))
+        val location = CreateFromStd.location(args.joinToString(" "))
         CustomConsole.addArgToHistory(location.toString())
-        CustomConsole.boolResponse(manager.removeAllByLocation(location))
+        CustomConsole.outBool(manager.removeAllByLocation(location))
     }
 }
 
@@ -166,10 +167,10 @@ class FilterGreaterThanHairColorCommand(
     override val desc: String = "вывести элементы, значение поля hairColor которых больше заданного"
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
     override fun execute(args: List<String>) {
-        val color = CustomConsole.colorFromConsoleInput(args.joinToString(" "))
+        val color = CreateFromStd.color(args.joinToString(" "))
         CustomConsole.addArgToHistory(color.toString())
         val res = manager.filterGreaterThanHairColor(color)
-        CustomConsole.iterableResponse(res)
+        CustomConsole.outIterable(res)
     }
 }
 
@@ -182,7 +183,7 @@ class PrintFieldAscendingHairColorCommand(
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val res = manager.printFieldAscendingHairColor()
-        CustomConsole.iterableResponse(res)
+        CustomConsole.outIterable(res)
     }
 }
 
@@ -193,6 +194,6 @@ class AddTestCommand(private val manager: DataBaseCommands, override val name: S
     override fun execute(args: List<String>) {
         val person = PersonDirector(NoNamePersonBuilder()).createPerson()
         CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.boolResponse(manager.add(person))
+        CustomConsole.outBool(manager.add(person))
     }
 }

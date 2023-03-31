@@ -1,9 +1,9 @@
 package com.prog2sem.client
 
+import com.prog2sem.client.utils.AskUser
 import com.prog2sem.client.net.InetDataBaseCommands
-import com.prog2sem.client.utils.CustomConsole.Companion.isLoadTempSave
-import com.prog2sem.client.utils.CustomConsole.Companion.printGreen
-import com.prog2sem.client.utils.CustomConsole.Companion.printerr
+import com.prog2sem.client.io.ColorfulOut.printGreen
+import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.client.net.commands.*
 import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.shared.net.NioUdpClient
@@ -56,7 +56,7 @@ fun main() {
 
     // Временное сохранение прошлой сессии
     val isExist = dbCommands.isTempSaveExist()
-    if (isExist && isLoadTempSave()) {
+    if (isExist && AskUser.isLoadTempSave()) {
         val response = dbCommands.loadTempSave()
         if (response)
             printGreen("Сохранение загружено!")

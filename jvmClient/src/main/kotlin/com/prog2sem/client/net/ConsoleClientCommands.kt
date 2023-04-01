@@ -1,7 +1,6 @@
-package com.prog2sem.client.net.commands
+package com.prog2sem.client.net
 
 import com.prog2sem.client.*
-import com.prog2sem.client.net.ClientCommands
 import com.prog2sem.client.exceptions.InvalidUserInputException
 import com.prog2sem.client.Invoker
 import com.prog2sem.client.utils.CustomConsole

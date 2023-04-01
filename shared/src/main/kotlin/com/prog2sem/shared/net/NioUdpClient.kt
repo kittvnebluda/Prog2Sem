@@ -13,15 +13,16 @@ import kotlin.jvm.Throws
  */
 open class NioUdpClient(
     private val bufferCapacity: Int = 1024,
-    timeout: Int = 10000
+    timeout: Int = 10000,
+    configureBlocking: Boolean = true
 ) : Talker, AddressTalker {
 
     var channel: DatagramChannel = DatagramChannel.open()
-
     lateinit var sendToAddress: SocketAddress
 
     init {
         channel.socket().soTimeout = timeout // set timeout
+        channel.configureBlocking(configureBlocking)
     }
 
     @Throws(SocketTimeoutException::class)

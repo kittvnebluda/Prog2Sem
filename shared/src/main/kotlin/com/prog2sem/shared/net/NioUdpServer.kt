@@ -4,8 +4,10 @@ import com.prog2sem.shared.utils.Buffer
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.SocketAddress
+import java.net.SocketTimeoutException
 import java.nio.ByteBuffer
 import java.nio.channels.DatagramChannel
+import kotlin.jvm.Throws
 
 /**
  * Класс обеспечивающий обмен данными с помощью датаграмм из покета nio.
@@ -15,7 +17,8 @@ open class NioUdpServer(
     host: InetAddress,
     port: Int,
     private val bufferCapacity: Int = 1024,
-    timeout: Int = 10000
+    timeout: Int = 10000,
+    configureBlocking: Boolean = false
 ) : Talker, AddressTalker {
 
     var channel: DatagramChannel = DatagramChannel.open()
@@ -27,9 +30,9 @@ open class NioUdpServer(
         // The server is listening
         channel.bind(address)
         println("Receiver started at $address:$port")
-        channel.configureBlocking(false)
+        channel.configureBlocking(configureBlocking)
     }
-
+    @Throws(SocketTimeoutException::class)
     override fun receive(): String {
         val buffer: ByteBuffer = ByteBuffer.allocate(bufferCapacity)
         sendToAddress = channel.receive(buffer)

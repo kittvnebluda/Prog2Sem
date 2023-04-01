@@ -4,6 +4,7 @@ import com.prog2sem.client.utils.AskUser
 import com.prog2sem.client.net.InetDataBaseCommands
 import com.prog2sem.client.io.ColorfulOut.printGreen
 import com.prog2sem.client.io.ColorfulOut.printerr
+import com.prog2sem.client.net.ConsoleClientCommands
 import com.prog2sem.client.net.commands.*
 import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.shared.net.NioUdpClient

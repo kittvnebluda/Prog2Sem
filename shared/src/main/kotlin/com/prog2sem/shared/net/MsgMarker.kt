@@ -1,7 +1,8 @@
 package com.prog2sem.shared.net
 
+import com.prog2sem.shared.exceptions.GotErrorMsgException
 import com.prog2sem.shared.exceptions.NotMarkedMsgException
-import com.prog2sem.shared.exceptions.MsgErrorException
+import com.prog2sem.shared.exceptions.MsgException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -52,6 +53,7 @@ object MsgMarker {
     fun getFun(msg: String): Array<String> {
         return Json.decodeFromString(extract(msg))
     }
+
     @Throws(NotMarkedMsgException::class)
     fun which(msg: String): MarkCodes {
         return when(msg.slice(0..2)) {
@@ -61,9 +63,13 @@ object MsgMarker {
             else -> throw NotMarkedMsgException()
         }
     }
-    @Throws(MsgErrorException::class)
+
+    @Throws(MsgException::class)
     inline fun <reified T> getGenOrException(msg: String): T {
-        return if (which(msg) == MarkCodes.GEN) getGeneric(msg)
-        else throw MsgErrorException(getError(msg))
+        return when(which(msg)) {
+            MarkCodes.GEN -> getGeneric(msg)
+            MarkCodes.ERR -> throw GotErrorMsgException(msg)
+            else -> throw MsgException("Не найдены нужные теги в сообщении")
+        }
     }
 }

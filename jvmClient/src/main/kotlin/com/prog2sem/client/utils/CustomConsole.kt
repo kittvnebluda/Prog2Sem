@@ -4,7 +4,7 @@ import com.prog2sem.client.HISTORY
 import com.prog2sem.client.ISQUIT
 import com.prog2sem.client.Invoker
 import com.prog2sem.client.exceptions.InvalidUserInputException
-import com.prog2sem.shared.exceptions.MsgErrorException
+import com.prog2sem.shared.exceptions.MsgException
 import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.client.io.ColorfulOut.randLightANSI
 
@@ -22,8 +22,7 @@ class CustomConsole(private val invoker: Invoker) {
             val greeting = when (kotlin.random.Random.nextInt(3)) {
                 0 -> "Здравствуйте, пользователь."
                 1 -> "ПРИВЕТСТВУЮ!"
-                2 -> "ВСЕ ${randLightANSI()}Х ${randLightANSI()}О ${randLightANSI()}Р ${randLightANSI()}О ${randLightANSI()}Ш ${randLightANSI()}О \u001b[0m!"
-                else -> "Вы точно хотите знать зачем я нужен?"
+                else -> "ВСЕ ${randLightANSI()}Х ${randLightANSI()}О ${randLightANSI()}Р ${randLightANSI()}О ${randLightANSI()}Ш ${randLightANSI()}О \u001b[0m!"
             }
             println("#############################################")
             println("# $greeting")
@@ -66,7 +65,7 @@ class CustomConsole(private val invoker: Invoker) {
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> println(e.message)
-                    is MsgErrorException -> println(e.message)
+                    is MsgException -> println(e.message)
                 }
             }
         }

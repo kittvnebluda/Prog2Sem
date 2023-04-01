@@ -4,7 +4,7 @@ import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.client.MAX_HISTORY_SIZE
 import com.prog2sem.client.exceptions.InvalidUserInputException
 import com.prog2sem.client.Invoker
-import com.prog2sem.client.io.CreateFromStd
+import com.prog2sem.client.utils.CreateFromStd
 import com.prog2sem.client.net.ClientCommands
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.NoNamePersonBuilder

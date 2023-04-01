@@ -3,7 +3,7 @@ package com.prog2sem.server
 import com.prog2sem.shared.FileWorker
 import java.time.ZonedDateTime
 import com.prog2sem.shared.JsonWorker.json
-import com.prog2sem.shared.Person
+import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.decodeFromString
 
 object DataBaseSim {

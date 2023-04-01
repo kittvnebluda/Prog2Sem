@@ -1,16 +1,15 @@
-package com.prog2sem.shared
+package com.prog2sem.shared.net
 
-@Deprecated("Use TempSaveCommands from net package instead")
-interface TempSaveDBCommands {
+interface TempSaveCommands {
     /**
      * Возвращает есть ли временное сохранение
      * @return true, если сохранение существует
      */
-    fun isTempSaveExist(): SimpleResponse
+    fun isTempSaveExist(): Boolean
 
     /**
      * Обеспечивает загрузку временного сохранения
      * @return true, если сохранение было загружено
      */
-    fun loadTempSave(): SimpleResponse
+    fun loadTempSave(): Boolean
 }

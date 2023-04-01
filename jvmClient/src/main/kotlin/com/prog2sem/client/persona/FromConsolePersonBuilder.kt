@@ -1,6 +1,12 @@
-package com.prog2sem.client
+package com.prog2sem.client.persona
 
+import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.client.exceptions.InvalidUserInputException
+import com.prog2sem.client.io.ColorfulOut.printerr
+import com.prog2sem.client.utils.CreateFromStd
 import com.prog2sem.shared.*
+import com.prog2sem.shared.persona.BirthPersonBuilder
+import com.prog2sem.shared.persona.PersonBuilder
 import java.lang.NumberFormatException
 import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
@@ -34,11 +40,11 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
                     if (coordinates!!.x > -948 && coordinates!!.y <= 453)
                         break
                     else
-                        CustomConsole.printerr("x должен быть больше -948, а y должен быть меньше 453. Попробуйте еще раз!")
+                        printerr("x должен быть больше -948, а y должен быть меньше 453. Попробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    CustomConsole.printerr("Не получилось пропарсить строку в числа. Помните: x - Float, y - Double. Попробуйте еще раз!")
+                    printerr("Не получилось пропарсить строку в числа. Помните: x - Float, y - Double. Попробуйте еще раз!")
                 } catch (e: InvalidUserInputException) {
-                    CustomConsole.printerr(e.message!!)
+                    printerr(e.message!!)
                 }
             }
             input = readlnOrNull()
@@ -54,9 +60,9 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
             else {
                 try {
                     height = input.trim().toLong()
-                    if (height!! > 0) break else CustomConsole.printerr("Высота человека должна быть больше 0. Пропробуйте еще раз!")
+                    if (height!! > 0) break else printerr("Высота человека должна быть больше 0. Пропробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    CustomConsole.printerr("Не получается пропарсить строку как Long. Попробуйте еще раз!")
+                    printerr("Не получается пропарсить строку как Long. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -74,7 +80,7 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
                     birthday = ZonedDateTime.parse(input.trim())
                     break
                 } catch (e: DateTimeParseException) {
-                    CustomConsole.printerr("Не получается пропарсить дату. Попробуйте еще раз!")
+                    printerr("Не получается пропарсить дату. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -90,9 +96,9 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
             else {
                 try {
                     weight = input.trim().toInt()
-                    if (weight!! > 0) break else CustomConsole.printerr("Высота человека должна быть больше 0. Пропробуйте еще раз!")
+                    if (weight!! > 0) break else printerr("Высота человека должна быть больше 0. Пропробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    CustomConsole.printerr("Не получается пропарсить строку как Int. Попробуйте еще раз!")
+                    printerr("Не получается пропарсить строку как Int. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -101,12 +107,12 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
     }
 
     override fun chooseHairColor(): PersonBuilder {
-        hairColor = CustomConsole.colorFromConsoleInput()
+        hairColor = CreateFromStd.color()
         return this
     }
 
     override fun chooseLocation(): PersonBuilder {
-        location = CustomConsole.locationFromConsoleInput()
+        location = CreateFromStd.location()
         return this
     }
 }

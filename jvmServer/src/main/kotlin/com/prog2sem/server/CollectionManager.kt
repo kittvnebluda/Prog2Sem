@@ -1,4 +1,8 @@
-package com.prog2sem.shared
+package com.prog2sem.server
+
+import com.prog2sem.shared.Color
+import com.prog2sem.shared.Location
+import com.prog2sem.shared.persona.Person
 
 /**
  * Интерфейс команд пользователя
@@ -32,7 +36,6 @@ interface CollectionManager {
 
     /**
      * Обеспечивает удаление элемента из коллекции по его id
-     * @param index индекс элемента коллекции
      */
     fun removeId(id: Int): String
 
@@ -73,7 +76,6 @@ interface CollectionManager {
 
     /**
      * Возвращает количество элементов, значение поля hairColor которых меньше заданного
-     * @param color цвет волос, может быть null
      * @return количество подходящих элементов
      */
     fun printFieldAscendingHairColor(): String

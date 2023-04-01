@@ -1,15 +1,21 @@
-package com.prog2sem.client
+package com.prog2sem.client.net
 
 import com.prog2sem.shared.*
 import com.prog2sem.server.LocalManager
 import com.prog2sem.server.ServerAnswer
 import com.prog2sem.server.main
+import com.prog2sem.shared.DataBaseCommands
+import com.prog2sem.shared.TempSaveDBCommands
+import com.prog2sem.shared.Response
+import com.prog2sem.shared.SimpleResponse
+import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 
 /**
  * @param filename путь к файлу сохранения
  */
+@Deprecated("Сделано на коленки, лучше не использовать", level = DeprecationLevel.HIDDEN)
 class LocalDataBaseCommands(private val filename: String) : DataBaseCommands, TempSaveDBCommands {
     private val manager = LocalManager()
 

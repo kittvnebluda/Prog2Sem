@@ -8,8 +8,8 @@ pluginManagement {
 }
 rootProject.name = "Prog2Sem"
 
-include("shared")
-include("jvmServer")
+include(":shared")
+include(":jvmServer")
 include(":jvmClient")
 //include(":androidClient")
 

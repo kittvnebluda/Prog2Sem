@@ -19,7 +19,6 @@ buildscript {
 }
 
 group = "com.prog2sem"
-version = "1.0-SNAPSHOT"
 
 allprojects {
     repositories {

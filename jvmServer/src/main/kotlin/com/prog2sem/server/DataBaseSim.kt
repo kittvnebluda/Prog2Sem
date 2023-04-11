@@ -8,7 +8,7 @@ import kotlinx.serialization.decodeFromString
 
 object DataBaseSim {
     private val creationDate = ZonedDateTime.now()
-    var dataBaseSim: HashSet<Person> = hashSetOf()
+    var dataBaseSim: HashSet<Person_Autogeneration> = hashSetOf()
 
     /**
      * @param filePath путь к файлу

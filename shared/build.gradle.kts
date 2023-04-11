@@ -4,7 +4,6 @@ plugins {
 }
 
 group = "com.prog2sem"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -21,5 +20,6 @@ kotlin {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation(kotlin("test"))
+
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 }

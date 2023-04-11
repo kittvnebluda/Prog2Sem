@@ -1,12 +1,10 @@
 package com.prog2sem.server
 
-import com.prog2sem.shared.Important
-import com.prog2sem.shared.Important.autoSaveFileName
-import com.prog2sem.shared.Important.idGen
-import com.prog2sem.shared.Important.isSaved
-import com.prog2sem.shared.Important.loadAuto
 import com.prog2sem.shared.Color
 import com.prog2sem.server.DataBaseSim.dataBaseSim
+import com.prog2sem.server.Important.autoSaveFileName
+import com.prog2sem.server.Important.idGen
+import com.prog2sem.server.Important.isSaved
 import com.prog2sem.shared.JsonWorker.json
 import com.prog2sem.shared.*
 import com.prog2sem.shared.persona.Person
@@ -15,7 +13,7 @@ import kotlinx.serialization.encodeToString
 /**
  * Class for managing DataBase
  */
-class LocalManager : CollectionManager {
+class LocalManager : ServerCommands {
 
     override fun info(): String {
         return json.encodeToString(ServerAnswer(answerMessage = DataBaseSim.toString()))
@@ -26,48 +24,43 @@ class LocalManager : CollectionManager {
             .replace(", ", "")))
     }
 
-    override fun update(index: Int, e: Person): String {
+    override fun update(index: Int, e: Person): Boolean {
 //        dataBaseSim.sortedDescending()
-        val el = dataBaseSim.elementAtOrNull(index - 1) ?: return json.encodeToString(
-            ServerAnswer(
-                false,
-                "Person with this id does not exist"
-            )
-        )
+
+        val newPerson = Person_Autogeneration(e)
+
+        val el = dataBaseSim.elementAtOrNull(index - 1) ?: return TODO("Добавить возращение")
         with(el) {
-            name = e.name
-            coordinates = e.coordinates
-            birthday = e.birthday
-            height = e.height
-            weight = e.weight
-            hairColor = e.hairColor
-            location = e.location
-            creationDate = e.creationDate
+            person.name = newPerson.person.name
+            person.coordinates = newPerson.person.coordinates
+            person.birthday = newPerson.person.birthday
+            person.height = newPerson.person.height
+            person.weight = newPerson.person.weight
+            person.hairColor = newPerson.person.hairColor
+            person.location = newPerson.person.location
+            creationDate = newPerson.creationDate
         }
-        return json.encodeToString(ServerAnswer())
+        removeId(newPerson.id)
+        return TODO("Добавить возращение")
     }
 
-    override fun removeId(id: Int): String {
+    override fun removeId(id: Int): Boolean {
         val size = dataBaseSim.size
         dataBaseSim.removeIf { it.id == id }
         idGen.newRemovedId(id)
-        return json.encodeToString(
-            ServerAnswer(
-                size != dataBaseSim.size,
-                if (size != dataBaseSim.size) "All Okay" else "Can not find this $id id"
-            )
-        )
+        return TODO("Добавить возращение")
     }
 
-    override fun add(e: Person): String {
-        val isAdd = dataBaseSim.add(e)
-        return json.encodeToString(ServerAnswer(isAdd, if (!isAdd) "Can not add new el in DataBase" else "All Okay"))
+    override fun add(e: Person): Boolean {
+        val person = Person_Autogeneration(e)
+        val isAdd = dataBaseSim.add(person)
+        return TODO("Добавить возращение")
     }
 
-    override fun clear(): String {
+    override fun clear(): Boolean {
         dataBaseSim.clear()
         idGen.clear()
-        return json.encodeToString(ServerAnswer())
+        return TODO("Добавить возращение")
     }
 
     override fun save(filePath: String): String {
@@ -87,43 +80,41 @@ class LocalManager : CollectionManager {
         )
     }
 
-    override fun removeGreater(e: Person): String {
-        dataBaseSim.removeIf { val check = it > e; if (check) idGen.newRemovedId(it.id); return@removeIf check }
-        return json.encodeToString(ServerAnswer())
+    override fun removeGreater(e: Person): Boolean {
+        val person = Person_Autogeneration(e)
+        dataBaseSim.removeIf { val check = it > person; if (check) idGen.newRemovedId(it.id); return@removeIf check }
+        return TODO("Добавить возращение")
     }
 
-    override fun removeAllByLocation(location: Location): String {
+    override fun removeAllByLocation(location: Location): Boolean {
         dataBaseSim.removeIf {
-            val check = it.location == location; if (check) idGen.newRemovedId(it.id); return@removeIf check
+            val check = it.person.location == location; if (check) idGen.newRemovedId(it.id); return@removeIf check
         }
-        return json.encodeToString(ServerAnswer())
+        return TODO("Добавить возращение")
     }
 
-    override fun filterGreaterThanHairColor(color: Color?): String {
-        if (color == null) return json.encodeToString(ServerAnswer(answerMessage = dataBaseSim.toString()))
+    override fun filterGreaterThanHairColor(color: Color?): Array<Person> {
+        if (color == null) return TODO("Добавить возращение")
         val sb = StringBuilder()
-        dataBaseSim.forEach { if (it.hairColor > color) sb.append(it.toString()) }
-        return json.encodeToString(ServerAnswer(answerMessage = sb.toString()))
+        dataBaseSim.forEach { if (it.person.hairColor > color) sb.append(it.toString()) }
+        return TODO("Добавить возращение")
     }
 
-    override fun printFieldAscendingHairColor(): String {
+    override fun printFieldAscendingHairColor(): Array<Color> {
         Person.colors.sort()
-        return json.encodeToString(ServerAnswer(answerMessage = Person.colors.toString()))
+        return TODO("Добавить возращение")
     }
 
-    override fun addIfMin(e: Person): String {
+    override fun addIfMin(e: Person): Boolean {
+
+        val person = Person_Autogeneration(e)
+
         val minPerson = dataBaseSim.minBy { it.id }
-        if (minPerson.id < e.id) return json.encodeToString(ServerAnswer(false, "This person is not minimal"))
-        dataBaseSim.add(e)
-        return json.encodeToString(ServerAnswer())
+
+        if (minPerson.id < person.id) return TODO("Добавить возращение")
+        dataBaseSim.add(person)
+
+        return TODO("Добавить возращение")
     }
 
-    fun isAutoSaved(): Boolean {
-        return !isSaved
-    }
-
-    fun loadAutoSave() {
-        DataBaseSim.readDataFromFile(autoSaveFileName)
-        loadAuto()
-    }
 }

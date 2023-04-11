@@ -3,7 +3,6 @@ package com.prog2sem.shared.persona
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Coordinates
 import com.prog2sem.shared.CustomSerializers.KZonedDateTimeSerializer
-import com.prog2sem.shared.Important.idGen
 import com.prog2sem.shared.Location
 import java.time.ZonedDateTime
 import kotlinx.serialization.Serializable
@@ -25,25 +24,15 @@ data class Person(
 
     companion object {
         val colors = mutableListOf<Color>()
-
-        var maxId = 1
-        var previousId: Int = 0
     }
 
     init {
-        previousId = maxId
         if (colors.indexOf(hairColor) < 0)
             colors.add(hairColor)
     }
 
-    val id = idGen.getId()
-
-
-    @Serializable(KZonedDateTimeSerializer::class)
-    var creationDate: ZonedDateTime = ZonedDateTime.now()
-
     operator fun compareTo(other: Person): Int {
-        return this.id.compareTo(other.id)
+        return TODO("Переопределить для обычного Person")
     }
 
     override fun equals(other: Any?): Boolean {
@@ -59,8 +48,6 @@ data class Person(
         if (weight != other.weight) return false
         if (hairColor != other.hairColor) return false
         if (location != other.location) return false
-        if (id != other.id) return false
-        if (creationDate != other.creationDate) return false
 
         return true
     }
@@ -73,15 +60,11 @@ data class Person(
         result = 31 * result + weight
         result = 31 * result + hairColor.hashCode()
         result = 31 * result + location.hashCode()
-        result = 31 * result + id.hashCode()
-        result = 31 * result + creationDate.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return StringBuilder().append("Person@$id\n").append(
-            "Name: $name\n" +
-                    "CreationDate: $creationDate\n" +
+        return StringBuilder().append("Person: $name\n").append(
                     "Height: $height\n" +
                     "Weight: $weight\n" +
                     "Birthday: $birthday\n" +

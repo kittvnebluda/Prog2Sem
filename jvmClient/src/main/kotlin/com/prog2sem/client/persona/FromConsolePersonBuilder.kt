@@ -1,7 +1,7 @@
 package com.prog2sem.client.persona
 
 import com.prog2sem.client.utils.CustomConsole
-import com.prog2sem.client.exceptions.InvalidUserInputException
+import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.client.utils.CreateFromStd
 import com.prog2sem.shared.*

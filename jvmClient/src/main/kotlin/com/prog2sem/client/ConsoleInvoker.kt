@@ -1,8 +1,9 @@
 package com.prog2sem.client
 
-import com.prog2sem.client.net.commands.Command
-import com.prog2sem.client.exceptions.InvalidUserInputException
+import com.prog2sem.shared.net.Command
+import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.shared.Invoker
 import kotlin.math.max
 
 /**

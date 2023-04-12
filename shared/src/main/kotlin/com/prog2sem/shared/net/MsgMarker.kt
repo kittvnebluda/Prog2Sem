@@ -1,11 +1,11 @@
 package com.prog2sem.shared.net
 
+import com.prog2sem.shared.JsonWorker.json
 import com.prog2sem.shared.exceptions.GotErrorMsgException
 import com.prog2sem.shared.exceptions.NotMarkedMsgException
 import com.prog2sem.shared.exceptions.MsgException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import kotlin.jvm.Throws
 
 /**
@@ -28,11 +28,11 @@ object MsgMarker {
     }
     /** Mark generic message, T must be serializable */
     inline fun <reified T> markGeneric(msg: T): String {
-        return MarkCodes.GEN + Json.encodeToString(msg)
+        return MarkCodes.GEN + json.encodeToString(msg)
     }
     /** Get generic message */
     inline fun <reified T> getGeneric(msg: String): T {
-        return Json.decodeFromString(extract(msg))
+        return json.decodeFromString(extract(msg))
     }
     /** Mark error message */
     fun markError(error: String): String {
@@ -44,14 +44,14 @@ object MsgMarker {
     }
     /** Mark function call message with corresponding parameters */
     fun markFun(funName: String, vararg params: String): String {
-        return MarkCodes.FWP + Json.encodeToString(arrayOf(funName, *params))
+        return MarkCodes.FWP + json.encodeToString(arrayOf(funName, *params))
     }
     /**
      * Get function name with its parameters.
      * @return An array whose first parameter is always the name of the function, the rest are its parameters
      */
     fun getFun(msg: String): Array<String> {
-        return Json.decodeFromString(extract(msg))
+        return json.decodeFromString(extract(msg))
     }
 
     @Throws(NotMarkedMsgException::class)
@@ -65,7 +65,7 @@ object MsgMarker {
     }
 
     @Throws(MsgException::class)
-    inline fun <reified T> getGenOrException(msg: String): T {
+    inline fun <reified T> getGenOrException(msg: String): T  {
         return when(which(msg)) {
             MarkCodes.GEN -> getGeneric(msg)
             MarkCodes.ERR -> throw GotErrorMsgException(msg)

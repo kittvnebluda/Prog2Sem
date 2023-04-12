@@ -1,6 +1,6 @@
 package com.prog2sem.client.net
 
-import com.prog2sem.client.Invoker
+import com.prog2sem.shared.Invoker
 
 /**
  * Интерфейс работающих без сервера команд пользователя.

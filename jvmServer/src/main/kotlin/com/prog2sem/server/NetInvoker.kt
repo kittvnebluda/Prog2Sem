@@ -26,6 +26,7 @@ class NetInvoker : Invoker {
 
         val args = postCmd.slice(1 until postCmd.size)
 
+
         // Добавляем команду в историю
 
         command.execute(args) // Выполняем команду

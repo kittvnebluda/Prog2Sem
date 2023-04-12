@@ -16,7 +16,7 @@ import kotlinx.serialization.encodeToString
 /**
  * Class for managing DataBase
  */
-object LocalManager : ServerCommands, DataBaseCommands {
+object LocalManager : ServCom, DataBaseCommands {
 
     override fun info(): String {
         return DataBaseSim.toString()

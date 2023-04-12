@@ -32,7 +32,7 @@ data class Person(
     }
 
     operator fun compareTo(other: Person): Int {
-        return TODO("Переопределить для обычного Person")
+        return name.compareTo(other.name)
     }
 
     override fun equals(other: Any?): Boolean {

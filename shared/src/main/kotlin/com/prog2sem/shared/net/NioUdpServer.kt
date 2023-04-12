@@ -51,6 +51,7 @@ open class NioUdpServer(
     override fun send(msg: String, address: SocketAddress) {
         val buffer: ByteBuffer = ByteBuffer.wrap(msg.toByteArray())
         channel.send(buffer, address)
+        println("Sent mes $msg")
     }
 
     /**

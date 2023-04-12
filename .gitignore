@@ -9,3 +9,5 @@
 local.properties
 /.idea/
 /shared/build/
+/jvmClient/build/
+/jvmServer/build/

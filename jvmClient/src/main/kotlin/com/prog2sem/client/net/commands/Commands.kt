@@ -2,10 +2,11 @@ package com.prog2sem.client.net.commands
 
 import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.client.MAX_HISTORY_SIZE
+import com.prog2sem.client.net.InetCommands
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.Invoker
 import com.prog2sem.client.utils.CreateFromStd
-import com.prog2sem.client.net.ClientCommands
+import com.prog2sem.client.net.LocalCommands
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.NoNamePersonBuilder
 import com.prog2sem.shared.net.Command
@@ -13,7 +14,7 @@ import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
 
 /** Вызов команды помощи */
-class HelpCommand(private val commands: ClientCommands, override val name: String = "help") :
+class HelpCommand(private val commands: LocalCommands, override val name: String = "help") :
     Command {
     override val desc: String = "описание команд"
     override val methodsDesc: Map<String, String> = emptyMap()
@@ -23,7 +24,7 @@ class HelpCommand(private val commands: ClientCommands, override val name: Strin
 }
 
 /** Вызов команды завершения программы */
-class ExitCommand(private val commands: ClientCommands, override val name: String = "exit") :
+class ExitCommand(private val commands: LocalCommands, override val name: String = "exit") :
     Command {
     override val desc: String = "завершение программы"
     override val methodsDesc: Map<String, String> = emptyMap()
@@ -34,7 +35,7 @@ class ExitCommand(private val commands: ClientCommands, override val name: Strin
 }
 
 /** Вызов истории выполненных команд */
-class HistoryCommand(private val commands: ClientCommands, override val name: String = "history") :
+class HistoryCommand(private val commands: LocalCommands, override val name: String = "history") :
     Command {
     override val desc: String = "обеспечивает вывод последних $MAX_HISTORY_SIZE команд без их аргументов"
     override val methodsDesc: Map<String, String> = emptyMap()
@@ -45,7 +46,7 @@ class HistoryCommand(private val commands: ClientCommands, override val name: St
 
 /** Вызов выполнения скрипта */
 class ExecuteScriptCommand(
-    private val commands: ClientCommands,
+    private val commands: LocalCommands,
     private val invoker: Invoker,
     override val name: String = "execute"
 ) : Command {
@@ -57,6 +58,18 @@ class ExecuteScriptCommand(
         else
             throw InvalidUserInputException("В команде пропущен путь файла")
     }
+}
+
+class ServerAddressCommand(
+    private val commands: InetCommands,
+    override val name: String = "get_server_addr"
+) : Command {
+    override val desc: String = "Выводит адрес сервера"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>) {
+        commands.getServerAddr()
+    }
+
 }
 
 /** Реализация вызова команды получения информации о коллекции */
@@ -86,6 +99,18 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
+        CustomConsole.addArgToHistory(person.toString())
+        CustomConsole.outBool(manager.add(person))
+    }
+}
+
+/** Реализация вызова команды добавления готового элемента в коллекцию */
+class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_noname") :
+    Command {
+    override val desc: String = "добавить готовый элемент в коллекцию"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>) {
+        val person = PersonDirector(NoNamePersonBuilder()).createPerson()
         CustomConsole.addArgToHistory(person.toString())
         CustomConsole.outBool(manager.add(person))
     }
@@ -195,17 +220,5 @@ class PrintFieldAscendingHairColorCommand(
     override fun execute(args: List<String>) {
         val res = manager.printFieldAscendingHairColor()
         CustomConsole.outIterable(res)
-    }
-}
-
-/** Реализация вызова команды добавления готового элемента в коллекцию */
-class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_noname") :
-    Command {
-    override val desc: String = "добавить готовый элемент в коллекцию"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        val person = PersonDirector(NoNamePersonBuilder()).createPerson()
-        CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.outBool(manager.add(person))
     }
 }

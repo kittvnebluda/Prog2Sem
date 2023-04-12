@@ -1,7 +1,6 @@
 package com.prog2sem.client.net
 
 import com.prog2sem.shared.Color
-import com.prog2sem.shared.JsonWorker.json
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.*
 import com.prog2sem.shared.persona.Person
@@ -23,11 +22,11 @@ class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
     }
 
     override fun add(p: Person): Boolean {
-        return funTalk("add", json.encodeToString(p))
+        return funTalk("add", MsgMarker.markGeneric(p))
     }
 
     override fun update(index: Int, p: Person): Boolean {
-        return funTalk("update", index.toString(), json.encodeToString(p))
+        return funTalk("update", index.toString(), MsgMarker.markGeneric(p))
     }
 
     override fun removeId(index: Int): Boolean {
@@ -39,19 +38,19 @@ class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
     }
 
     override fun addIfMin(p: Person): Boolean {
-        return funTalk("add_if_min", json.encodeToString(p))
+        return funTalk("add_if_min", MsgMarker.markGeneric(p))
     }
 
     override fun removeGreater(p: Person): Boolean {
-        return funTalk("remove_greater", json.encodeToString(p))
+        return funTalk("remove_greater", MsgMarker.markGeneric(p))
     }
 
     override fun removeAllByLocation(location: Location): Boolean {
-        return funTalk("remove_all_by_location", json.encodeToString(location))
+        return funTalk("remove_all_by_location", MsgMarker.markGeneric(location))
     }
 
     override fun filterGreaterThanHairColor(color: Color?): Array<Person> {
-        return funTalk("filter_greater_than_hair_color", json.encodeToString(color))
+        return funTalk("filter_greater_than_hair_color", MsgMarker.markGeneric(color))
     }
 
     override fun printFieldAscendingHairColor(): Array<Color> {

@@ -12,7 +12,8 @@ import kotlin.jvm.Throws
  * Настраивает клиент
  */
 open class NioUdpClient(
-    private val bufferCapacity: Int = 1024
+    private val bufferCapacity: Int = 1024,
+    private val timeout: Int = 3000  // Время ожидания в миллисекундах
 ) : Talker, AddressTalker {
 
     var channel: DatagramChannel = DatagramChannel.open()
@@ -36,10 +37,14 @@ open class NioUdpClient(
                 6 -> print("\rЖдем... ")
                 9 -> print("\rЖдем... ")
             }
-        } while (address == null && counter < 2000000)
+        } while (address == null && counter < timeout * 666)
 
         val message = Buffer.toString(buffer)
-        println("Received message from server: $address")
+        if (address == null) {
+            println("Время вышло!")
+        } else {
+            println("Received message from server: $address")
+        }
         return message
     }
 

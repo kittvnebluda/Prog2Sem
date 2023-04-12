@@ -16,7 +16,7 @@ import kotlin.jvm.Throws
 open class NioUdpServer(
     host: InetAddress,
     port: Int,
-    private val bufferCapacity: Int = 1024,
+    val bufferCapacity: Int = 1024,
     timeout: Int = 10000,
     configureBlocking: Boolean = false
 ) : Talker, AddressTalker {
@@ -29,13 +29,16 @@ open class NioUdpServer(
         val address = InetSocketAddress(host, port)
         // The server is listening
         channel.bind(address)
-        println("Receiver started at $address:$port")
+        println("Receiver started at $address")
         channel.configureBlocking(configureBlocking)
     }
     @Throws(SocketTimeoutException::class)
     override fun receive(): String {
         val buffer: ByteBuffer = ByteBuffer.allocate(bufferCapacity)
-        sendToAddress = channel.receive(buffer)
+        var nulladress : SocketAddress? = null
+        while (nulladress == null)
+            nulladress = channel.receive(buffer)
+        sendToAddress = nulladress
         val message = Buffer.toString(buffer)
         println("Received message from sender: $sendToAddress")
         return message

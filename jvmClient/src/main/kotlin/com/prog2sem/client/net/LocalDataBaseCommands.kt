@@ -2,7 +2,6 @@ package com.prog2sem.client.net
 
 import com.prog2sem.shared.*
 import com.prog2sem.server.LocalManager
-import com.prog2sem.server.ServerAnswer
 import com.prog2sem.server.main
 import com.prog2sem.shared.DataBaseCommands
 import com.prog2sem.shared.TempSaveDBCommands

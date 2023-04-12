@@ -1,6 +1,6 @@
-package com.prog2sem.client.net.commands
+package com.prog2sem.shared.net
 
-import com.prog2sem.client.exceptions.InvalidUserInputException
+
 
 /** Интерфейс всех команд */
 interface Command {

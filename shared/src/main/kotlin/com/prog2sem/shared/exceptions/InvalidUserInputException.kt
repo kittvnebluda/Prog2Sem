@@ -1,4 +1,4 @@
-package com.prog2sem.client.exceptions
+package com.prog2sem.shared.exceptions
 
 import java.lang.Exception
 

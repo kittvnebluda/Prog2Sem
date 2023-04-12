@@ -1,6 +1,6 @@
-package com.prog2sem.client
+package com.prog2sem.shared
 
-import com.prog2sem.client.net.commands.Command
+import com.prog2sem.shared.net.Command
 
 /**
  * Интерфейс для классов, хранящих и вызывающих команды

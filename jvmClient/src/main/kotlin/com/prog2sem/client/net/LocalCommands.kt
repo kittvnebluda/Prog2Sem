@@ -5,7 +5,7 @@ import com.prog2sem.client.Invoker
 /**
  * Интерфейс работающих без сервера команд пользователя.
  */
-interface ClientCommands {
+interface LocalCommands {
     /**
      * Возвращает справку по доступным командам.
      * @return справка в виде текста

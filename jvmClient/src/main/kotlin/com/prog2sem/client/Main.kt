@@ -10,17 +10,31 @@ import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.shared.net.NioUdpClient
 import java.net.InetAddress
 import java.net.InetSocketAddress
+import kotlin.properties.Delegates
 
 const val MAX_HISTORY_SIZE = 12
 
 val HISTORY = mutableListOf<String>()
 var ISQUIT = false
 var HELP = ""
+var HOST = "127.0.0.1"
+var PORT = 4221
 
-fun main() {
+fun main(args: Array<String>) {
     val client = NioUdpClient()
-    val host = InetAddress.getLocalHost()
-    val port = 4221
+
+    val host: InetAddress
+    val port: Int
+
+    if (args.size == 2) {
+        host = InetAddress.getByName(args[0])
+        HOST = host.toString()
+        port = args[1].toInt()
+        PORT = port
+    } else {
+        host = InetAddress.getByName(HOST)
+        port = PORT
+    }
 
     client.sendToAddress = InetSocketAddress(host, port)
 
@@ -33,11 +47,11 @@ fun main() {
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
     val execute = ExecuteScriptCommand(clientCommands, invoker)
+    val serverAddr = ServerAddressCommand(clientCommands)
 
     val info = InfoCommand(dbCommands)
     val show = ShowCommand(dbCommands)
     val add = AddCommand(dbCommands)
-    val addTest = AddTestCommand(dbCommands)
     val update = UpdateCommand(dbCommands)
     val remove = RemoveIdCommand(dbCommands)
     val clear = ClearCommand(dbCommands)
@@ -50,20 +64,10 @@ fun main() {
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addTest
+        removeByLocation, filterByColor, printHairColor, serverAddr
     )
 
     invoker.genHelp() // Генерируем строку помощи
-
-    // Временное сохранение прошлой сессии
-    val isExist = dbCommands.isTempSaveExist()
-    if (isExist && AskUser.isLoadTempSave()) {
-        val response = dbCommands.loadTempSave()
-        if (response)
-            printGreen("Сохранение загружено!")
-        else
-            printerr("Не получилось загрузить сохранение")
-    }
 
     val cc = CustomConsole(invoker)
 

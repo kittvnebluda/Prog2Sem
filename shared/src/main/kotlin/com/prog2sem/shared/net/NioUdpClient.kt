@@ -12,29 +12,39 @@ import kotlin.jvm.Throws
  * Настраивает клиент
  */
 open class NioUdpClient(
-    private val bufferCapacity: Int = 1024,
-    timeout: Int = 10000,
-    configureBlocking: Boolean = true
+    private val bufferCapacity: Int = 1024
 ) : Talker, AddressTalker {
 
     var channel: DatagramChannel = DatagramChannel.open()
     lateinit var sendToAddress: SocketAddress
 
     init {
-        channel.socket().soTimeout = timeout // set timeout
-        channel.configureBlocking(configureBlocking)
+        channel.configureBlocking(false)
     }
 
-    @Throws(SocketTimeoutException::class)
     override fun receive(): String {
         val buffer: ByteBuffer = ByteBuffer.allocate(bufferCapacity)
-        val address = channel.receive(buffer)
+
+        var counter = 0
+        var address: SocketAddress?
+        do {
+            counter += 1
+            address = channel.receive(buffer)
+            when(counter % 10) {
+                1 -> print("\rЖдем    ")
+                3 -> print("\rЖдем..  ")
+                6 -> print("\rЖдем... ")
+                9 -> print("\rЖдем... ")
+            }
+        } while (address == null && counter < 2000000)
+
         val message = Buffer.toString(buffer)
         println("Received message from server: $address")
         return message
     }
 
     override fun send(msg: String, address: SocketAddress) {
+        println("Sending: $msg")
         val buffer: ByteBuffer = ByteBuffer.wrap(msg.toByteArray())
         channel.send(buffer, address)
     }

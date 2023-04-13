@@ -12,8 +12,8 @@ const val MAX_HISTORY_SIZE = 12
 val HISTORY = mutableListOf<String>()
 var ISQUIT = false
 var HELP = ""
-var HOST = "127.0.0.1"
-var PORT = 4221
+var DEFAULT_HOST = "127.0.0.1"
+var DEFAULT_PORT = 4221
 
 fun main(args: Array<String>) {
     val client = NioUdpClient()
@@ -23,18 +23,17 @@ fun main(args: Array<String>) {
 
     if (args.size == 2) {
         host = InetAddress.getByName(args[0])
-        HOST = host.toString()
         port = args[1].toInt()
-        PORT = port
     } else {
-        host = InetAddress.getByName(HOST)
-        port = PORT
+        host = InetAddress.getByName(DEFAULT_HOST)
+        port = DEFAULT_PORT
     }
 
     client.sendToAddress = InetSocketAddress(host, port)
 
     val dbCommands = InetDataBaseCommands(client)
-    val clientCommands = ConsoleClientCommands()
+    val clientCommands = ConsoleLocalCommands()
+    val inetCommands = ConsoleInetCommands(client)
     val invoker = ConsoleInvoker()
 
     // Создаем экземпляры команд
@@ -42,7 +41,8 @@ fun main(args: Array<String>) {
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
     val execute = ExecuteScriptCommand(clientCommands, invoker)
-    val serverAddr = ServerAddressCommand(clientCommands)
+    val showServerAddr = ShowServerAddressCommand(inetCommands)
+    val setServerAddr = SetServerAddressCommand(inetCommands)
 
     val info = InfoCommand(dbCommands)
     val show = ShowCommand(dbCommands)
@@ -60,7 +60,7 @@ fun main(args: Array<String>) {
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addTest, serverAddr
+        removeByLocation, filterByColor, printHairColor, addTest, showServerAddr, setServerAddr
     )
 
     invoker.genHelp() // Генерируем строку помощи

@@ -11,7 +11,7 @@ import java.util.*
 /**
  * Класс консольных работающих без сервера команд пользователя.
  */
-class ConsoleClientCommands : LocalCommands, InetCommands {
+class ConsoleLocalCommands : LocalCommands {
     companion object {
         private val openedScripts = LinkedList<String>()
     }
@@ -53,9 +53,5 @@ class ConsoleClientCommands : LocalCommands, InetCommands {
         HISTORY.forEachIndexed { index, s ->
             println("${index + 1}. $s")
         }
-    }
-
-    override fun getServerAddr() {
-        println("Адрес сервера: $HOST:$PORT")
     }
 }

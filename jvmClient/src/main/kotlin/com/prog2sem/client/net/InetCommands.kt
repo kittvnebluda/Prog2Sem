@@ -7,5 +7,9 @@ interface InetCommands {
     /**
      * Обеспечивает вывод информации об адресе сервера
      */
-    fun getServerAddr()
+    fun showServerAddr()
+    /**
+     * Обеспечивает изменение адреса сервера
+     */
+    fun setServerAddr(address: String, port: Int)
 }

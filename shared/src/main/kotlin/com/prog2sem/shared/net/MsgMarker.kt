@@ -1,6 +1,6 @@
 package com.prog2sem.shared.net
 
-import com.prog2sem.shared.JsonWorker.json
+import com.prog2sem.shared.utils.JsonWorker.json
 import com.prog2sem.shared.exceptions.GotErrorMsgException
 import com.prog2sem.shared.exceptions.MsgException
 import com.prog2sem.shared.exceptions.NotMarkedMsgException

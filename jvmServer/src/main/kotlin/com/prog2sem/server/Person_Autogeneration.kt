@@ -1,7 +1,7 @@
 package com.prog2sem.server
 
 import com.prog2sem.server.Important.idGen
-import com.prog2sem.shared.CustomSerializers
+import com.prog2sem.shared.utils.CustomSerializers
 import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.Serializable
 import java.time.ZonedDateTime

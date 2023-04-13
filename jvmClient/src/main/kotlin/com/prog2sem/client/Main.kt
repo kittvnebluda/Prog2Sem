@@ -1,8 +1,7 @@
 package com.prog2sem.client
 
-import com.prog2sem.client.net.ConsoleClientCommands
-import com.prog2sem.client.net.InetDataBaseCommands
-import com.prog2sem.client.net.commands.*
+import com.prog2sem.client.cmdpattern.*
+import com.prog2sem.client.net.*
 import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.shared.net.NioUdpClient
 import java.net.InetAddress

@@ -2,7 +2,7 @@ package com.prog2sem.client.net
 
 import com.prog2sem.client.*
 import com.prog2sem.client.utils.CustomConsole
-import com.prog2sem.shared.Invoker
+import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import java.io.File
 import java.io.FileNotFoundException

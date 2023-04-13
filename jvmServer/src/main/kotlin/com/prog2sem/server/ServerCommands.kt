@@ -1,7 +1,7 @@
 package com.prog2sem.server
 
 
-import com.prog2sem.shared.net.Command
+import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.MsgMarker.getGeneric
 import com.prog2sem.shared.net.MsgMarker.markGeneric
 

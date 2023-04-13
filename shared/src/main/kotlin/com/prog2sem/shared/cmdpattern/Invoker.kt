@@ -1,6 +1,4 @@
-package com.prog2sem.shared
-
-import com.prog2sem.shared.net.Command
+package com.prog2sem.shared.cmdpattern
 
 /**
  * Интерфейс для классов, хранящих и вызывающих команды

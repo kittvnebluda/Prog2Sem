@@ -4,7 +4,7 @@ import com.prog2sem.client.HISTORY
 import com.prog2sem.client.ISQUIT
 import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.client.io.ColorfulOut.randLightANSI
-import com.prog2sem.shared.Invoker
+import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.exceptions.MsgException
 

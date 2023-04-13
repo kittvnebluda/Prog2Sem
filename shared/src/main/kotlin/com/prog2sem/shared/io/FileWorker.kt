@@ -1,11 +1,10 @@
-package com.prog2sem.shared
+package com.prog2sem.shared.io
 
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 
 object FileWorker {
-
     private const val COUNT_OF_TRYING = 3
 
     /**
@@ -36,7 +35,6 @@ object FileWorker {
      * @param args
      * @return
      */
-
     fun writeFileFromEnterFilePath(filePath: String, vararg args: Any): Boolean {
 
         var file = File(filePath)
@@ -64,7 +62,6 @@ object FileWorker {
      * @param filePath
      * @return
      */
-
     private fun createFileWithEnterPath(filePath: String): File {
         val file = File(filePath)
         file.createNewFile()
@@ -75,6 +72,7 @@ object FileWorker {
      * @param filePath
      * @return
      */
+    // TODO("Check how it works")
     fun clearFile(filePath: String) {
         val file = File(filePath)
         val outputStr = FileOutputStream(file)
@@ -90,5 +88,4 @@ object FileWorker {
         outputStr.write("".toByteArray())
         outputStr.close()
     }
-    /* TODO("Check how it work") */
 }

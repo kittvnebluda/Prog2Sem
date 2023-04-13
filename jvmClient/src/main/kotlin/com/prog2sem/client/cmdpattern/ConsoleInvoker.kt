@@ -1,9 +1,12 @@
-package com.prog2sem.client
+package com.prog2sem.client.cmdpattern
 
+import com.prog2sem.client.HELP
+import com.prog2sem.client.HISTORY
+import com.prog2sem.client.MAX_HISTORY_SIZE
 import com.prog2sem.client.utils.CustomConsole
-import com.prog2sem.shared.Invoker
+import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
-import com.prog2sem.shared.net.Command
+import com.prog2sem.shared.cmdpattern.Command
 import kotlin.math.max
 
 /**

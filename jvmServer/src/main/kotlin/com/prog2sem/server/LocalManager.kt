@@ -5,8 +5,8 @@ import com.prog2sem.server.Important.autoSaveFileName
 import com.prog2sem.server.Important.idGen
 import com.prog2sem.server.Important.isSaved
 import com.prog2sem.shared.Color
-import com.prog2sem.shared.FileWorker
-import com.prog2sem.shared.JsonWorker.json
+import com.prog2sem.shared.io.FileWorker
+import com.prog2sem.shared.utils.JsonWorker.json
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.Person

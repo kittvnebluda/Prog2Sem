@@ -2,7 +2,7 @@ package com.prog2sem.shared.persona
 
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Coordinates
-import com.prog2sem.shared.CustomSerializers.KZonedDateTimeSerializer
+import com.prog2sem.shared.utils.CustomSerializers.KZonedDateTimeSerializer
 import com.prog2sem.shared.Location
 import kotlinx.serialization.Serializable
 import java.time.ZonedDateTime

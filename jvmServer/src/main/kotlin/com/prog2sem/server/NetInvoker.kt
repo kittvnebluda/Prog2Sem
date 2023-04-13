@@ -1,8 +1,8 @@
 package com.prog2sem.server
 
-import com.prog2sem.shared.Invoker
+import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
-import com.prog2sem.shared.net.Command
+import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.MsgMarker
 
 /**

@@ -14,10 +14,10 @@ val SELECTOR: Selector = Selector.open()
 val NOW_IP = InetAddress.getLocalHost()
 
 fun main(args: Array<String>) {
-//    com.prog2sem.shared.FileWorker.clearFile(ImportantVal().filePath)
+//    com.prog2sem.shared.io.FileWorker.clearFile(ImportantVal().filePath)
     var fileName = "DataBaseSaveFile"
     if (args.isNotEmpty())
-//        com.prog2sem.shared.FileWorker.clearFile(args[0])
+//        com.prog2sem.shared.io.FileWorker.clearFile(args[0])
         fileName = args[0]
 
     DataBaseSim.readDataFromFile(fileName)

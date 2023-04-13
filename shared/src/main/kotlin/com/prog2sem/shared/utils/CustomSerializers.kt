@@ -1,4 +1,4 @@
-package com.prog2sem.shared
+package com.prog2sem.shared.utils
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

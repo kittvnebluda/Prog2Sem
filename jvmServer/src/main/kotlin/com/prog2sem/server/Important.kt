@@ -1,7 +1,7 @@
 package com.prog2sem.server
 
-import com.prog2sem.shared.FileWorker
-import com.prog2sem.shared.JsonWorker.json
+import com.prog2sem.shared.io.FileWorker
+import com.prog2sem.shared.utils.JsonWorker.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString

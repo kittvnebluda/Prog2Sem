@@ -13,6 +13,7 @@ object Important {
     var isSaved = false
 
     fun save() {
+        idGen.save()
         if (isSaved) FileWorker.writeFileFromEnterFilePath(
             fileName,
             json.encodeToString(Ser(idGen, isSaved))

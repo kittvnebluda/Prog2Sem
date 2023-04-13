@@ -4,7 +4,6 @@ import com.prog2sem.shared.utils.Buffer
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.SocketAddress
-import java.net.SocketTimeoutException
 import java.nio.ByteBuffer
 import java.nio.channels.DatagramChannel
 
@@ -16,22 +15,19 @@ open class NioUdpServer(
     host: InetAddress,
     port: Int,
     val bufferCapacity: Int = 1024,
-    timeout: Int = 10000,
-    configureBlocking: Boolean = false
 ) : Talker, AddressTalker {
 
     var channel: DatagramChannel = DatagramChannel.open()
     private lateinit var sendToAddress: SocketAddress
 
     init {
-        channel.socket().soTimeout = timeout // Set timeout
         val address = InetSocketAddress(host, port)
         // The server is listening
         channel.bind(address)
         println("Receiver started at $address")
-        channel.configureBlocking(configureBlocking)
+        channel.configureBlocking(false)
     }
-    @Throws(SocketTimeoutException::class)
+
     override fun receive(): String {
         val buffer: ByteBuffer = ByteBuffer.allocate(bufferCapacity)
         var nulladress : SocketAddress? = null
@@ -48,9 +44,9 @@ open class NioUdpServer(
      * @param address адрес отправки сообщения
      */
     override fun send(msg: String, address: SocketAddress) {
+        println("Sending: $msg")
         val buffer: ByteBuffer = ByteBuffer.wrap(msg.toByteArray())
         channel.send(buffer, address)
-        println("Sent mes $msg")
     }
 
     /**

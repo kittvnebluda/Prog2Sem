@@ -27,6 +27,7 @@ object Scheduler {
             val rec = SHEDULER.receive()
             if (rec.isNotEmpty()) INVOKER.proceed(rec)
         } catch (ex: Exception) {
+            println(ex.message)
             when(ex) {
                 is IllegalArgumentException, is InvalidUserInputException -> {
                     SHEDULER.send(MsgMarker.markGeneric("Пакеты повредились при транспортировке, пожалуйста попробуйте снова"))

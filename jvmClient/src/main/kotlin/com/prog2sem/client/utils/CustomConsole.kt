@@ -53,9 +53,7 @@ class CustomConsole(private val invoker: Invoker) {
         }
     }
 
-    /**
-     * Главная функция класса, реализующая постоянное "общение" с пользователем
-     */
+    /** Главная функция класса, реализующая постоянное "общение" с пользователем */
     fun talkWithUserForever() {
         greetings()
         while (!ISQUIT) {
@@ -66,6 +64,7 @@ class CustomConsole(private val invoker: Invoker) {
                 when (e) {
                     is InvalidUserInputException -> println(e.message)
                     is MsgException -> println(e.message)
+                    else -> throw e
                 }
             }
         }

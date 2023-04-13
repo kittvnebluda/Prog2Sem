@@ -5,6 +5,7 @@ plugins {
 }
 
 group = "com.prog2sem"
+version = "1.1-SNAPSHOT"
 
 dependencies {
     implementation(project(":shared"))

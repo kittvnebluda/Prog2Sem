@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.prog2sem"
-version = "1.0-SNAPSHOT"
+version = "1.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.prog2sem.application.ServerKt")
+    mainClass.set("com.prog2sem.server.ServerKt")
 }
 
 tasks.withType<Jar> {

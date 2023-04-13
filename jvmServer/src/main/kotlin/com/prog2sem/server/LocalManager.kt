@@ -1,15 +1,14 @@
 package com.prog2sem.server
 
-import com.prog2sem.shared.Color
 import com.prog2sem.server.DataBaseSim.dataBaseSim
 import com.prog2sem.server.Important.autoSaveFileName
 import com.prog2sem.server.Important.idGen
 import com.prog2sem.server.Important.isSaved
+import com.prog2sem.shared.Color
 import com.prog2sem.shared.FileWorker
 import com.prog2sem.shared.JsonWorker.json
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.DataBaseCommands
-import com.prog2sem.shared.net.MsgMarker
 import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.encodeToString
 

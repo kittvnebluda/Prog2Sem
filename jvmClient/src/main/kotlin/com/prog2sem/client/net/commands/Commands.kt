@@ -1,14 +1,14 @@
 package com.prog2sem.client.net.commands
 
-import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.client.MAX_HISTORY_SIZE
 import com.prog2sem.client.net.InetCommands
-import com.prog2sem.shared.exceptions.InvalidUserInputException
-import com.prog2sem.shared.Invoker
-import com.prog2sem.client.utils.CreateFromStd
 import com.prog2sem.client.net.LocalCommands
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.NoNamePersonBuilder
+import com.prog2sem.client.utils.CreateFromStd
+import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.shared.Invoker
+import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.net.Command
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
@@ -69,7 +69,6 @@ class ServerAddressCommand(
     override fun execute(args: List<String>) {
         commands.getServerAddr()
     }
-
 }
 
 /** Реализация вызова команды получения информации о коллекции */

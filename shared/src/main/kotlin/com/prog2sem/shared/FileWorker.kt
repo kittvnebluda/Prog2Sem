@@ -2,7 +2,7 @@ package com.prog2sem.shared
 
 import java.io.File
 import java.io.FileOutputStream
-import java.util.Scanner
+import java.util.*
 
 object FileWorker {
 

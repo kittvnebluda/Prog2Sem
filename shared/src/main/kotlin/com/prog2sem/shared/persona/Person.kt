@@ -4,8 +4,8 @@ import com.prog2sem.shared.Color
 import com.prog2sem.shared.Coordinates
 import com.prog2sem.shared.CustomSerializers.KZonedDateTimeSerializer
 import com.prog2sem.shared.Location
-import java.time.ZonedDateTime
 import kotlinx.serialization.Serializable
+import java.time.ZonedDateTime
 
 /**
  * Класс описывающий личность
@@ -47,9 +47,7 @@ data class Person(
         if (height != other.height) return false
         if (weight != other.weight) return false
         if (hairColor != other.hairColor) return false
-        if (location != other.location) return false
-
-        return true
+        return location == other.location
     }
 
     override fun hashCode(): Int {

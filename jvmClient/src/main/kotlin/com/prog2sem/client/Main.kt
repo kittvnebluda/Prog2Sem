@@ -1,16 +1,12 @@
 package com.prog2sem.client
 
-import com.prog2sem.client.utils.AskUser
-import com.prog2sem.client.net.InetDataBaseCommands
-import com.prog2sem.client.io.ColorfulOut.printGreen
-import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.client.net.ConsoleClientCommands
+import com.prog2sem.client.net.InetDataBaseCommands
 import com.prog2sem.client.net.commands.*
 import com.prog2sem.client.utils.CustomConsole
 import com.prog2sem.shared.net.NioUdpClient
 import java.net.InetAddress
 import java.net.InetSocketAddress
-import kotlin.properties.Delegates
 
 const val MAX_HISTORY_SIZE = 12
 
@@ -47,7 +43,7 @@ fun main(args: Array<String>) {
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
     val execute = ExecuteScriptCommand(clientCommands, invoker)
-//    val serverAddr = ServerAddressCommand(clientCommands)
+    val serverAddr = ServerAddressCommand(clientCommands)
 
     val info = InfoCommand(dbCommands)
     val show = ShowCommand(dbCommands)
@@ -65,7 +61,7 @@ fun main(args: Array<String>) {
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addTest
+        removeByLocation, filterByColor, printHairColor, addTest, serverAddr
     )
 
     invoker.genHelp() // Генерируем строку помощи

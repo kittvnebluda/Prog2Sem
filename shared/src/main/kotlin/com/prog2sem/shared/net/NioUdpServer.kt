@@ -7,7 +7,6 @@ import java.net.SocketAddress
 import java.net.SocketTimeoutException
 import java.nio.ByteBuffer
 import java.nio.channels.DatagramChannel
-import kotlin.jvm.Throws
 
 /**
  * Класс обеспечивающий обмен данными с помощью датаграмм из покета nio.

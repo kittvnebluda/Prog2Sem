@@ -1,13 +1,12 @@
 package com.prog2sem.client.persona
 
-import com.prog2sem.client.utils.CustomConsole
-import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.client.utils.CreateFromStd
-import com.prog2sem.shared.*
+import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.shared.Coordinates
+import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.persona.BirthPersonBuilder
 import com.prog2sem.shared.persona.PersonBuilder
-import java.lang.NumberFormatException
 import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
 

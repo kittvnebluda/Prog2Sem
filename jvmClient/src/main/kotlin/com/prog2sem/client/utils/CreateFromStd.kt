@@ -1,9 +1,9 @@
 package com.prog2sem.client.utils
 
-import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.client.io.ColorfulOut.printerr
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
+import com.prog2sem.shared.exceptions.InvalidUserInputException
 
 object CreateFromStd {
     /** Создать Location из пользовательского ввода */

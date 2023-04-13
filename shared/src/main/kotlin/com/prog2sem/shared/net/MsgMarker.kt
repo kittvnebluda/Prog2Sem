@@ -2,11 +2,10 @@ package com.prog2sem.shared.net
 
 import com.prog2sem.shared.JsonWorker.json
 import com.prog2sem.shared.exceptions.GotErrorMsgException
-import com.prog2sem.shared.exceptions.NotMarkedMsgException
 import com.prog2sem.shared.exceptions.MsgException
+import com.prog2sem.shared.exceptions.NotMarkedMsgException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlin.jvm.Throws
 
 /**
  * Маркирует сообщения разного рода в строку.

@@ -37,9 +37,7 @@ class Person_Autogeneration (val person: Person) {
 
         if (person == other.person) return false
         if (id != other.id) return false
-        if (creationDate != other.creationDate) return false
-
-        return true
+        return creationDate == other.creationDate
     }
 
     override fun hashCode(): Int {

@@ -6,5 +6,4 @@ import com.prog2sem.shared.net.MsgMarker
  * Класс получения ошибки в сообщении
  * @param error строка с маркировкой [MsgMarker.MarkCodes.ERR]
  */
-class GotErrorMsgException(error: String) : MsgException(MsgMarker.getError(error)){
-}
+class GotErrorMsgException(error: String) : MsgException(MsgMarker.getError(error))

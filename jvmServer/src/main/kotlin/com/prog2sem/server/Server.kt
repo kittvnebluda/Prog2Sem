@@ -32,11 +32,11 @@ suspend fun main(args: Array<String>) {
 
     initCommands()
 
-    checking()
-
     Runtime.getRuntime().addShutdownHook(Thread {
         saveAll()
     })
+
+    checking()
 }
 
 fun initCommands(){
@@ -64,7 +64,7 @@ fun load(){
 }
 fun saveAll(){
     Important.save()
-    LocalManager.save(autoSaveFileName)
+    LocalManager.save(fileName)
 }
 
 suspend fun checking() {

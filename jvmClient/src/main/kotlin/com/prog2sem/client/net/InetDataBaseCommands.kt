@@ -18,7 +18,7 @@ class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
         return funTalk("info")
     }
 
-    override fun show(): String {
+    override fun show(): Array<Person> {
         return funTalk("show")
     }
 

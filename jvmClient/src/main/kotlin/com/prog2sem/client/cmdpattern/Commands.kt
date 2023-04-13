@@ -106,7 +106,7 @@ class ShowCommand(private val manager: DataBaseCommands, override val name: Stri
     override val desc: String = "вывести все элементы коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        println(manager.show())
+        CustomConsole.outIterable(manager.show())
     }
 }
 

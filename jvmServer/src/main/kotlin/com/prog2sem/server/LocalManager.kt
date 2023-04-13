@@ -21,9 +21,10 @@ object LocalManager : ServCom, DataBaseCommands {
         return DataBaseSim.toString()
     }
 
-    override fun show(): String {
-        return dataBaseSim.toString().filter { it != '[' && it != ']' }
-            .replace(", ", "")
+    override fun show(): Array<Person> {
+        val persons = mutableListOf<Person>()
+        dataBaseSim.forEach { persons.add(it.person) }
+        return persons.toTypedArray()
     }
 
     override fun update(index: Int, e: Person): Boolean {
@@ -43,7 +44,7 @@ object LocalManager : ServCom, DataBaseCommands {
             creationDate = newPerson.creationDate
         }
         removeId(newPerson.id)
-        return TODO("Добавить возращение")
+        return true
     }
 
     override fun removeId(id: Int): Boolean {

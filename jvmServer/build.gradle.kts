@@ -27,7 +27,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.prog2sem.application.ServerKt")
+    mainClass.set("com.prog2sem.server.ServerKt")
 }
 
 tasks.withType<Jar> {

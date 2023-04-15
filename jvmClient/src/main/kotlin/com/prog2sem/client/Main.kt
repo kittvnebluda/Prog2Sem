@@ -2,7 +2,7 @@ package com.prog2sem.client
 
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.*
-import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.client.utils.Smt
 import com.prog2sem.shared.net.NioUdpClient
 import java.net.InetAddress
 import java.net.InetSocketAddress
@@ -65,7 +65,5 @@ fun main(args: Array<String>) {
 
     invoker.genHelp() // Генерируем строку помощи
 
-    val cc = CustomConsole(invoker)
-
-    cc.talkWithUserForever()
+    Smt.talkWithUserForever(invoker)
 }

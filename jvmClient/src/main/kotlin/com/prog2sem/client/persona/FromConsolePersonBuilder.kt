@@ -1,8 +1,8 @@
 package com.prog2sem.client.persona
 
-import com.prog2sem.client.io.ColorfulOut.printerr
+import com.prog2sem.client.io.ColorfulOut.printlnRed
 import com.prog2sem.client.utils.CreateFromStd
-import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.client.utils.StringWorker.splitSpaces
 import com.prog2sem.shared.Coordinates
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.persona.BirthPersonBuilder
@@ -32,18 +32,18 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
                 println("Введите координаты, x и y ")
             else {
                 try {
-                    val fineInput = CustomConsole.splitSpaces(input)
+                    val fineInput = splitSpaces(input)
                     if (fineInput.size < 2)
                         throw InvalidUserInputException("Нужно ввести два числа через пробел. Попробуйте еще раз!")
                     coordinates = Coordinates(fineInput[0].toFloat(), fineInput[1].toDouble())
                     if (coordinates!!.x > -948 && coordinates!!.y <= 453)
                         break
                     else
-                        printerr("x должен быть больше -948, а y должен быть меньше 453. Попробуйте еще раз!")
+                        printlnRed("x должен быть больше -948, а y должен быть меньше 453. Попробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    printerr("Не получилось пропарсить строку в числа. Помните: x - Float, y - Double. Попробуйте еще раз!")
+                    printlnRed("Не получилось пропарсить строку в числа. Помните: x - Float, y - Double. Попробуйте еще раз!")
                 } catch (e: InvalidUserInputException) {
-                    printerr(e.message!!)
+                    printlnRed(e.message!!)
                 }
             }
             input = readlnOrNull()
@@ -59,9 +59,9 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
             else {
                 try {
                     height = input.trim().toLong()
-                    if (height!! > 0) break else printerr("Высота человека должна быть больше 0. Пропробуйте еще раз!")
+                    if (height!! > 0) break else printlnRed("Высота человека должна быть больше 0. Пропробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    printerr("Не получается пропарсить строку как Long. Попробуйте еще раз!")
+                    printlnRed("Не получается пропарсить строку как Long. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -79,7 +79,7 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
                     birthday = ZonedDateTime.parse(input.trim())
                     break
                 } catch (e: DateTimeParseException) {
-                    printerr("Не получается пропарсить дату. Попробуйте еще раз!")
+                    printlnRed("Не получается пропарсить дату. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -95,9 +95,9 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
             else {
                 try {
                     weight = input.trim().toInt()
-                    if (weight!! > 0) break else printerr("Высота человека должна быть больше 0. Пропробуйте еще раз!")
+                    if (weight!! > 0) break else printlnRed("Высота человека должна быть больше 0. Пропробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    printerr("Не получается пропарсить строку как Int. Попробуйте еще раз!")
+                    printlnRed("Не получается пропарсить строку как Int. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()

@@ -3,7 +3,7 @@ package com.prog2sem.client.cmdpattern
 import com.prog2sem.client.HELP
 import com.prog2sem.client.HISTORY
 import com.prog2sem.client.MAX_HISTORY_SIZE
-import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.client.utils.StringWorker.splitSpaces
 import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
@@ -25,7 +25,7 @@ class ConsoleInvoker : Invoker {
 
     override fun proceed(cmd: String) {
         // Разделяем ввод и достаем команду
-        val postCmd = CustomConsole.splitSpaces(cmd)
+        val postCmd = splitSpaces(cmd)
         val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
 
         val args = postCmd.slice(1 until postCmd.size)

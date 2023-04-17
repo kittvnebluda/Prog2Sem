@@ -21,7 +21,7 @@ class SetServerAddressCommand(
     override val name: String = "set_server_addr"
 ) : Command {
     override val desc: String = "Выводит адрес сервера"
-    override val methodsDesc: Map<String, String> = emptyMap()
+    override val methodsDesc: Map<String, String> = mapOf(Pair("address", "адрес хоста"), Pair("port", "порт хоста"))
     override fun execute(args: List<String>) {
         try {
             if (args.size > 1)

@@ -47,7 +47,8 @@ fun main(args: Array<String>) {
     val info = InfoCommand(dbCommands)
     val show = ShowCommand(dbCommands)
     val add = AddCommand(dbCommands)
-    val addTest = AddTestCommand(dbCommands)
+    val addRnd = AddRndCommand(dbCommands)
+    val fill = FillCommand(dbCommands)
     val update = UpdateCommand(dbCommands)
     val remove = RemoveIdCommand(dbCommands)
     val clear = ClearCommand(dbCommands)
@@ -60,7 +61,7 @@ fun main(args: Array<String>) {
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addTest, showServerAddr, setServerAddr
+        removeByLocation, filterByColor, printHairColor, addRnd, showServerAddr, setServerAddr, fill
     )
 
     invoker.genHelp() // Генерируем строку помощи

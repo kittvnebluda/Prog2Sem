@@ -6,24 +6,29 @@ import com.prog2sem.shared.Location
 import com.prog2sem.shared.persona.BirthPersonBuilder
 import com.prog2sem.shared.persona.PersonBuilder
 import java.time.ZonedDateTime
+import kotlin.random.Random
 
 /**
  * Класс персоны без имени
  */
-class NoNamePersonBuilder : BirthPersonBuilder() {
+class RndPersonBuilder : BirthPersonBuilder() {
+    companion object {
+        private val names = arrayOf("Века", "Вилка", "Сюзанна", "Андрей Григорьевич", "Года", "Кака")
+        private val locations = arrayOf("Марианская впадина", "Луна", "Уран", "Орбита Солнца", "Африка", "Звезда смерти")
+    }
 
     override fun chooseName(): PersonBuilder {
-        name = "Noname"
+        name = names[Random.nextInt(names.size)]
         return this
     }
 
     override fun chooseCoordinates(): PersonBuilder {
-        coordinates = Coordinates(42f, 21.0)
+        coordinates = Coordinates(Random.nextFloat() * -948, Random.nextDouble(453.0))
         return this
     }
 
     override fun chooseHeight(): PersonBuilder {
-        height = 255
+        height = Random.nextLong(1, 1000)
         return this
     }
 
@@ -33,17 +38,21 @@ class NoNamePersonBuilder : BirthPersonBuilder() {
     }
 
     override fun chooseWeight(): PersonBuilder {
-        weight = 69
+        weight = Random.nextInt(1, 1000)
         return this
     }
 
     override fun chooseHairColor(): PersonBuilder {
-        hairColor = Color.BLACK
+        hairColor = Color.values()[Random.nextInt(Color.values().size)]
         return this
     }
 
     override fun chooseLocation(): PersonBuilder {
-        location = Location(55.1540200f, 61.4291500f, 219)
+        location = Location(
+            Random.nextFloat() * 100,
+            Random.nextFloat() * 100,
+            Random.nextInt(),
+            locations[Random.nextInt(locations.size)])
         return this
     }
 }

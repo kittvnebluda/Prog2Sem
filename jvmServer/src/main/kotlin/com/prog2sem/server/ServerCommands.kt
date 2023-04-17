@@ -2,8 +2,8 @@ package com.prog2sem.server
 
 
 import com.prog2sem.shared.cmdpattern.Command
-import com.prog2sem.shared.net.MsgMarker.getGeneric
-import com.prog2sem.shared.net.MsgMarker.markGeneric
+import com.prog2sem.shared.utils.MsgMarker.getGeneric
+import com.prog2sem.shared.utils.MsgMarker.markGeneric
 
 
 /** Реализация вызова команды получения информации о коллекции */

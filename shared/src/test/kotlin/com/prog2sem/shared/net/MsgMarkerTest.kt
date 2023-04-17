@@ -1,6 +1,7 @@
 package com.prog2sem.shared.net
 
 import com.prog2sem.shared.Location
+import com.prog2sem.shared.utils.MsgMarker
 import com.prog2sem.shared.utils.Packets
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -33,16 +34,13 @@ class MsgMarkerTest {
 
     @Test
     fun testPackets() {
-        val s = "128301928"
-        val msg = MsgMarker.markPacket(s, 1)
-        val newMsg = MsgMarker.getPacket(msg)
-
-        assert(s == newMsg.second)
-
         val string = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-        val msg1 = Packets.generate(string)
-        val newMsg1 = Packets.merge(msg1)
+        val msg = Packets.generate(string)
+        val newMsg = Packets.merge(msg)
 
-        assert(string == newMsg1)
+        println(msg)
+        println(newMsg)
+
+        assert(string == newMsg)
     }
 }

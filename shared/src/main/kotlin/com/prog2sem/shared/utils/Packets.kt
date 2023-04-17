@@ -1,6 +1,6 @@
 package com.prog2sem.shared.utils
 
-import com.prog2sem.shared.net.MsgMarker
+import kotlin.math.absoluteValue
 
 object Packets {
     /**
@@ -14,7 +14,10 @@ object Packets {
      */
     fun generate(string: String): List<String> {
         var i = 0
-        return cut(string).map { MsgMarker.markPacket(it, ++i) }.toList()
+        val packets = cut(string).map { MsgMarker.markPacket(it, ++i) }.toMutableList()
+        // Маркеруем последний пакет
+        packets[packets.lastIndex] = packets[packets.lastIndex].replaceFirst("{", "{-")
+        return packets
     }
     /**
      * Объединяет лист строк, помеченных как пакеты, в строку, соблюдая порядок покетов
@@ -23,8 +26,8 @@ object Packets {
         return packets
             .stream()
             .map { MsgMarker.getPacket(it) }
-            .sorted { pair1, pair2 -> if(pair1.first > pair2.first) 1 else -1 }
-            .map { it.second }
+            .sorted { pair1, pair2 -> if(pair1.second.absoluteValue > pair2.second.absoluteValue) 1 else -1 }
+            .map { it.first }
             .toList()
             .joinToString("")
     }

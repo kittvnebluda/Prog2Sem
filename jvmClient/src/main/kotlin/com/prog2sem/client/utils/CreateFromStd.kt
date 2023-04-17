@@ -1,6 +1,7 @@
 package com.prog2sem.client.utils
 
-import com.prog2sem.client.io.ColorfulOut.printerr
+import com.prog2sem.client.io.ColorfulOut.printlnRed
+import com.prog2sem.client.utils.StringWorker.splitSpaces
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.exceptions.InvalidUserInputException
@@ -15,7 +16,7 @@ object CreateFromStd {
                 println("Введите местоположение человека: x, y, z и название места, если хотите")
             else {
                 try {
-                    val fineInput = CustomConsole.splitSpaces(input)
+                    val fineInput = splitSpaces(input)
                     if (fineInput.size < 3)
                         throw InvalidUserInputException("Нужно ввести минимум три числа через пробел. Попробуйте еще раз!")
                     val locName = if (fineInput.size > 3) fineInput[3] else null
@@ -23,9 +24,9 @@ object CreateFromStd {
                         Location(fineInput[0].toFloat(), fineInput[1].toFloat(), fineInput[2].toInt(), locName)
                     break
                 } catch (e: NumberFormatException) {
-                    printerr("Не получилось пропарсить строку в числа. Помните: x - Float, y - Float, z - Int. Попробуйте еще раз!")
+                    printlnRed("Не получилось пропарсить строку в числа. Помните: x - Float, y - Float, z - Int. Попробуйте еще раз!")
                 } catch (e: InvalidUserInputException) {
-                    printerr(e.message!!)
+                    printlnRed(e.message!!)
                 }
             }
             input = readlnOrNull()
@@ -45,7 +46,7 @@ object CreateFromStd {
                     color = Color.valueOf(input.trim().uppercase())
                     break
                 } catch (e: IllegalArgumentException) {
-                    printerr("Не найден цвет ${input.trim().uppercase()}. Попробуйте еще раз!")
+                    printlnRed("Не найден цвет ${input.trim().uppercase()}. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()

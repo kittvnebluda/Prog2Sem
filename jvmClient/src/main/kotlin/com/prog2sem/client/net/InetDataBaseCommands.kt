@@ -1,17 +1,20 @@
 package com.prog2sem.client.net
 
+import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.DataBaseCommands
-import com.prog2sem.shared.net.MsgMarker
+import com.prog2sem.shared.utils.MsgMarker
 import com.prog2sem.shared.net.Talker
 import com.prog2sem.shared.persona.Person
 
 class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
     private inline fun <reified T> funTalk(funName: String, vararg params: String): T {
         client.send(MsgMarker.markFun(funName, *params))
-        val response = client.receive()
-        return MsgMarker.getGenOrException(response)
+        client.receive()?.let {
+            return MsgMarker.getGenOrException(it)
+        }
+        throw ServerNotAnsweringException()
     }
 
     override fun info(): String {

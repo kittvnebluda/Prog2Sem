@@ -3,7 +3,7 @@ package com.prog2sem.server
 import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
-import com.prog2sem.shared.net.MsgMarker
+import com.prog2sem.shared.utils.MsgMarker
 
 /**
  * Класс хранящий и вызывающий команды

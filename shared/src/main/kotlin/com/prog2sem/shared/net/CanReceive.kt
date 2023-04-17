@@ -4,5 +4,5 @@ interface CanReceive {
     /**
      * Метод обеспечивающий получение сообщения
      */
-    fun receive(): String
+    fun receive(): String?
 }

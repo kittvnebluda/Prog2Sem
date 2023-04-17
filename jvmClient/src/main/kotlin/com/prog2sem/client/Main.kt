@@ -3,7 +3,7 @@ package com.prog2sem.client
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.*
 import com.prog2sem.client.utils.Smt
-import com.prog2sem.shared.net.NioUdpClient
+import com.prog2sem.shared.net.PacketsUDP
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
@@ -16,7 +16,7 @@ var DEFAULT_HOST = "127.0.0.1"
 var DEFAULT_PORT = 4221
 
 fun main(args: Array<String>) {
-    val client = NioUdpClient()
+    val client = PacketsUDP()
 
     val host: InetAddress
     val port: Int

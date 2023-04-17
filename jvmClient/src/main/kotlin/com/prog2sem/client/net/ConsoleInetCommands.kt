@@ -1,9 +1,9 @@
 package com.prog2sem.client.net
 
-import com.prog2sem.shared.net.NioUdpClient
+import com.prog2sem.shared.net.UDP
 import java.net.InetSocketAddress
 
-class ConsoleInetCommands(val client: NioUdpClient) : InetCommands {
+class ConsoleInetCommands(val client: UDP) : InetCommands {
     override fun showServerAddr() {
         println("Адрес сервера: ${client.sendToAddress}")
     }

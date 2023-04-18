@@ -11,7 +11,7 @@ class UDPTest {
     fun sendReceive() {
         // Инициализируемся
         val host = InetAddress.getLocalHost()
-        val port = 4221
+        val port = 4222
 
         val client = UDP()
         val server = UDPServer(host, port)

@@ -2,11 +2,10 @@ package com.prog2sem.androidClient
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.prog2sem.application.Greeting
 import android.widget.TextView
 
 fun greet(): String {
-    return Greeting().greeting()
+    return "ЕПТ!"
 }
 
 class MainActivity : AppCompatActivity() {

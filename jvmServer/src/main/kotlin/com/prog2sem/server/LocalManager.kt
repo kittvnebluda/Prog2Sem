@@ -27,10 +27,10 @@ object LocalManager : ServCom, DataBaseCommands {
         return persons.toTypedArray()
     }
 
-    override fun update(index: Int, e: Person): Boolean {
+    override fun update(index: Int, p: Person): Boolean {
 //        dataBaseSim.sortedDescending()
 
-        val newPerson = Person_Autogeneration(e)
+        val newPerson = Person_Autogeneration(p)
 
         val el = dataBaseSim.elementAtOrNull(index - 1) ?: return TODO("Добавить возращение")
         with(el) {
@@ -47,15 +47,15 @@ object LocalManager : ServCom, DataBaseCommands {
         return true
     }
 
-    override fun removeId(id: Int): Boolean {
+    override fun removeId(index: Int): Boolean {
         val size = dataBaseSim.size
-        dataBaseSim.removeIf { it.id == id }
-        idGen.newRemovedId(id)
+        dataBaseSim.removeIf { it.id == index }
+        idGen.newRemovedId(index)
         return size != dataBaseSim.size
     }
 
-    override fun add(e: Person): Boolean {
-        val person = Person_Autogeneration(e)
+    override fun add(p: Person): Boolean {
+        val person = Person_Autogeneration(p)
         return dataBaseSim.add(person)
     }
 
@@ -76,9 +76,9 @@ object LocalManager : ServCom, DataBaseCommands {
         return isSuccess
     }
 
-    override fun removeGreater(e: Person): Boolean {
+    override fun removeGreater(p: Person): Boolean {
         val size = dataBaseSim.size
-        dataBaseSim.removeIf { val check = it.person > e; if (check) idGen.newRemovedId(it.id); return@removeIf check }
+        dataBaseSim.removeIf { val check = it.person > p; if (check) idGen.newRemovedId(it.id); return@removeIf check }
         return dataBaseSim.size != size
     }
 
@@ -101,9 +101,9 @@ object LocalManager : ServCom, DataBaseCommands {
         return Person.colors.toTypedArray()
     }
 
-    override fun addIfMin(e: Person): Boolean {
+    override fun addIfMin(p: Person): Boolean {
 
-        val person = Person_Autogeneration(e)
+        val person = Person_Autogeneration(p)
 
         val minPerson = dataBaseSim.minBy { it.id }
 

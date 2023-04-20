@@ -1,7 +1,7 @@
 package com.prog2sem.client.net
 
 import com.prog2sem.client.*
-import com.prog2sem.client.utils.CustomConsole
+import com.prog2sem.client.io.ColorfulOut.printlnGreen
 import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import java.io.File
@@ -36,7 +36,7 @@ class ConsoleLocalCommands : LocalCommands {
                 else
                     invoker.proceed(command)
             }
-            println("${CustomConsole.green}Выполнение команд завершено${CustomConsole.reset}")
+            printlnGreen("Выполнение команд завершено")
             sc.close()
             openedScripts.clear()
 

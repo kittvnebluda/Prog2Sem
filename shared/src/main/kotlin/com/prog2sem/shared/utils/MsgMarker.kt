@@ -1,4 +1,4 @@
-package com.prog2sem.shared.net
+package com.prog2sem.shared.utils
 
 import com.prog2sem.shared.utils.JsonWorker.json
 import com.prog2sem.shared.exceptions.GotErrorMsgException
@@ -15,12 +15,10 @@ object MsgMarker {
     enum class Tags {
         GEN,  // Generic tag
         ERR,  // Error tag
-        FWP,  // Function call with parameters tag
+        FUN,  // Function call with parameters tag
         PAC;  // Packet tag
 
-        operator fun plus(s: String): String {
-            return toString() + s
-        }
+        operator fun plus(s: String) = toString() + s
     }
 
     fun extract(msg: String): String {
@@ -44,7 +42,7 @@ object MsgMarker {
     }
     /** Mark function call message with corresponding parameters */
     fun markFun(funName: String, vararg params: String): String {
-        return Tags.FWP + json.encodeToString(arrayOf(funName, *params))
+        return Tags.FUN + json.encodeToString(arrayOf(funName, *params))
     }
     /**
      * Get function name with its parameters.
@@ -53,18 +51,21 @@ object MsgMarker {
     fun getFun(msg: String): Array<String> {
         return json.decodeFromString(extract(msg))
     }
-    /** Mark packet with its order */
-    fun markPacket(msg: String, order: Int): String {
-        return Tags.PAC + "{$order}" + msg
+    /** Mark packet with its index which starts with 1*/
+    fun markPacket(msg: String, index: Int, count: Int): String {
+        return Tags.PAC + "{$index/$count}" + msg
     }
-    /** Get packet with its order */
-    fun getPacket(msg: String): Pair<Int, String> {
-        val msg1 = extract(msg)
-        val orderStart = msg1.indexOf('{')
-        val orderEnd = msg1.indexOf('}')
-        val order = msg1.slice(orderStart + 1 until orderEnd).toInt()
-        val msg2 = msg1.substring(orderEnd - orderStart + 1)
-        return Pair(order, msg2)
+    /** Get the text in a packet with its index and total number of packets */
+    fun getPacket(msg: String): Triple<String, Int, Int> {
+        val indexStart = msg.indexOf('{')
+        val delimiter = msg.indexOf('/')
+        val countEnd = msg.indexOf('}')
+
+        val index = msg.slice(indexStart + 1 until delimiter).toInt()
+        val count = msg.slice(delimiter + 1 until countEnd).toInt()
+
+        val innerMsg = msg.substring(countEnd + 1)
+        return Triple(innerMsg, index, count)
     }
 
     /**
@@ -73,12 +74,10 @@ object MsgMarker {
      * @throws NotMarkedMsgException
      */
     fun which(msg: String): Tags {
-        return when("$msg   ".slice(0..2)) {
-            Tags.GEN.toString() -> Tags.GEN
-            Tags.ERR.toString() -> Tags.ERR
-            Tags.FWP.toString() -> Tags.FWP
-            else -> throw NotMarkedMsgException()
-        }
+        val slice = "$msg   ".slice(0..2)
+        for (tag in Tags.values())
+            if (slice == tag.toString()) return tag
+        throw NotMarkedMsgException()
     }
 
     /**

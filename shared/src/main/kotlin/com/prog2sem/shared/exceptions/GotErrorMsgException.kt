@@ -1,6 +1,6 @@
 package com.prog2sem.shared.exceptions
 
-import com.prog2sem.shared.net.MsgMarker
+import com.prog2sem.shared.utils.MsgMarker
 
 /**
  * Класс получения ошибки в сообщении

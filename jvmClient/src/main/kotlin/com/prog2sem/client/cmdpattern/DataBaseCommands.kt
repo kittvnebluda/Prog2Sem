@@ -1,94 +1,13 @@
 package com.prog2sem.client.cmdpattern
 
-import com.prog2sem.client.MAX_HISTORY_SIZE
-import com.prog2sem.client.io.ColorfulOut
-import com.prog2sem.client.net.InetCommands
-import com.prog2sem.client.net.LocalCommands
 import com.prog2sem.client.persona.FromConsolePersonBuilder
-import com.prog2sem.client.persona.NoNamePersonBuilder
+import com.prog2sem.client.persona.RndPersonBuilder
 import com.prog2sem.client.utils.CreateFromStd
-import com.prog2sem.client.utils.CustomConsole
-import com.prog2sem.shared.cmdpattern.Invoker
+import com.prog2sem.client.utils.Smt
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
-
-/** Вызов команды помощи */
-class HelpCommand(private val commands: LocalCommands, override val name: String = "help") :
-    Command {
-    override val desc: String = "описание команд"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        commands.help()
-    }
-}
-
-/** Вызов команды завершения программы */
-class ExitCommand(private val commands: LocalCommands, override val name: String = "exit") :
-    Command {
-    override val desc: String = "завершение программы"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        println("Удачи!")
-        commands.exit()
-    }
-}
-
-/** Вызов истории выполненных команд */
-class HistoryCommand(private val commands: LocalCommands, override val name: String = "history") :
-    Command {
-    override val desc: String = "обеспечивает вывод последних $MAX_HISTORY_SIZE команд без их аргументов"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        commands.history()
-    }
-}
-
-/** Вызов выполнения скрипта */
-class ExecuteScriptCommand(
-    private val commands: LocalCommands,
-    private val invoker: Invoker,
-    override val name: String = "execute"
-) : Command {
-    override val desc: String = "исполнение скрипта из указанного файла"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        if (args.isNotEmpty())
-            commands.executeScript(args[0], invoker)
-        else
-            throw InvalidUserInputException("В команде пропущен путь файла")
-    }
-}
-
-class ShowServerAddressCommand(
-    private val commands: InetCommands,
-    override val name: String = "show_server_addr"
-) : Command {
-    override val desc: String = "Выводит адрес сервера"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        commands.showServerAddr()
-    }
-}
-
-class SetServerAddressCommand(
-    private val commands: InetCommands,
-    override val name: String = "set_server_addr"
-) : Command {
-    override val desc: String = "Выводит адрес сервера"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
-        try {
-            if (args.size > 1)
-                commands.setServerAddr(args[0], args[1].toInt())
-            else
-                throw InvalidUserInputException("Не указаны адрес или порт (Пример: \"127.0.0.1 1872\")")
-        } catch (e: Exception) {
-            ColorfulOut.printerr("Неправильно введен адрес (Пример: \"127.0.0.1 1872\"). Попробуйте еще раз!")
-        }
-    }
-}
 
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") :
@@ -106,7 +25,7 @@ class ShowCommand(private val manager: DataBaseCommands, override val name: Stri
     override val desc: String = "вывести все элементы коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.outIterable(manager.show())
+        Smt.outIterable(manager.show())
     }
 }
 
@@ -117,20 +36,38 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
-        CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.outBool(manager.add(person))
+        Smt.addArgToHistory(person.toString())
+        Smt.outBool(manager.add(person))
     }
 }
 
-/** Реализация вызова команды добавления готового элемента в коллекцию */
-class AddTestCommand(private val manager: DataBaseCommands, override val name: String = "add_noname") :
+/** Реализация вызова команды добавления случайного элемента в коллекцию */
+class AddRndCommand(private val manager: DataBaseCommands,
+                    override val name: String = "add_rnd") :
     Command {
-    override val desc: String = "добавить готовый элемент в коллекцию"
+    override val desc: String = "добавить случайно сгенерированный элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        val person = PersonDirector(NoNamePersonBuilder()).createPerson()
-        CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.outBool(manager.add(person))
+        val person = PersonDirector(RndPersonBuilder()).createPerson()
+        Smt.addArgToHistory(person.toString())
+        Smt.outBool(manager.add(person))
+    }
+}
+
+/** Реализация вызова команды добавления множества случайных элементов в коллекцию */
+class FillCommand(private val manager: DataBaseCommands, override val name: String = "fill") :
+    Command {
+    override val desc: String = "заполнить коллекцию случайно сгенерированными элементами"
+    override val methodsDesc: Map<String, String> = mapOf(Pair("amount", "количество генерируемых элементов"))
+    override fun execute(args: List<String>) {
+        val amount = if (args.isNotEmpty()) args[0].toInt()
+        else throw InvalidUserInputException("Не указано количество элементов")
+
+        for (i in 1..amount) {
+            val person = PersonDirector(RndPersonBuilder()).createPerson()
+            Smt.addArgToHistory(person.toString())
+            Smt.outBool(manager.add(person))
+        }
     }
 }
 
@@ -144,8 +81,8 @@ class UpdateCommand(private val manager: DataBaseCommands, override val name: St
         else throw InvalidUserInputException("Не указаны индекс класса и его имя")
 
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
-        CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.outBool(manager.update(index, person))
+        Smt.addArgToHistory(person.toString())
+        Smt.outBool(manager.update(index, person))
     }
 }
 
@@ -157,7 +94,7 @@ class RemoveIdCommand(private val manager: DataBaseCommands, override val name: 
     override fun execute(args: List<String>) {
         val index = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указан индекс класса")
-        CustomConsole.outBool(manager.removeId(index))
+        Smt.outBool(manager.removeId(index))
     }
 }
 
@@ -167,7 +104,7 @@ class ClearCommand(private val manager: DataBaseCommands, override val name: Str
     override val desc: String = "очистить коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        CustomConsole.outBool(manager.clear())
+        Smt.outBool(manager.clear())
     }
 }
 
@@ -179,8 +116,8 @@ class AddIfMinCommand(private val manager: DataBaseCommands, override val name: 
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
-        CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.outBool(manager.addIfMin(person))
+        Smt.addArgToHistory(person.toString())
+        Smt.outBool(manager.addIfMin(person))
     }
 }
 
@@ -193,8 +130,8 @@ class RemoveGreaterCommand(
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
-        CustomConsole.addArgToHistory(person.toString())
-        CustomConsole.outBool(manager.removeGreater(person))
+        Smt.addArgToHistory(person.toString())
+        Smt.outBool(manager.removeGreater(person))
     }
 }
 
@@ -208,8 +145,8 @@ class RemoveAllByLocationCommand(
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
     override fun execute(args: List<String>) {
         val location = CreateFromStd.location(args.joinToString(" "))
-        CustomConsole.addArgToHistory(location.toString())
-        CustomConsole.outBool(manager.removeAllByLocation(location))
+        Smt.addArgToHistory(location.toString())
+        Smt.outBool(manager.removeAllByLocation(location))
     }
 }
 
@@ -222,9 +159,9 @@ class FilterGreaterThanHairColorCommand(
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
     override fun execute(args: List<String>) {
         val color = CreateFromStd.color(args.joinToString(" "))
-        CustomConsole.addArgToHistory(color.toString())
+        Smt.addArgToHistory(color.toString())
         val res = manager.filterGreaterThanHairColor(color)
-        CustomConsole.outIterable(res)
+        Smt.outIterable(res)
     }
 }
 
@@ -237,6 +174,6 @@ class PrintFieldAscendingHairColorCommand(
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
         val res = manager.printFieldAscendingHairColor()
-        CustomConsole.outIterable(res)
+        Smt.outIterable(res)
     }
 }

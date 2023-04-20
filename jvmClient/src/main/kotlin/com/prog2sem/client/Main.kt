@@ -2,8 +2,9 @@ package com.prog2sem.client
 
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.*
-import com.prog2sem.client.utils.CustomConsole
-import com.prog2sem.shared.net.NioUdpClient
+import com.prog2sem.client.utils.Smt
+import com.prog2sem.client.net.InetDataBaseCommands
+import com.prog2sem.shared.net.PacketsUDP
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
@@ -16,7 +17,7 @@ var DEFAULT_HOST = "127.0.0.1"
 var DEFAULT_PORT = 4221
 
 fun main(args: Array<String>) {
-    val client = NioUdpClient()
+    val client = PacketsUDP()
 
     val host: InetAddress
     val port: Int
@@ -47,7 +48,8 @@ fun main(args: Array<String>) {
     val info = InfoCommand(dbCommands)
     val show = ShowCommand(dbCommands)
     val add = AddCommand(dbCommands)
-    val addTest = AddTestCommand(dbCommands)
+    val addRnd = AddRndCommand(dbCommands)
+    val fill = FillCommand(dbCommands)
     val update = UpdateCommand(dbCommands)
     val remove = RemoveIdCommand(dbCommands)
     val clear = ClearCommand(dbCommands)
@@ -60,12 +62,10 @@ fun main(args: Array<String>) {
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addTest, showServerAddr, setServerAddr
+        removeByLocation, filterByColor, printHairColor, addRnd, showServerAddr, setServerAddr, fill
     )
 
     invoker.genHelp() // Генерируем строку помощи
 
-    val cc = CustomConsole(invoker)
-
-    cc.talkWithUserForever()
+    Smt.talkWithUserForever(invoker)
 }

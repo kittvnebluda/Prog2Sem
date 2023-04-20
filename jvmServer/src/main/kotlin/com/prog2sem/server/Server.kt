@@ -1,18 +1,12 @@
 package com.prog2sem.server
 
-import com.prog2sem.server.Important.autoSaveFileName
-import com.prog2sem.server.Important.isSaved
-import com.prog2sem.server.Important.loadAuto
-import com.prog2sem.shared.net.NioUdpServer
+import com.prog2sem.shared.net.PacketsUDPServer
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import java.net.InetAddress
-import java.nio.channels.SelectionKey
-import java.nio.channels.Selector
 
-val SHEDULER = NioUdpServer(InetAddress.getLocalHost(), 4221)
+val SHEDULER = PacketsUDPServer(InetAddress.getLocalHost(), 4221)
 val INVOKER = NetInvoker()
 //val SELECTOR: Selector = Selector.open()
 //val NOW_IP = InetAddress.getLocalHost()

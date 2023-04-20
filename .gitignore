@@ -11,3 +11,5 @@ local.properties
 /shared/build/
 /jvmClient/build/
 /jvmServer/build/
+/androidClient/build/
+/clientsShared/build/

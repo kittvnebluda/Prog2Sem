@@ -9,6 +9,7 @@ version = "1.1-SNAPSHOT"
 
 dependencies {
     implementation(project(":shared"))
+    implementation(project(":clientsShared"))
     implementation(project(":jvmServer"))
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")

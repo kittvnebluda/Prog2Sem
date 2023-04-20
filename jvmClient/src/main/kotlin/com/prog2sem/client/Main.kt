@@ -3,6 +3,7 @@ package com.prog2sem.client
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.*
 import com.prog2sem.client.utils.Smt
+import com.prog2sem.client.net.InetDataBaseCommands
 import com.prog2sem.shared.net.PacketsUDP
 import java.net.InetAddress
 import java.net.InetSocketAddress

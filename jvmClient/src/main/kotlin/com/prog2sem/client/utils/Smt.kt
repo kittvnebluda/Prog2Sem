@@ -2,7 +2,7 @@ package com.prog2sem.client.utils
 
 import com.prog2sem.client.HISTORY
 import com.prog2sem.client.ISQUIT
-import com.prog2sem.clientsShared.exceptions.ServerNotAnsweringException
+import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.io.ColorfulOut.printRandColor
 import com.prog2sem.client.io.ColorfulOut.printlnGreen
 import com.prog2sem.client.io.ColorfulOut.printlnRed

@@ -24,7 +24,7 @@ open class PacketsUDP(
 
         var address: SocketAddress?
 
-        var packetsCount = 10000000  // Ставим большое начальное количество пакетов в сообщении
+        var packetsCount = 1000000000  // Ставим большое начальное количество пакетов в сообщении
         var received = 0  // Счетчик полученных датаграмм
 
         var timeStart = System.currentTimeMillis()
@@ -45,17 +45,12 @@ open class PacketsUDP(
                 packets.add(packet)
                 println("Получили: $packet ")
 
-                if (packet.length > 5) {
+                if (packet.length > 7) {
                     received++
                     // Определяем количество пакетов (пытаемся найти пакет с отрицательным порядковым номером)
-                    val packetNumber = MsgMarker.getPacket(packet).second
-                    if (packetNumber < 0)
-                        packetsCount = -packetNumber
-
-                    println("Получили $received пакет(ов)")
+                    packetsCount = MsgMarker.getPacket(packet).third
                 } else
-                    println("Говно, а не пакет")
-
+                    println("WARNING!!! Говно, а не пакет")
 
             // Если мы не получили датаграмму
             }?:run {
@@ -67,6 +62,8 @@ open class PacketsUDP(
                 }
             }
         } while (timeDiff < timeout && received < packetsCount)
+
+        println("Received $received packet(s)")
 
         return if (packetsCount == received) {
             println("Received all packets from server: $address")

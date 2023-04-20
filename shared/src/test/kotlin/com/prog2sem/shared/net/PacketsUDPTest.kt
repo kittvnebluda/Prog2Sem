@@ -3,6 +3,7 @@ package com.prog2sem.shared.net
 import org.junit.jupiter.api.Test
 import java.net.InetAddress
 import java.net.InetSocketAddress
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class PacketsUDPTest {
@@ -25,18 +26,13 @@ class PacketsUDPTest {
         var text = "AYAYA.HI"
         client.send(text, InetSocketAddress(host, port))
         var msg = server.receive()
-        assertTrue(
-            msg == "AYAYA.HI",
-            "Полученное сервером $msg и отправленное клиентом $text не совпадают"
-        )
+        assertEquals(msg, text, "Полученное сервером $msg и отправленное клиентом $text не совпадают")
 
         // Проверяем способность отправлять сервера и получать клиента
-        text = "NEVER GONNA GIVE YOU UP"
+        text = "NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP"
         server.send(text)
         msg = client.receive()!!
-        assertTrue(
-            msg == "NEVER GONNA GIVE YOU UP",
-            "Полученное клиентом $msg и отправленное сервером $text не совпадают"
-        )
+
+        assertEquals(msg, text, "Полученное клиентом $msg и отправленное сервером $text не совпадают")
     }
 }

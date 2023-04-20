@@ -51,18 +51,21 @@ object MsgMarker {
     fun getFun(msg: String): Array<String> {
         return json.decodeFromString(extract(msg))
     }
-    /** Mark packet with its order */
-    fun markPacket(msg: String, order: Int): String {
-        return Tags.PAC + "{$order}" + msg
+    /** Mark packet with its index which starts with 1*/
+    fun markPacket(msg: String, index: Int, count: Int): String {
+        return Tags.PAC + "{$index/$count}" + msg
     }
-    /** Get packet with its order */
-    fun getPacket(msg: String): Pair<String, Int> {
-        val msg1 = extract(msg)
-        val orderStart = msg1.indexOf('{')
-        val orderEnd = msg1.indexOf('}')
-        val order = msg1.slice(orderStart + 1 until orderEnd).toInt()
-        val msg2 = msg1.substring(orderEnd - orderStart + 1)
-        return Pair(msg2, order)
+    /** Get the text in a packet with its index and total number of packets */
+    fun getPacket(msg: String): Triple<String, Int, Int> {
+        val indexStart = msg.indexOf('{')
+        val delimiter = msg.indexOf('/')
+        val countEnd = msg.indexOf('}')
+
+        val index = msg.slice(indexStart + 1 until delimiter).toInt()
+        val count = msg.slice(delimiter + 1 until countEnd).toInt()
+
+        val innerMsg = msg.substring(countEnd + 1)
+        return Triple(innerMsg, index, count)
     }
 
     /**

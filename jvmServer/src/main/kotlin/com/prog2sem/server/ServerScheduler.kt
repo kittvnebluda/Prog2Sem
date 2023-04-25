@@ -28,23 +28,31 @@ object ServerScheduler {
                     val address = server.sendToAddress
 
                     if (!packetsTable.containsKey(address)) {
-                        addressToKill.add(Pair(address, launch {
+                        addressToKill.add(Pair(address, async {
                             delay(timeOut)
                         }))
                         packetsTable[address] = mutableListOf(pack)
                         packetsSizeTable[address] =
                             pack.substring(pack.indexOf('/') + 1, pack.indexOf('}')).toInt()
-                        if (packetsTable[address]?.size == packetsSizeTable[address]) doTask(
-                            packetsTable[address] as List<String>,
-                            address as InetSocketAddress
-                        )
+                        if (packetsTable[address]?.size == packetsSizeTable[address]){
+                            val list = packetsTable[address] as List<String>
+                            val adr = address as InetSocketAddress
+                            doTask(
+                                list,
+                                adr
+                            )
+                        }
                     } else {
                         packetsTable[address]?.add(pack)
                         println(packetsTable[address])
-                        if (packetsTable[address]?.size == packetsSizeTable[address]) doTask(
-                            packetsTable[address] as List<String>,
-                            address as InetSocketAddress
-                        )
+                        if (packetsTable[address]?.size == packetsSizeTable[address]) {
+                            val list = packetsTable[address] as List<String>
+                            val adr = address as InetSocketAddress
+                            doTask(
+                                list,
+                                adr
+                            )
+                        }
                     }
                 }
             }
@@ -54,7 +62,6 @@ object ServerScheduler {
             while (true) {
                 if (addressToKill.isNotEmpty()){
                     val job = addressToKill.element().second
-                    job.join()
                     if (job.isCompleted) {
                         val address = addressToKill.remove().first
                         println("Remove address $address")
@@ -66,13 +73,24 @@ object ServerScheduler {
         }
     }.await()
 
-    private suspend fun doTask(packets: List<String>, address: InetSocketAddress) = coroutineScope {
-        async {
-            var msg = Packets.merge(packets)
-            msg = address.hostString + ":" + address.port + ":" + msg
-            println(msg)
-            INVOKER.proceed(msg)
+    private fun checkAddressToKill(address: InetSocketAddress): Boolean {
+        var t = false
+        for (el in addressToKill) {
+            t = el.first == address
+            if (t) break
         }
+        return t
+    }
+    private fun doTask(packets: List<String>, address: InetSocketAddress) {
+
+        addressToKill.remove()
+        packetsTable.remove(address)
+        packetsSizeTable.remove(address)
+
+        var msg = Packets.merge(packets)
+        msg = address.hostString + ":" + address.port + ":" + msg
+        println(msg)
+        INVOKER.proceed(msg)
     }
     private suspend fun killAddress(addressToKill: SocketAddress) = coroutineScope {
 
@@ -82,7 +100,6 @@ object ServerScheduler {
         var cnt = 0
         Packets.generate(msg).forEach {
             cnt++
-            println("Sending: $it")
             server.send(it, address)
         }
         println("Sent $cnt packet(s)")

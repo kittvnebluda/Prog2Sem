@@ -24,13 +24,11 @@ open class  UDP : Talker, AddressTalker {
 
         return channel.receive(buffer)?.let {
             sendToAddress = it
-            println("Received message from sender: $sendToAddress")
             Buffer.toString(buffer)
         }
     }
 
     override fun send(msg: String, address: SocketAddress) {
-        println("Sending: $msg")
         val buffer: ByteBuffer = ByteBuffer.wrap(msg.toByteArray())
         channel.send(buffer, address)
     }

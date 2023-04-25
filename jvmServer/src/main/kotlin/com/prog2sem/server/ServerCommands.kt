@@ -14,7 +14,6 @@ class InfoCommand(override val name: String = "info") : Command {
     override val desc: String = "вывести информацию о коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>) {
-        println(args[1])
         val port = args[1] as Int
         val address = InetSocketAddress(InetAddress.getByName(args[0]), port)
         send(markGeneric(LocalManager.info()), address)

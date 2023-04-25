@@ -43,7 +43,6 @@ open class PacketsUDP(
 
                 val packet = Buffer.toString(buffer)
                 packets.add(packet)
-                println("Получили: $packet ")
 
                 if (packet.length > 7) {
                     received++
@@ -63,10 +62,7 @@ open class PacketsUDP(
             }
         } while (timeDiff < timeout && received < packetsCount)
 
-        println("Received $received packet(s)")
-
         return if (packetsCount == received) {
-            println("Received all packets from server: $address")
             Packets.merge(packets)
         } else {
             println("Время ожидания вышло!")
@@ -83,10 +79,8 @@ open class PacketsUDP(
         var cnt = 0
         Packets.generate(msg).forEach {
             cnt++
-            println("Sending: $it")
             val buffer: ByteBuffer = ByteBuffer.wrap(it.toByteArray())
             channel.send(buffer, address)
         }
-        println("Sent $cnt packet(s)")
     }
 }

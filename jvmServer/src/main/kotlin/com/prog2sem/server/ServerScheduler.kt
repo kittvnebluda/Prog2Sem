@@ -44,7 +44,6 @@ object ServerScheduler {
                         }
                     } else {
                         packetsTable[address]?.add(pack)
-                        println(packetsTable[address])
                         if (packetsTable[address]?.size == packetsSizeTable[address]) {
                             val list = packetsTable[address] as List<String>
                             val adr = address as InetSocketAddress
@@ -64,7 +63,6 @@ object ServerScheduler {
                     val job = addressToKill.element().second
                     if (job.isCompleted) {
                         val address = addressToKill.remove().first
-                        println("Remove address $address")
                         packetsTable.remove(address)
                         packetsSizeTable.remove(address)
                     }
@@ -89,7 +87,6 @@ object ServerScheduler {
 
         var msg = Packets.merge(packets)
         msg = address.hostString + ":" + address.port + ":" + msg
-        println(msg)
         INVOKER.proceed(msg)
     }
     private suspend fun killAddress(addressToKill: SocketAddress) = coroutineScope {
@@ -102,7 +99,6 @@ object ServerScheduler {
             cnt++
             server.send(it, address)
         }
-        println("Sent $cnt packet(s)")
     }
 
 }

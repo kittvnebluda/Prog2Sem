@@ -14,7 +14,7 @@ val server = UDPServer(InetAddress.getLocalHost(), 4221)
 //val SELECTOR: Selector = Selector.open()
 //val NOW_IP = InetAddress.getLocalHost()
 val fileName = "DataBaseSaveFile"
-const val AUTOSAVE_TIMEOUT = 15000L
+const val AUTOSAVE_TIMEOUT = 30000L
 
 suspend fun main(args: Array<String>) {
 //    com.prog2sem.shared.io.FileWorker.clearFile(ImportantVal().filePath)

@@ -25,6 +25,7 @@ class MsgMarkerTest {
         assert(p1 == rep1)
         assert(p2 == rep2)
     }
+
     @Test
     fun whichMarkTest() {
         val s = "ERROR"

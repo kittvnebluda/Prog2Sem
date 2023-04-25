@@ -8,7 +8,7 @@ import java.nio.channels.DatagramChannel
 /**
  * Класс обеспечивающий обмен данными с помощью датаграмм из покета nio в неблокирущем режиме
  */
-open class UDP : Talker, AddressTalker {
+open class  UDP : Talker, AddressTalker {
 
     protected val bufferCapacity: Int = 1024
 

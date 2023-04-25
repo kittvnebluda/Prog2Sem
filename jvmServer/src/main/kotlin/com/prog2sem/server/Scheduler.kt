@@ -5,7 +5,7 @@ import com.prog2sem.shared.utils.MsgMarker
 
 object Scheduler {
 
-    fun listener() {
+    /*fun listener() {
         /*println(SELECTOR.select())
         val keys = SELECTOR.selectedKeys()
         while (keys.iterator().hasNext()){
@@ -38,7 +38,7 @@ object Scheduler {
         }
     }
 
-/*    fun speaker() {
+    fun speaker() {
         println("Speak")
         SELECTOR.select()
         val keys = SELECTOR.selectedKeys()

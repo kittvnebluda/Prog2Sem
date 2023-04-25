@@ -1,28 +1,32 @@
 package com.prog2sem.server
 
 import com.prog2sem.shared.net.PacketsUDPServer
+import com.prog2sem.shared.net.UDPServer
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.SocketException
 
-val SHEDULER = PacketsUDPServer(InetAddress.getLocalHost(), 4221)
 val INVOKER = NetInvoker()
+val server = UDPServer(InetAddress.getLocalHost(), 4221)
 //val SELECTOR: Selector = Selector.open()
 //val NOW_IP = InetAddress.getLocalHost()
-var fileName = "DataBaseSaveFile"
+val fileName = "DataBaseSaveFile"
 const val AUTOSAVE_TIMEOUT = 15000L
 
 suspend fun main(args: Array<String>) {
 //    com.prog2sem.shared.io.FileWorker.clearFile(ImportantVal().filePath)
 
-    if (args.isNotEmpty())
-//        com.prog2sem.shared.io.FileWorker.clearFile(args[0])
-        fileName = args[0]
+    try {
+         server.channel.connect(InetSocketAddress(args[0], args[1].toInt()))
+        println("Connect to ${server.channel.localAddress}")
+    }catch(e : Exception){
+        println("Can not connect to input address connect to local address ${server.channel.localAddress}")
+    }
 
     load()
-
-    println(InetAddress.getLocalHost())
 
     initCommands()
 
@@ -62,6 +66,7 @@ fun saveAll(){
 }
 
 suspend fun checking() {
+
     coroutineScope {
         async {
             while (true) {
@@ -70,10 +75,7 @@ suspend fun checking() {
                 saveAll()
             }
         }
-        async {
-            while (true){
-                Scheduler.listener()
-            }
-        }
+
+        ServerScheduler.scheduler()
     }
 }

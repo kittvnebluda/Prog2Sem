@@ -1,13 +1,12 @@
 package com.prog2sem.server
 
-import com.prog2sem.shared.net.PacketsUDPServer
 import com.prog2sem.shared.net.UDPServer
+import com.prog2sem.shared.utils.Log
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import java.net.InetAddress
 import java.net.InetSocketAddress
-import java.net.SocketException
 
 val INVOKER = NetInvoker()
 val server = UDPServer(InetAddress.getLocalHost(), 4221)
@@ -17,13 +16,14 @@ val fileName = "DataBaseSaveFile"
 const val AUTOSAVE_TIMEOUT = 30000L
 
 suspend fun main(args: Array<String>) {
+
 //    com.prog2sem.shared.io.FileWorker.clearFile(ImportantVal().filePath)
 
     try {
-         server.channel.connect(InetSocketAddress(args[0], args[1].toInt()))
-        println("Connect to ${server.channel.localAddress}")
+        server.channel.connect(InetSocketAddress(args[0], args[1].toInt()))
+        Log.i("Connect to ${server.channel.localAddress}")
     }catch(e : Exception){
-        println("Can not connect to input address connect to local address ${server.channel.localAddress}")
+        Log.e("Can not connect to input address connect to local address ${server.channel.localAddress}")
     }
 
     load()
@@ -35,6 +35,7 @@ suspend fun main(args: Array<String>) {
     })
 
     checking()
+
 }
 
 fun initCommands(){
@@ -57,25 +58,26 @@ fun initCommands(){
     )
 }
 fun load(){
+    Log.i("Server load info from file")
     DataBaseSim.readDataFromFile(fileName)
     Important.load()
 }
 fun saveAll(){
+    Log.i("Server save database in file")
     Important.save()
     LocalManager.save(fileName)
 }
 
-suspend fun checking() {
+suspend fun checking() = coroutineScope {
 
-    coroutineScope {
-        async {
-            while (true) {
-                delay(AUTOSAVE_TIMEOUT)
-                println("AutoSave")
-                saveAll()
-            }
+    async {
+        while (true) {
+            delay(AUTOSAVE_TIMEOUT)
+            saveAll()
         }
+    }
 
+    async {
         ServerScheduler.scheduler()
     }
 }

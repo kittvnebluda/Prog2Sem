@@ -1,11 +1,14 @@
 package com.prog2sem.shared.utils
 
 object Packets {
+
+    private const val packetSize = 100
+
     /**
      * Делит строку на куски
      */
     private fun cut(string: String): List<String> {
-        return string.chunked(100)
+        return string.chunked(packetSize)
     }
 
     /**

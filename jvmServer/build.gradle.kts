@@ -21,6 +21,7 @@ kotlin {
 
 dependencies {
     implementation(project(":shared"))
+
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-Beta")
     implementation(kotlin("test"))

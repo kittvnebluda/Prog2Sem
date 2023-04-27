@@ -5,6 +5,8 @@ import com.prog2sem.client.net.*
 import com.prog2sem.client.utils.Smt
 import com.prog2sem.client.net.InetDataBaseCommands
 import com.prog2sem.shared.net.PacketsUDP
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.core.config.Configurator
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
@@ -22,7 +24,7 @@ fun main(args: Array<String>) {
     val host: InetAddress
     val port: Int
 
-    if (args.size == 2) {
+    if (args.size >= 2) {
         host = InetAddress.getByName(args[0])
         port = args[1].toInt()
     } else {
@@ -31,6 +33,12 @@ fun main(args: Array<String>) {
     }
 
     client.sendToAddress = InetSocketAddress(host, port)
+
+    if (args.size > 2) {
+        Configurator.setRootLevel(Level.getLevel(args[2].uppercase()))
+    } else {
+        Configurator.setRootLevel(Level.getLevel("INFO"))
+    }
 
     val dbCommands = InetDataBaseCommands(client)
     val clientCommands = ConsoleLocalCommands()

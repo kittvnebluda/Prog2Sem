@@ -29,7 +29,7 @@ class SetServerAddressCommand(
             else
                 throw InvalidUserInputException("Не указаны адрес или порт (Пример: \"127.0.0.1 1872\")")
         } catch (e: Exception) {
-            ColorfulOut.printlnRed("Неправильно введен адрес (Пример: \"127.0.0.1 1872\"). Попробуйте еще раз!")
+            ColorfulOut.printlnError("Неправильно введен адрес (Пример: \"127.0.0.1 1872\"). Попробуйте еще раз!")
         }
     }
 }

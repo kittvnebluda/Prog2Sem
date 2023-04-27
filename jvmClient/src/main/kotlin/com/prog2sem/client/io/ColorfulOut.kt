@@ -1,5 +1,7 @@
 package com.prog2sem.client.io
 
+import com.prog2sem.shared.utils.Log
+
 object ColorfulOut {
     private const val red = "\u001b[31m"
     private const val green = "\u001B[32m"
@@ -16,12 +18,12 @@ object ColorfulOut {
     }
 
     /** Выводит красный текст в стандартный поток выхода */
-    fun printlnRed(s: String) {
-        println(red + s + reset)
+    fun printlnError(s: String) {
+        Log.e(red + s + reset)
     }
 
     /**  Выводит зеленый текст в стандартный поток */
     fun printlnGreen(s: String) {
-        println(green + s + reset)
+        Log.i(green + s + reset)
     }
 }

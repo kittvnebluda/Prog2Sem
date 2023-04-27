@@ -10,8 +10,10 @@ version = "1.1-SNAPSHOT"
 dependencies {
     implementation(project(":shared"))
     implementation(project(":jvmServer"))
-    testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("org.apache.logging.log4j:log4j-api:2.20.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+    testImplementation(kotlin("test"))
 }
 repositories {
     mavenCentral()

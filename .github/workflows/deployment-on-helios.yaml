@@ -19,7 +19,7 @@ jobs:
       - name: Run gradle jvm server jar task
         run: ./gradlew :jvmServer:jar
 
-      - name: Copy jvmClient.jar via ssh password
+      - name: Copy jvmClient.jar via ssh password to Kit
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
@@ -31,7 +31,7 @@ jobs:
           source: jvmClient/build/libs/jvmClient-1.1-SNAPSHOT.jar
           target: lab5client/jvmClient-1.1-SNAPSHOT.jar
 
-      - name: Copy jvmServer.jar via ssh password
+      - name: Copy jvmServer.jar via ssh password to Kit
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
@@ -43,10 +43,11 @@ jobs:
           source: jvmServer/build/libs/jvmServer-1.1-SNAPSHOT.jar
           target: lab5server/jvmServer-1.1-SNAPSHOT.jar
 
-      - name: Copy jvmClient.jar via ssh password
+      - name: Copy jvmClient.jar via ssh password to Pseh
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
@@ -54,10 +55,11 @@ jobs:
           source: jvmClient/build/libs/jvmClient-1.1-SNAPSHOT.jar
           target: lab5client/jvmClient-1.1-SNAPSHOT.jar
 
-      - name: Copy jvmServer.jar via ssh password
+      - name: Copy jvmServer.jar via ssh password to Pseh
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}

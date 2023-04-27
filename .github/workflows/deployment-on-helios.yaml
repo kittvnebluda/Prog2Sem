@@ -48,7 +48,7 @@ jobs:
         with:
           direction: upload
           fingerprint: ${{ secrets.HOST_FINGERPRINT }}
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST_SASHA }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SASHA }}
@@ -60,7 +60,7 @@ jobs:
         with:
           direction: upload
           fingerprint: ${{ secrets.HOST_FINGERPRINT }}
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST_SASHA }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SASHA }}

@@ -4,6 +4,9 @@ import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.utils.MsgMarker
+import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.SocketAddress
 
 /**
  * Класс хранящий и вызывающий команды
@@ -21,11 +24,15 @@ class NetInvoker : Invoker {
 
     override fun proceed(cmd: String) {
         // Разделяем ввод и достаем команду
-        val postCmd = MsgMarker.getFun(cmd)
-        val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
+        val address = InetAddress.getByName(cmd.substringBefore(':'))
+        var newCmd = cmd.substring(cmd.indexOf(':') + 1)
+        val port = (newCmd.substringBefore(':')).toInt()
+        newCmd = newCmd.substring(newCmd.indexOf(':') + 1)
+        val postCmd = MsgMarker.getFun(newCmd)
+        val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$newCmd: команда не найдена")
 
-        val args = postCmd.slice(1 until postCmd.size)
-
+        val args = mutableListOf(address.hostAddress, port) as MutableList<String>
+        for (el in postCmd.slice(1 until postCmd.size)) args.add(el)
         command.execute(args) // Выполняем команду
     }
 

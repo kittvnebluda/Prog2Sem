@@ -1,6 +1,7 @@
 package com.prog2sem.shared.net
 
 import com.prog2sem.shared.utils.Buffer
+import com.prog2sem.shared.utils.Log
 import com.prog2sem.shared.utils.MsgMarker
 import com.prog2sem.shared.utils.Packets
 import java.net.SocketAddress
@@ -39,17 +40,20 @@ open class PacketsUDP(
             // Если мы получили датаграмму
             address?.let {
                 timeStart = System.currentTimeMillis()
+
+                Log.d("RECEIVED FROM $address")
                 sendToAddress = address
 
                 val packet = Buffer.toString(buffer)
                 packets.add(packet)
+                Log.d("RECEIVED CONTENT: $packet")
 
                 if (packet.length > 7) {
                     received++
                     // Определяем количество пакетов (пытаемся найти пакет с отрицательным порядковым номером)
                     packetsCount = MsgMarker.getPacket(packet).third
                 } else
-                    println("WARNING!!! Говно, а не пакет")
+                    Log.w("Получено говно, а не пакет!")
 
             // Если мы не получили датаграмму
             }?:run {
@@ -63,9 +67,11 @@ open class PacketsUDP(
         } while (timeDiff < timeout && received < packetsCount)
 
         return if (packetsCount == received) {
+            Log.d("TOTAL PACKETS RECEIVED: $received")
             Packets.merge(packets)
         } else {
-            println("Время ожидания вышло!")
+            Log.d("TOTAL PACKETS RECEIVED: $received")
+            Log.i("Время ожидания вышло!")
             null
         }
     }
@@ -78,6 +84,7 @@ open class PacketsUDP(
     override fun send(msg: String, address: SocketAddress) {
         var cnt = 0
         Packets.generate(msg).forEach {
+            Log.d("SENDING $it")
             cnt++
             val buffer: ByteBuffer = ByteBuffer.wrap(it.toByteArray())
             channel.send(buffer, address)

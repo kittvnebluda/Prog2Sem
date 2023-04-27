@@ -1,6 +1,6 @@
 package com.prog2sem.client.utils
 
-import com.prog2sem.client.io.ColorfulOut.printlnRed
+import com.prog2sem.client.io.ColorfulOut.printlnError
 import com.prog2sem.client.utils.StringWorker.splitSpaces
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Location
@@ -24,9 +24,9 @@ object CreateFromStd {
                         Location(fineInput[0].toFloat(), fineInput[1].toFloat(), fineInput[2].toInt(), locName)
                     break
                 } catch (e: NumberFormatException) {
-                    printlnRed("Не получилось пропарсить строку в числа. Помните: x - Float, y - Float, z - Int. Попробуйте еще раз!")
+                    printlnError("Не получилось пропарсить строку в числа. Помните: x - Float, y - Float, z - Int. Попробуйте еще раз!")
                 } catch (e: InvalidUserInputException) {
-                    printlnRed(e.message!!)
+                    printlnError(e.message!!)
                 }
             }
             input = readlnOrNull()
@@ -46,7 +46,7 @@ object CreateFromStd {
                     color = Color.valueOf(input.trim().uppercase())
                     break
                 } catch (e: IllegalArgumentException) {
-                    printlnRed("Не найден цвет ${input.trim().uppercase()}. Попробуйте еще раз!")
+                    printlnError("Не найден цвет ${input.trim().uppercase()}. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()

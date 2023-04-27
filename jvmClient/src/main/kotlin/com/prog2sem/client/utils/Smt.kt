@@ -5,7 +5,7 @@ import com.prog2sem.client.ISQUIT
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.io.ColorfulOut.printRandColor
 import com.prog2sem.client.io.ColorfulOut.printlnGreen
-import com.prog2sem.client.io.ColorfulOut.printlnRed
+import com.prog2sem.client.io.ColorfulOut.printlnError
 import com.prog2sem.client.io.ColorfulOut.randLightANSI
 import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
@@ -33,7 +33,7 @@ object Smt {
         if (boolean)
             printlnGreen("Успех!")
         else
-            printlnRed("Неудача")
+            printlnError("Неудача")
     }
 
     /** Вывод итерабельного ответа */
@@ -56,9 +56,9 @@ object Smt {
                 invoker.proceed(readln())
             } catch (e: Exception) {
                 when (e) {
-                    is InvalidUserInputException -> println(e.message)
-                    is MsgException -> println(e.message)
-                    is ServerNotAnsweringException -> println(e.message)
+                    is InvalidUserInputException -> e.message?.let { printlnError(it) }
+                    is MsgException -> e.message?.let { printlnError(it) }
+                    is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
                     else -> throw e
                 }
             }

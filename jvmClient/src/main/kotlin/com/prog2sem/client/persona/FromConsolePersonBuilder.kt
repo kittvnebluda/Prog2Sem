@@ -1,6 +1,6 @@
 package com.prog2sem.client.persona
 
-import com.prog2sem.client.io.ColorfulOut.printlnRed
+import com.prog2sem.client.io.ColorfulOut.printlnError
 import com.prog2sem.client.utils.CreateFromStd
 import com.prog2sem.client.utils.StringWorker.splitSpaces
 import com.prog2sem.shared.Coordinates
@@ -39,11 +39,11 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
                     if (coordinates!!.x > -948 && coordinates!!.y <= 453)
                         break
                     else
-                        printlnRed("x должен быть больше -948, а y должен быть меньше 453. Попробуйте еще раз!")
+                        printlnError("x должен быть больше -948, а y должен быть меньше 453. Попробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    printlnRed("Не получилось пропарсить строку в числа. Помните: x - Float, y - Double. Попробуйте еще раз!")
+                    printlnError("Не получилось пропарсить строку в числа. Помните: x - Float, y - Double. Попробуйте еще раз!")
                 } catch (e: InvalidUserInputException) {
-                    printlnRed(e.message!!)
+                    printlnError(e.message!!)
                 }
             }
             input = readlnOrNull()
@@ -59,9 +59,9 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
             else {
                 try {
                     height = input.trim().toLong()
-                    if (height!! > 0) break else printlnRed("Высота человека должна быть больше 0. Пропробуйте еще раз!")
+                    if (height!! > 0) break else printlnError("Высота человека должна быть больше 0. Пропробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    printlnRed("Не получается пропарсить строку как Long. Попробуйте еще раз!")
+                    printlnError("Не получается пропарсить строку как Long. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -79,7 +79,7 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
                     birthday = ZonedDateTime.parse(input.trim())
                     break
                 } catch (e: DateTimeParseException) {
-                    printlnRed("Не получается пропарсить дату. Попробуйте еще раз!")
+                    printlnError("Не получается пропарсить дату. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()
@@ -95,9 +95,9 @@ class FromConsolePersonBuilder : BirthPersonBuilder() {
             else {
                 try {
                     weight = input.trim().toInt()
-                    if (weight!! > 0) break else printlnRed("Высота человека должна быть больше 0. Пропробуйте еще раз!")
+                    if (weight!! > 0) break else printlnError("Высота человека должна быть больше 0. Пропробуйте еще раз!")
                 } catch (e: NumberFormatException) {
-                    printlnRed("Не получается пропарсить строку как Int. Попробуйте еще раз!")
+                    printlnError("Не получается пропарсить строку как Int. Попробуйте еще раз!")
                 }
             }
             input = readlnOrNull()

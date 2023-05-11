@@ -174,7 +174,7 @@ object LocalManager : ServCom, DataBaseCommands {
     }
 
     override fun addLogin(login: String, password: String): Boolean {
-        val com = "insert into 's368793..\"TestLogin\" values(?, ?, ?)"
+        val com = "insert into 's368793.\"TestLogin\" values(?, ?, ?)"
 
         val hashMap = HashMap<String, Any>()
 

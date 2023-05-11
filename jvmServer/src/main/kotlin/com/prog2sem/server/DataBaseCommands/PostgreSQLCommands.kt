@@ -11,16 +11,16 @@ import java.sql.ResultSet
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public."TestJDBC"
+ALTER TABLE IF EXISTS 's368793."TestJDBC"
     OWNER to postgres;
 
 */
 
 /*
 --CREATE SEQUENCE id START 1;
---insert into public."TestJDBC" (id, name, login, password) values(nextval('id'), 'Alex', 'me', '1234')
---select * from public."TestJDBC"
---delete from public."TestJDBC"
+--insert into 's368793."TestJDBC" (id, name, login, password) values(nextval('id'), 'Alex', 'me', '1234')
+--select * from 's368793."TestJDBC"
+--delete from 's368793."TestJDBC"
 --drop SEQUENCE id;
 */
 
@@ -28,7 +28,7 @@ object PostgreSQLCommands {
 
     private lateinit var SQLConnection: Connection
 
-    const val createTableOfPersons = "CREATE TABLE IF NOT EXISTS public.\"TestJDBC\" \n" +
+    const val createTableOfPersons = "CREATE TABLE IF NOT EXISTS 's368793.\"TestJDBC\" \n" +
             "            (\n" +
             "                id integer NOT NULL,\n" +
             "                creationTime character varying,\n" +
@@ -43,7 +43,7 @@ object PostgreSQLCommands {
             "                pass character varying,\n" +
             "                CONSTRAINT \"TestJDBC_pkey\" PRIMARY KEY (id)\n" +
             "            )"
-    const val createTableOfLogins = "CREATE TABLE IF NOT EXISTS public.\"TestLogin\" \n" +
+    const val createTableOfLogins = "CREATE TABLE IF NOT EXISTS 's368793.\"TestLogin\" \n" +
             "            (\n" +
             "                id integer NOT NULL,\n" +
             "                login character varying,\n" +
@@ -51,24 +51,24 @@ object PostgreSQLCommands {
             "                CONSTRAINT \"TestLogin_pkey\" PRIMARY KEY (id)\n" +
             "            )"
 
-    const val getAllPersons = "select * from public.\"TestJDBC\""
+    const val getAllPersons = "select * from 's368793.\"TestJDBC\""
 
-    val createSequancePersons = "CREATE SEQUENCE public.id START 1"
-    val createSequanceLogins = "CREATE SEQUENCE public.id_log START 1"
+    val createSequancePersons = "CREATE SEQUENCE 's368793.id START 1"
+    val createSequanceLogins = "CREATE SEQUENCE 's368793.id_log START 1"
 
-   // val getId = "select public.id.nextval "
+   // val getId = "select 's368793.id.nextval "
 
     val personKeys = listOf("id", "createTime", "name", "weight", "height", "birthday", "hairColor", "coordinates", "location", "login", "pass")
 
     val loginKeys = listOf("id", "login", "password")
 
-    const val addPerson = "insert into public.\"TestJDBC\" values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    const val addPerson = "insert into 's368793.\"TestJDBC\" values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
     /*(${personKeys[1]}, ${personKeys[2]}, ${personKeys[3]}, ${personKeys[4]}, ${personKeys[5]}, " +
             "${personKeys[6]}, ${personKeys[7]}, ${personKeys[8]}, ${personKeys[9]}, ${personKeys[10]})*/
 
     fun startConnection(){
-        SQLConnection = DriverManager.getConnection("jdbc:postgresql://pg:5432/", "s368262", "tLBj@7203")
+        SQLConnection = DriverManager.getConnection("jdbc:postgresql://pg:5432/studs", "s368793", "mvw4a69sVJQ3dtlw")
 
         Log.i(if (!SQLConnection.isClosed) "Успешно подключились к базе дынных" else "Соединение не установлено")
     }
@@ -121,7 +121,7 @@ object PostgreSQLCommands {
     }
 
     fun getAllFromTable(): ResultSet? {
-        val all = "select * from public.\"TestJDBC\""
+        val all = "select * from 's368793.\"TestJDBC\""
 
         val statement = SQLConnection.createStatement()
 

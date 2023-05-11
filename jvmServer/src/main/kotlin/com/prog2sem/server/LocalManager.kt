@@ -48,7 +48,7 @@ object LocalManager : ServCom, DataBaseCommands {
 
         //val personKeys = listOf("id", "createTime", "name", "weight", "height", "birthday", "hairColor", "coordinates", "location", "login", "password")
 
-        val updateById = "update 's368793.\"TestJDBC\" set ${personKeys[2]} = '${p.name}', ${personKeys[3]} = ${p.weight}, ${personKeys[4]} = ${p.height}, " +
+        val updateById = "update s368793.\"TestJDBC\" set ${personKeys[2]} = '${p.name}', ${personKeys[3]} = ${p.weight}, ${personKeys[4]} = ${p.height}, " +
                 "${personKeys[5]} = '${p.birthday}', ${personKeys[6]} = '${p.hairColor}', ${personKeys[7]} = '${p.coordinates.toTable()}', " +
                 "${personKeys[8]} = '${p.location.toTable()}' " +
                 "where ${personKeys[9]} = '$login' and ${personKeys[10]} = '${encryptThisString(password)}' and ${personKeys[0]} = $index"
@@ -66,7 +66,7 @@ object LocalManager : ServCom, DataBaseCommands {
 
         Log.d("here")
 
-        val com = "delete from 's368793.\"TestJDBC\" " +
+        val com = "delete from s368793.\"TestJDBC\" " +
                 "where ${personKeys[9]} = '$login' and ${personKeys[10]} = '${encryptThisString(password)}' and ${personKeys[0]} = $index"
 
         Log.d(com)
@@ -101,7 +101,7 @@ object LocalManager : ServCom, DataBaseCommands {
     }
 
     override fun clear(): Boolean {
-        var com = "delete from 's368793.\"TestJDBC\""
+        var com = "delete from s368793.\"TestJDBC\""
 
         if (!useUpdateQueryStat(
                 com,
@@ -131,7 +131,7 @@ object LocalManager : ServCom, DataBaseCommands {
 
     override fun removeGreater(p: Person, login: String, password: String): Boolean {
 
-        val com = "delete from 's368793.\"TestJDBC\"" +
+        val com = "delete from s368793.\"TestJDBC\"" +
                 "where ${personKeys[9]} = '$login' and ${personKeys[10]} = '${encryptThisString(password)}' and ${personKeys[2]} > ${p.name}"
 
         if (!useUpdateQueryStat(
@@ -144,7 +144,7 @@ object LocalManager : ServCom, DataBaseCommands {
     }
 
     override fun removeAllByLocation(location: Location, login: String, password: String): Boolean {
-        val com = "delete from 's368793.\"TestJDBC\"" +
+        val com = "delete from s368793.\"TestJDBC\"" +
                 "where ${personKeys[9]} = '$login' and ${personKeys[10]} = '${encryptThisString(password)}' and ${personKeys[8]} = ${location.toTable()}"
 
         if (!useUpdateQueryStat(
@@ -168,13 +168,13 @@ object LocalManager : ServCom, DataBaseCommands {
     }
 
     override fun checkLogin(login: String, password: String): Boolean {
-        val com = "select * from 's368793.\"TestLogin\" where ${personKeys[1]} = '$login' and ${personKeys[2]} = '${encryptThisString(password)}'"
+        val com = "select * from s368793.\"TestLogin\" where ${personKeys[1]} = '$login' and ${personKeys[2]} = '${encryptThisString(password)}'"
 
         return useUpdateStat(com)
     }
 
     override fun addLogin(login: String, password: String): Boolean {
-        val com = "insert into 's368793.\"TestLogin\" values(?, ?, ?)"
+        val com = "insert into s368793.\"TestLogin\" values(?, ?, ?)"
 
         val hashMap = HashMap<String, Any>()
 

@@ -16,6 +16,8 @@ object MsgMarker {
         GEN,  // Generic tag
         ERR,  // Error tag
         FUN,  // Function call with parameters tag
+        LOG,
+        PAS,
         PAC;  // Packet tag
 
         operator fun plus(s: String) = toString() + s
@@ -32,6 +34,19 @@ object MsgMarker {
     inline fun <reified T> getGeneric(msg: String): T {
         return json.decodeFromString(extract(msg))
     }
+
+    fun markLogAndPas(msg: String, login: String, password: String): String{
+        return Tags.LOG + login + Tags.PAS + password + msg
+    }
+
+    fun getLogAndPas(msg: String): Pair<String, String>{
+        val login = msg.substring(3, msg.indexOf(Tags.PAS.toString()))
+        Log.d(login)
+        val password = msg.substring(msg.indexOf(Tags.PAS.toString()) + 3, msg.indexOf(Tags.PAC.toString()))
+        Log.d(password)
+        return Pair(login, password)
+    }
+
     /** Mark error message */
     fun markError(error: String): String {
         return Tags.ERR + error
@@ -52,8 +67,8 @@ object MsgMarker {
         return json.decodeFromString(extract(msg))
     }
     /** Mark packet with its index which starts with 1*/
-    fun markPacket(msg: String, index: Int, count: Int): String {
-        return Tags.PAC + "{$index/$count}" + msg
+    fun markPacket(msg: String, index: Int, count: Int, login: String, password: String): String {
+        return markLogAndPas(Tags.PAC + "{$index/$count}" + msg, login, password)
     }
     /** Get the text in a packet with its index and total number of packets */
     fun getPacket(msg: String): Triple<String, Int, Int> {

@@ -7,5 +7,5 @@ interface CanSendToAddress {
      * Метод обеспечивающий отправку сообщения [msg] по указанному адресу [address]
      * @param address адрес принимающего
      */
-    fun send(msg: String, address: SocketAddress)
+    fun send(msg: String, address: SocketAddress, login: String, password: String)
 }

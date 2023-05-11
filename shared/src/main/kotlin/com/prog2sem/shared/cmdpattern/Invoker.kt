@@ -19,5 +19,5 @@ interface Invoker {
     /**
      * Выполнить команду с ее аргументами
      */
-    fun proceed(cmd: String)
+    fun proceed(cmd: String, login: String, password: String)
 }

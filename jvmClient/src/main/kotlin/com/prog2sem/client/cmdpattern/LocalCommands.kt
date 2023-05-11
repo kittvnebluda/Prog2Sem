@@ -11,7 +11,7 @@ class HelpCommand(private val commands: LocalCommands, override val name: String
     Command {
     override val desc: String = "описание команд"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         commands.help()
     }
 }
@@ -21,7 +21,7 @@ class ExitCommand(private val commands: LocalCommands, override val name: String
     Command {
     override val desc: String = "завершение программы"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         println("Удачи!")
         commands.exit()
     }
@@ -32,7 +32,7 @@ class HistoryCommand(private val commands: LocalCommands, override val name: Str
     Command {
     override val desc: String = "обеспечивает вывод последних $MAX_HISTORY_SIZE команд без их аргументов"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         commands.history()
     }
 }
@@ -45,7 +45,7 @@ class ExecuteScriptCommand(
 ) : Command {
     override val desc: String = "исполнение скрипта из указанного файла"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         if (args.isNotEmpty())
             commands.executeScript(args[0], invoker)
         else

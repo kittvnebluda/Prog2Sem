@@ -28,7 +28,7 @@ open class  UDP : Talker, AddressTalker {
         }
     }
 
-    override fun send(msg: String, address: SocketAddress) {
+    override fun send(msg: String, address: SocketAddress, login: String, password: String) {
         val buffer: ByteBuffer = ByteBuffer.wrap(msg.toByteArray())
         channel.send(buffer, address)
     }
@@ -37,7 +37,7 @@ open class  UDP : Talker, AddressTalker {
      * Метод для отправки сообщений по адресу отправителя,
      * полученному после [receive] метода
      */
-    override fun send(msg: String) {
-        send(msg, sendToAddress)
+    override fun send(msg: String, login: String, password: String) {
+        send(msg, sendToAddress, login, password)
     }
 }

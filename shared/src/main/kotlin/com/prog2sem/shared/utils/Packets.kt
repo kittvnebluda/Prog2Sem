@@ -14,10 +14,10 @@ object Packets {
     /**
      * Генерирует лист строк с метками пакета
      */
-    fun generate(string: String): List<String> {
+    fun generate(string: String, login: String, password: String): List<String> {
         val list = cut(string)
         var i = 0
-        return list.map { MsgMarker.markPacket(it, ++i, list.size) }.toMutableList()
+        return list.map { MsgMarker.markPacket(it, ++i, list.size, login, password) }.toMutableList()
     }
     /**
      * Объединяет лист строк, помеченных как пакеты, в строку, соблюдая порядковый номер пакетов

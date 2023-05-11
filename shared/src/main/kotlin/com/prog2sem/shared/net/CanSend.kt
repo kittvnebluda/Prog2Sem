@@ -4,5 +4,5 @@ interface CanSend {
     /**
      * Метод обеспечивающий отправку сообщения [msg]
      */
-    fun send(msg: String)
+    fun send(msg: String, login: String, password: String)
 }

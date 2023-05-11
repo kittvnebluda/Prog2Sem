@@ -23,7 +23,7 @@ class ConsoleInvoker : Invoker {
         commands.forEach { put(it) }
     }
 
-    override fun proceed(cmd: String) {
+    override fun proceed(cmd: String, login: String, password: String) {
         // Разделяем ввод и достаем команду
         val postCmd = splitSpaces(cmd)
         val command = cmdMap[postCmd[0]] ?: throw InvalidUserInputException("$cmd: команда не найдена")
@@ -35,7 +35,7 @@ class ConsoleInvoker : Invoker {
         if (HISTORY.size > MAX_HISTORY_SIZE)
             HISTORY.removeFirst()
 
-        command.execute(args) // Выполняем команду
+        command.execute(args, login, password) // Выполняем команду
     }
 
     fun genHelp() {

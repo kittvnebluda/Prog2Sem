@@ -46,7 +46,7 @@ open class PacketsUDP(
 
                 val packet = Buffer.toString(buffer)
                 packets.add(packet)
-                Log.d("RECEIVED CONTENT: $packet")
+                //Log.d("RECEIVED CONTENT: $packet")
 
                 if (packet.length > 7) {
                     received++
@@ -81,9 +81,9 @@ open class PacketsUDP(
      * @param msg сообщение для отправки
      * @param address адрес получателя
      */
-    override fun send(msg: String, address: SocketAddress) {
+    override fun send(msg: String, address: SocketAddress, login: String, password: String) {
         var cnt = 0
-        Packets.generate(msg).forEach {
+        Packets.generate(msg, login, password).forEach {
             Log.d("SENDING $it")
             cnt++
             val buffer: ByteBuffer = ByteBuffer.wrap(it.toByteArray())

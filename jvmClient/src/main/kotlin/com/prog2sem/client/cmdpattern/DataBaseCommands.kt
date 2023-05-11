@@ -1,5 +1,7 @@
 package com.prog2sem.client.cmdpattern
 
+import com.prog2sem.client.ISLOGIN
+import com.prog2sem.client.io.ColorfulOut
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.RndPersonBuilder
 import com.prog2sem.client.utils.CreateFromStd
@@ -8,13 +10,14 @@ import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
+import com.prog2sem.shared.utils.Log
 
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") :
     Command {
     override val desc: String = "вывести информацию о коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         println(manager.info())
     }
 }
@@ -24,7 +27,7 @@ class ShowCommand(private val manager: DataBaseCommands, override val name: Stri
     Command {
     override val desc: String = "вывести все элементы коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         Smt.outIterable(manager.show())
     }
 }
@@ -34,10 +37,10 @@ class AddCommand(private val manager: DataBaseCommands, override val name: Strin
     Command {
     override val desc: String = "добавить элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         Smt.addArgToHistory(person.toString())
-        Smt.outBool(manager.add(person))
+        Smt.outBool(manager.add(person, login, password))
     }
 }
 
@@ -47,10 +50,10 @@ class AddRndCommand(private val manager: DataBaseCommands,
     Command {
     override val desc: String = "добавить случайно сгенерированный элемент в коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val person = PersonDirector(RndPersonBuilder()).createPerson()
         Smt.addArgToHistory(person.toString())
-        Smt.outBool(manager.add(person))
+        Smt.outBool(manager.add(person, login, password))
     }
 }
 
@@ -59,14 +62,14 @@ class FillCommand(private val manager: DataBaseCommands, override val name: Stri
     Command {
     override val desc: String = "заполнить коллекцию случайно сгенерированными элементами"
     override val methodsDesc: Map<String, String> = mapOf(Pair("amount", "количество генерируемых элементов"))
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val amount = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указано количество элементов")
 
         for (i in 1..amount) {
             val person = PersonDirector(RndPersonBuilder()).createPerson()
             Smt.addArgToHistory(person.toString())
-            Smt.outBool(manager.add(person))
+            Smt.outBool(manager.add(person, login, password))
         }
     }
 }
@@ -76,13 +79,13 @@ class UpdateCommand(private val manager: DataBaseCommands, override val name: St
     Command {
     override val desc: String = "обновить элемент коллекции"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id обновляемого элемента"))
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val index = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указаны индекс класса и его имя")
 
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         Smt.addArgToHistory(person.toString())
-        Smt.outBool(manager.update(index, person))
+        Smt.outBool(manager.update(index, person, login, password))
     }
 }
 
@@ -91,10 +94,10 @@ class RemoveIdCommand(private val manager: DataBaseCommands, override val name: 
     Command {
     override val desc: String = "удалить элемент из коллекции по его id"
     override val methodsDesc: Map<String, String> = mapOf(Pair("index", "id удаляемого элемента"))
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val index = if (args.isNotEmpty()) args[0].toInt()
         else throw InvalidUserInputException("Не указан индекс класса")
-        Smt.outBool(manager.removeId(index))
+        Smt.outBool(manager.removeId(index, login, password))
     }
 }
 
@@ -103,7 +106,7 @@ class ClearCommand(private val manager: DataBaseCommands, override val name: Str
     Command {
     override val desc: String = "очистить коллекцию"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         Smt.outBool(manager.clear())
     }
 }
@@ -114,10 +117,10 @@ class AddIfMinCommand(private val manager: DataBaseCommands, override val name: 
     override val desc: String =
         "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента коллекции"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         Smt.addArgToHistory(person.toString())
-        Smt.outBool(manager.addIfMin(person))
+        Smt.outBool(manager.addIfMin(person, login, password))
     }
 }
 
@@ -128,10 +131,10 @@ class RemoveGreaterCommand(
 ) : Command {
     override val desc: String = "удалить из коллекции все элементы, превышающие заданный"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val person = PersonDirector(FromConsolePersonBuilder()).createPerson()
         Smt.addArgToHistory(person.toString())
-        Smt.outBool(manager.removeGreater(person))
+        Smt.outBool(manager.removeGreater(person, login, password))
     }
 }
 
@@ -143,10 +146,10 @@ class RemoveAllByLocationCommand(
     override val desc: String =
         "удалить из коллекции все элементы, значение поля location которого эквивалентно заданному"
     override val methodsDesc: Map<String, String> = mapOf(Pair("location", "x, y, z и опциональное название места"))
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val location = CreateFromStd.location(args.joinToString(" "))
         Smt.addArgToHistory(location.toString())
-        Smt.outBool(manager.removeAllByLocation(location))
+        Smt.outBool(manager.removeAllByLocation(location, login, password))
     }
 }
 
@@ -157,7 +160,7 @@ class FilterGreaterThanHairColorCommand(
 ) : Command {
     override val desc: String = "вывести элементы, значение поля hairColor которых больше заданного"
     override val methodsDesc: Map<String, String> = mapOf(Pair("color", "GREEN, RED, BLACK, YELLOW или BROWN"))
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val color = CreateFromStd.color(args.joinToString(" "))
         Smt.addArgToHistory(color.toString())
         val res = manager.filterGreaterThanHairColor(color)
@@ -172,8 +175,77 @@ class PrintFieldAscendingHairColorCommand(
 ) : Command {
     override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         val res = manager.printFieldAscendingHairColor()
         Smt.outIterable(res)
+    }
+}
+
+class CheckLogin(
+    private val manager: DataBaseCommands,
+    override val name: String = "sign"
+) : Command {
+    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>, login: String, password: String) {
+
+        var login: String? = ""
+        var password: String? = ""
+
+        while (true) {
+            if (login == null || login == "")
+                println("Введите логин ")
+            else break
+            login = readlnOrNull()
+        }
+
+        while (true) {
+            if (password == null || password == "")
+                println("Введите пароль ")
+            else break
+            password = readlnOrNull()
+        }
+
+        var res = ""
+        if(manager.addLogin(login.toString(), password.toString())) {
+            res = "Успешно вошли"
+            ISLOGIN = true
+        } else res = "Попробуйте снова"
+        ColorfulOut.printlnError(res)
+    }
+}
+
+class AddLogin(
+    private val manager: DataBaseCommands,
+    override val name: String = "login"
+) : Command {
+    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>, login: String, password: String) {
+
+        var login: String? = ""
+        var password: String? = ""
+
+        while (true) {
+            if (login == null || login == "")
+                println("Введите логин ")
+            else break
+            login = readlnOrNull()
+        }
+
+        while (true) {
+            if (password == null || password == "")
+                println("Введите пароль ")
+            else break
+            password = readlnOrNull()
+        }
+
+
+        var res = ""
+        if(manager.addLogin(login.toString(), password.toString())) {
+            res = "Успешно зарегистрировались"
+            ISLOGIN = true
+        } else res = "Попробуйте снова"
+        ColorfulOut.printlnError(res)
     }
 }

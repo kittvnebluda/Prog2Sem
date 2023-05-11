@@ -5,9 +5,14 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
 import org.apache.logging.log4j.core.config.Configurator
+import java.util.*
 
 
 object Log {
+
+//    init {
+//        System.setProperty("log4j.configurationFile", "resources/Log4j.properties")
+//    }
 
     private val Logger: Logger = LogManager.getLogger()
 

@@ -68,7 +68,7 @@ object PostgreSQLCommands {
             "${personKeys[6]}, ${personKeys[7]}, ${personKeys[8]}, ${personKeys[9]}, ${personKeys[10]})*/
 
     fun startConnection(){
-        SQLConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/", "postgres", "prog2sem")
+        SQLConnection = DriverManager.getConnection("jdbc:postgresql://pg:5432/", "s368262", "tLBj@7203")
 
         Log.i(if (!SQLConnection.isClosed) "Успешно подключились к базе дынных" else "Соединение не установлено")
     }

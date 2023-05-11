@@ -25,7 +25,7 @@ interface DataBaseCommands {
      * @param p
      * @return true, если коллекция изменилась
      */
-    fun add(p: Person): Boolean
+    fun add(p: Person, login: String, password: String): Boolean
 
     /**
      * Обеспечивает обновление значения элемента коллекции, id которого равен заданному
@@ -33,14 +33,14 @@ interface DataBaseCommands {
      * @param p экземпляр класса коллекции
      * @return true, если коллекция изменилась
      */
-    fun update(index: Int, p: Person): Boolean
+    fun update(index: Int, p: Person, login: String, password: String): Boolean
 
     /**
      * Обеспечивает удаление элемента из коллекции по его id
      * @param index индекс элемента коллекции
      * @return true, если коллекция изменилась
      */
-    fun removeId(index: Int): Boolean
+    fun removeId(index: Int, login: String, password: String): Boolean
 
     /**
      * Обеспечивает очистку коллекции
@@ -53,21 +53,21 @@ interface DataBaseCommands {
      * @param p экземпляр класса коллекции
      * @return true, если коллекция изменилась
      */
-    fun addIfMin(p: Person): Boolean
+    fun addIfMin(p: Person, login: String, password: String): Boolean
 
     /**
      * Обеспечивает удаление из коллекции всех элементов, превышающие заданный
      * @param p экземпляр класса коллекции
      * @return true, если коллекция изменилась
      */
-    fun removeGreater(p: Person): Boolean
+    fun removeGreater(p: Person, login: String, password: String): Boolean
 
     /**
      * Обеспечивает удаление из коллекции всех элементов, значение поля location которого эквивалентно заданному.
      * @param location
      * @return true, если коллекция изменилась
      */
-    fun removeAllByLocation(location: Location): Boolean
+    fun removeAllByLocation(location: Location, login: String, password: String): Boolean
 
     /**
      * Возвращает элементы, значение поля hairColor которых больше заданного.
@@ -81,4 +81,8 @@ interface DataBaseCommands {
      * @return значения hairColor
      */
     fun printFieldAscendingHairColor(): Array<Color>
+
+    fun checkLogin(login: String, password: String): Boolean
+
+    fun addLogin(login: String, password: String): Boolean
 }

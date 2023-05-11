@@ -1,6 +1,5 @@
 plugins {
     id("org.jetbrains.dokka") version "1.8.10"
-    id("io.freefair.lombok") version "8.0.1"
 }
 
 subprojects {

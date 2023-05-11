@@ -14,9 +14,13 @@ const val MAX_HISTORY_SIZE = 12
 
 val HISTORY = mutableListOf<String>()
 var ISQUIT = false
+var ISLOGIN = false
 var HELP = ""
 var DEFAULT_HOST = "127.0.0.1"
 var DEFAULT_PORT = 4221
+
+var login = "admin"
+var password = "admin"
 
 fun main(args: Array<String>) {
     val client = PacketsUDP()
@@ -66,11 +70,13 @@ fun main(args: Array<String>) {
     val removeByLocation = RemoveAllByLocationCommand(dbCommands)
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
+    val addLogin = AddLogin(dbCommands)
+    val checkLogin = CheckLogin(dbCommands)
 
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addRnd, showServerAddr, setServerAddr, fill
+        removeByLocation, filterByColor, printHairColor, addRnd, showServerAddr, setServerAddr, fill, addLogin, checkLogin
     )
 
     invoker.genHelp() // Генерируем строку помощи

@@ -12,5 +12,5 @@ interface Command {
      * Метод, обеспечивающий выполнение команды
      * @throws InvalidUserInputException
      */
-    fun execute(args: List<String>)
+    fun execute(args: List<String>, login: String, password: String)
 }

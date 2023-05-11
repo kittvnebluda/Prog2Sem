@@ -34,7 +34,7 @@ class ConsoleLocalCommands : LocalCommands {
                 if (absPath in openedScripts)
                     throw InvalidUserInputException("Обнаружено зацикливание!")
                 else
-                    invoker.proceed(command)
+                    invoker.proceed(command, login, password)
             }
             printlnGreen("Выполнение команд завершено")
             sc.close()

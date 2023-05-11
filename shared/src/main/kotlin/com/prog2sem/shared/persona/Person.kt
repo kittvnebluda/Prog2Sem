@@ -5,6 +5,7 @@ import com.prog2sem.shared.Coordinates
 import com.prog2sem.shared.utils.CustomSerializers.KZonedDateTimeSerializer
 import com.prog2sem.shared.Location
 import kotlinx.serialization.Serializable
+import java.sql.ResultSet
 import java.time.ZonedDateTime
 
 /**
@@ -33,6 +34,20 @@ data class Person(
 
     operator fun compareTo(other: Person): Int {
         return name.compareTo(other.name)
+    }
+
+    fun toHashMap(keys: List<String>): HashMap<String, Any> {
+        val hashMap = HashMap<String, Any>()
+
+        hashMap[keys[2]] = name
+        hashMap[keys[7]] = coordinates.toTable()
+        hashMap[keys[6]] = hairColor.toString()
+        hashMap[keys[5]] = birthday.toString()
+        hashMap[keys[4]] = height
+        hashMap[keys[3]] = weight
+        hashMap[keys[8]] = location.toTable()
+
+        return hashMap
     }
 
     override fun equals(other: Any?): Boolean {

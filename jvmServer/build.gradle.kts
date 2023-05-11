@@ -4,6 +4,7 @@ plugins {
     kotlin("plugin.serialization") version "1.8.10"
 }
 
+
 group = "com.prog2sem"
 version = "1.1-SNAPSHOT"
 
@@ -22,6 +23,7 @@ kotlin {
 dependencies {
     implementation(project(":shared"))
 
+    implementation("org.postgresql:postgresql:42.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-Beta")
     implementation(kotlin("test"))

@@ -1,12 +1,15 @@
 package com.prog2sem.client.utils
 
 import com.prog2sem.client.HISTORY
+import com.prog2sem.client.ISLOGIN
 import com.prog2sem.client.ISQUIT
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.io.ColorfulOut.printRandColor
 import com.prog2sem.client.io.ColorfulOut.printlnGreen
 import com.prog2sem.client.io.ColorfulOut.printlnError
 import com.prog2sem.client.io.ColorfulOut.randLightANSI
+import com.prog2sem.client.login
+import com.prog2sem.client.password
 import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.exceptions.MsgException
@@ -50,10 +53,28 @@ object Smt {
     /** Главная функция класса, реализующая постоянное "общение" с пользователем */
     fun talkWithUserForever(invoker: Invoker) {
         greetings()
+        authorize(invoker)
         while (!ISQUIT) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
-                invoker.proceed(readln())
+                invoker.proceed(readln(), login, password)
+            } catch (e: Exception) {
+                when (e) {
+                    is InvalidUserInputException -> e.message?.let { printlnError(it) }
+                    is MsgException -> e.message?.let { printlnError(it) }
+                    is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
+                    else -> throw e
+                }
+            }
+        }
+    }
+
+    fun authorize(invoker: Invoker){
+        while (!ISLOGIN) {
+            try {
+                println("Зарегестрируйтесь или войдите используя команды:\nlogin\nsign")
+                printRandColor(">>> ") // Просто красивая штучка
+                invoker.proceed(readln(), login, password)
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> e.message?.let { printlnError(it) }

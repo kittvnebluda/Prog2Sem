@@ -11,7 +11,7 @@ class ShowServerAddressCommand(
 ) : Command {
     override val desc: String = "Выводит адрес сервера"
     override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         commands.showServerAddr()
     }
 }
@@ -22,7 +22,7 @@ class SetServerAddressCommand(
 ) : Command {
     override val desc: String = "Выводит адрес сервера"
     override val methodsDesc: Map<String, String> = mapOf(Pair("address", "адрес хоста"), Pair("port", "порт хоста"))
-    override fun execute(args: List<String>) {
+    override fun execute(args: List<String>, login: String, password: String) {
         try {
             if (args.size > 1)
                 commands.setServerAddr(args[0], args[1].toInt())

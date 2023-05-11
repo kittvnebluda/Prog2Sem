@@ -38,7 +38,7 @@ val server: DatagramChannel = startServer(InetAddress.getLocalHost(), 4221)
 val fileName = "DataBaseSaveFile"
 const val AUTOSAVE_TIMEOUT = 30000L
 
-private const val receiverCount = 200
+private const val receiverCount = 20
 
 const val bufferCapacity = 1024
 

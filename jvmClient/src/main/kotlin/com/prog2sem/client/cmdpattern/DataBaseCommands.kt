@@ -1,6 +1,6 @@
 package com.prog2sem.client.cmdpattern
 
-import com.prog2sem.client.ISLOGIN
+import com.prog2sem.client.LOGGED
 import com.prog2sem.client.io.ColorfulOut
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.RndPersonBuilder
@@ -10,7 +10,6 @@ import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
-import com.prog2sem.shared.utils.Log
 
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") :
@@ -181,11 +180,11 @@ class PrintFieldAscendingHairColorCommand(
     }
 }
 
-class CheckLogin(
+class LogInCommand(
     private val manager: DataBaseCommands,
-    override val name: String = "sign"
+    override val name: String = "login"
 ) : Command {
-    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val desc: String = "войти в существующий аккаунт базы данных"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
 
@@ -206,20 +205,19 @@ class CheckLogin(
             password = readlnOrNull()
         }
 
-        var res = ""
-        if(manager.addLogin(login.toString(), password.toString())) {
-            res = "Успешно вошли"
-            ISLOGIN = true
-        } else res = "Попробуйте снова"
+        val res = if(manager.addLogin(login.toString(), password.toString())) {
+            LOGGED = true
+            "Успешно вошли"
+        } else "Попробуйте снова"
         ColorfulOut.printlnError(res)
     }
 }
 
-class AddLogin(
+class SignUpCommand(
     private val manager: DataBaseCommands,
-    override val name: String = "login"
+    override val name: String = "signup"
 ) : Command {
-    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val desc: String = "создать аккаунт для работы с базой данных"
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
 
@@ -240,12 +238,10 @@ class AddLogin(
             password = readlnOrNull()
         }
 
-
-        var res = ""
-        if(manager.addLogin(login.toString(), password.toString())) {
-            res = "Успешно зарегистрировались"
-            ISLOGIN = true
-        } else res = "Попробуйте снова"
+        val res = if(manager.addLogin(login.toString(), password.toString())) {
+            LOGGED = true
+            "Успешно вошли"
+        } else "Попробуйте снова"
         ColorfulOut.printlnError(res)
     }
 }

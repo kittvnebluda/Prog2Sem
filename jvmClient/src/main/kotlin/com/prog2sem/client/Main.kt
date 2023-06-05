@@ -14,7 +14,7 @@ const val MAX_HISTORY_SIZE = 12
 
 val HISTORY = mutableListOf<String>()
 var ISQUIT = false
-var LOGGED = false
+var ISLOGIN = false
 var HELP = ""
 var DEFAULT_HOST = "127.0.0.1"
 var DEFAULT_PORT = 4221
@@ -72,8 +72,8 @@ fun main(args: Array<String>) {
     val removeByLocation = RemoveAllByLocationCommand(dbCommands)
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
-    val logIn = LogInCommand(dbCommands)
-    val signUp = SignUpCommand(dbCommands)
+    val logIn = CheckLogin(dbCommands)
+    val signUp = AddLogin(dbCommands)
 
     // Добавляем команды в вызыватель
     invoker.putAll(

@@ -53,7 +53,7 @@ object Smt {
     /** Главная функция класса, реализующая постоянное "общение" с пользователем */
     fun talkWithUserForever(invoker: Invoker) {
         greetings()
-        authorize(invoker)
+        val pair = authorize(invoker)
         while (!ISQUIT) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
@@ -69,10 +69,10 @@ object Smt {
         }
     }
 
-    fun authorize(invoker: Invoker){
+    private fun authorize(invoker: Invoker){
         while (!ISLOGIN) {
             try {
-                println("Зарегестрируйтесь или войдите используя команды:\nlogin\nsign")
+                println("Зарегестрируйтесь или войдите используя команды:\nsign\nlogin")
                 printRandColor(">>> ") // Просто красивая штучка
                 invoker.proceed(readln(), login, password)
             } catch (e: Exception) {

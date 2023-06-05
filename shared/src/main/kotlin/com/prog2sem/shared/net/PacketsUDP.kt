@@ -2,8 +2,11 @@ package com.prog2sem.shared.net
 
 import com.prog2sem.shared.utils.Buffer
 import com.prog2sem.shared.utils.Log
+import com.prog2sem.shared.utils.MakeAccessToken.generateToken
+import com.prog2sem.shared.utils.MakeAccessToken.getInfoFromToken
 import com.prog2sem.shared.utils.MsgMarker
 import com.prog2sem.shared.utils.Packets
+import com.prog2sem.shared.utils.TokenPayload
 import java.net.SocketAddress
 import java.nio.ByteBuffer
 
@@ -68,7 +71,7 @@ open class PacketsUDP(
 
         return if (packetsCount == received) {
             Log.d("TOTAL PACKETS RECEIVED: $received")
-            Packets.merge(packets)
+            getInfoFromToken(Packets.merge(packets)).info
         } else {
             Log.d("TOTAL PACKETS RECEIVED: $received")
             Log.i("Время ожидания вышло!")
@@ -83,6 +86,9 @@ open class PacketsUDP(
      */
     override fun send(msg: String, address: SocketAddress, login: String, password: String) {
         var cnt = 0
+
+        val msg = generateToken(TokenPayload(login, password, msg))
+
         Packets.generate(msg, login, password).forEach {
             Log.d("SENDING $it")
             cnt++

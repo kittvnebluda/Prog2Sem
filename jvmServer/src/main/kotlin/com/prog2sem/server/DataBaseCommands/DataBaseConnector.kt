@@ -1,29 +1,28 @@
 package com.prog2sem.server.DataBaseCommands
 
-import com.prog2sem.server.Person_Autogeneration
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Coordinates
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.io.FileWorker
 import com.prog2sem.shared.persona.Person
 import com.prog2sem.shared.utils.JsonWorker.json
-import com.prog2sem.shared.utils.Log
 import kotlinx.serialization.decodeFromString
 import java.sql.ResultSet
 import java.time.ZonedDateTime
 import java.util.Collections
 
-object DataBaseSim {
+object DataBaseConnector {
     private val creationDate = ZonedDateTime.now()
-    var dataBaseSim: MutableSet<Person> = Collections.synchronizedSet(hashSetOf<Person>())
+    var localDataBase: MutableSet<Person> = Collections.synchronizedSet(hashSetOf<Person>())
 
     /**
      * @param filePath путь к файлу
      */
+    @Deprecated("После добавления PostgreSQL стало не нужно")
     fun readDataFromFile(filePath: String) {
         val jsonString = FileWorker.readFileFromEnterFilePath(filePath)
         if (jsonString.length < 2) return
-        dataBaseSim = json.decodeFromString(jsonString)
+        localDataBase = json.decodeFromString(jsonString)
     }
 
     fun getPersonsFromTable(req: ResultSet?, keys: List<String>) {
@@ -35,7 +34,7 @@ object DataBaseSim {
                 Color.valueOf(req.getString(keys[6])), getLocationFromTable(req.getString(keys[8]))
             )
 
-            dataBaseSim.add(person)
+            localDataBase.add(person)
         }
     }
 
@@ -65,10 +64,10 @@ object DataBaseSim {
 
     override fun toString(): String {
         return StringBuilder().append(
-            "Type of DataBase: ", dataBaseSim.javaClass.typeName, "\n",
+            "Type of DataBase: ", localDataBase.javaClass.typeName, "\n",
             "Date of creation: ", creationDate.dayOfMonth, " ", creationDate.month, " ", creationDate.year, "\n",
             "Time of creation: ", creationDate.hour, ":", creationDate.minute, ":", creationDate.second, "\n",
-            "Count of elements: ", dataBaseSim.size
+            "Count of elements: ", localDataBase.size
         ).toString()
     }
 }

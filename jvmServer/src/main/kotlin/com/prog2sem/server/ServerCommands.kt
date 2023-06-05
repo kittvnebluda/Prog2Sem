@@ -6,8 +6,8 @@ import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.utils.MsgMarker.getGeneric
 import com.prog2sem.shared.utils.MsgMarker.markGeneric
 import java.net.InetAddress
-import com.prog2sem.server.tasks.Sender
 import com.prog2sem.shared.utils.Log
+import com.prog2sem.shared.utils.MsgMarker.markError
 import java.net.InetSocketAddress
 
 
@@ -154,7 +154,11 @@ class AddLogin(
     override fun execute(args: List<String>, login: String, password: String) {
         val port = args[1] as Int
         val address = InetSocketAddress(InetAddress.getByName(args[0]), port)
-        send(markGeneric(LocalManager.addLogin(login, password)), address, login, password)
+
+        if (LocalManager.addLogin(login, password))
+            send(markGeneric(true), address, login, password)
+        else
+            send(markError("Пользователь с таким именем уже существует"), address, login, password)
     }
 }
 
@@ -166,6 +170,10 @@ class CheckLogin(
     override fun execute(args: List<String>, login: String, password: String) {
         val port = args[1] as Int
         val address = InetSocketAddress(InetAddress.getByName(args[0]), port)
-        send(markGeneric(LocalManager.checkLogin(login, password)), address, login, password)
+
+        if (LocalManager.checkLogin(login, password))
+            send(markGeneric(true), address, login, password)
+        else
+            send(markError("Пользователь с таким именем не существует"), address, login, password)
     }
 }

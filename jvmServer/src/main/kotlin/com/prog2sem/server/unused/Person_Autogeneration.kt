@@ -1,6 +1,6 @@
-package com.prog2sem.server
+package com.prog2sem.server.unused
 
-import com.prog2sem.server.Important.idGen
+import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.getId
 import com.prog2sem.shared.utils.CustomSerializers
 import com.prog2sem.shared.persona.Person
 import kotlinx.serialization.Serializable
@@ -19,7 +19,7 @@ class Person_Autogeneration (val person: Person) {
         previousId = maxId
     }
 
-    val id = idGen.getId()
+    val id = getId()
 
 
     @Serializable(CustomSerializers.KZonedDateTimeSerializer::class)

@@ -1,4 +1,4 @@
-package com.prog2sem.server
+package com.prog2sem.server.unused
 
 import kotlinx.serialization.Serializable
 import java.util.*

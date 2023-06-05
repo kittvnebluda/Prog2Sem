@@ -20,7 +20,12 @@ class ConsoleLocalCommands : LocalCommands {
         println(HELP)
     }
 
-    override fun executeScript(filename: String, invoker: Invoker) {
+    override fun executeScript(
+        filename: String,
+        invoker: Invoker,
+        login: String,
+        password: String
+    ) {
         val file = File(filename)
 
         try {

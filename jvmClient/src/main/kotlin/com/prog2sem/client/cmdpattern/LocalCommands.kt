@@ -47,7 +47,7 @@ class ExecuteScriptCommand(
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
         if (args.isNotEmpty())
-            commands.executeScript(args[0], invoker)
+            commands.executeScript(args[0], invoker, login, password)
         else
             throw InvalidUserInputException("В команде пропущен путь файла")
     }

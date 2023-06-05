@@ -11,6 +11,7 @@ import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
 import com.prog2sem.shared.utils.Log
+import kotlin.jvm.internal.MagicApiIntrinsics
 
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") :
@@ -183,40 +184,6 @@ class PrintFieldAscendingHairColorCommand(
 
 class CheckLogin(
     private val manager: DataBaseCommands,
-    override val name: String = "sign"
-) : Command {
-    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
-    override val methodsDesc: Map<String, String> = emptyMap()
-    override fun execute(args: List<String>, login: String, password: String) {
-
-        var login: String? = ""
-        var password: String? = ""
-
-        while (true) {
-            if (login == null || login == "")
-                println("Введите логин ")
-            else break
-            login = readlnOrNull()
-        }
-
-        while (true) {
-            if (password == null || password == "")
-                println("Введите пароль ")
-            else break
-            password = readlnOrNull()
-        }
-
-        var res = ""
-        if(manager.addLogin(login.toString(), password.toString())) {
-            res = "Успешно вошли"
-            ISLOGIN = true
-        } else res = "Попробуйте снова"
-        ColorfulOut.printlnError(res)
-    }
-}
-
-class AddLogin(
-    private val manager: DataBaseCommands,
     override val name: String = "login"
 ) : Command {
     override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
@@ -240,12 +207,52 @@ class AddLogin(
             password = readlnOrNull()
         }
 
+        com.prog2sem.client.login = login as String
+        com.prog2sem.client.password = password as String
 
-        var res = ""
-        if(manager.addLogin(login.toString(), password.toString())) {
-            res = "Успешно зарегистрировались"
+        if(manager.checkLogin(login.toString(), password.toString())) {
+            ColorfulOut.printlnGreen("Успешно вошли")
             ISLOGIN = true
-        } else res = "Попробуйте снова"
-        ColorfulOut.printlnError(res)
+        } else ColorfulOut.printlnError("Попробуйте снова")
+
     }
+}
+
+class AddLogin(
+    private val manager: DataBaseCommands,
+    override val name: String = "sign"
+) : Command {
+    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>, login: String, password: String) {
+
+        var login: String? = ""
+        var password: String? = ""
+
+        while (true) {
+            if (login == null || login == "")
+                println("Введите логин ")
+            else break
+            login = readlnOrNull()
+        }
+
+        while (true) {
+            if (password == null || password == "")
+                println("Введите пароль ")
+            else break
+            password = readlnOrNull()
+        }
+
+        com.prog2sem.client.login = login as String
+        com.prog2sem.client.password = password as String
+
+
+        if(manager.addLogin(login.toString(), password.toString())) {
+            ColorfulOut.printlnGreen("Успешно зарегистрировались")
+            ISLOGIN = true
+        } else ColorfulOut.printlnError("Попробуйте снова")
+
+    }
+
+
 }

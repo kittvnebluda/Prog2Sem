@@ -35,17 +35,17 @@ object MsgMarker {
         return json.decodeFromString(extract(msg))
     }
 
-    fun markLogAndPas(msg: String, login: String, password: String): String{
-        return Tags.LOG + login + Tags.PAS + password + msg
-    }
+//    fun markLogAndPas(msg: String, login: String, password: String): String{
+//        return Tags.LOG + login + Tags.PAS + password + msg
+//    }
 
-    fun getLogAndPas(msg: String): Pair<String, String>{
-        val login = msg.substring(3, msg.indexOf(Tags.PAS.toString()))
-        Log.d(login)
-        val password = msg.substring(msg.indexOf(Tags.PAS.toString()) + 3, msg.indexOf(Tags.PAC.toString()))
-        Log.d(password)
-        return Pair(login, password)
-    }
+//    fun getLogAndPas(msg: String): Pair<String, String>{
+//        val login = msg.substring(3, msg.indexOf(Tags.PAS.toString()))
+//        Log.d(login)
+//        val password = msg.substring(msg.indexOf(Tags.PAS.toString()) + 3, msg.indexOf(Tags.PAC.toString()))
+//        Log.d(password)
+//        return Pair(login, password)
+//    }
 
     /** Mark error message */
     fun markError(error: String): String {
@@ -68,7 +68,7 @@ object MsgMarker {
     }
     /** Mark packet with its index which starts with 1*/
     fun markPacket(msg: String, index: Int, count: Int, login: String, password: String): String {
-        return markLogAndPas(Tags.PAC + "{$index/$count}" + msg, login, password)
+        return Tags.PAC + "{$index/$count}" + msg
     }
     /** Get the text in a packet with its index and total number of packets */
     fun getPacket(msg: String): Triple<String, Int, Int> {

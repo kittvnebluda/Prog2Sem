@@ -1,33 +1,24 @@
 package com.prog2sem.server
 
-import com.prog2sem.server.DataBaseCommands.DataBaseSim
-import com.prog2sem.server.DataBaseCommands.DataBaseSim.dataBaseSim
-import com.prog2sem.server.DataBaseCommands.DataBaseSim.getPersonsFromTable
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.addPerson
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.createSequanceLogins
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.createSequancePersons
+import com.prog2sem.server.DataBaseCommands.DataBaseConnector.getPersonsFromTable
+import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.createSequenceLogins
+import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.createSequencePersons
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.createTableOfLogins
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.createTableOfPersons
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.getAllFromTable
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.getAllPersons
+import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.personDataBaseName
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.personKeys
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.startConnection
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useStatement
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useUpdateQueryPrepare
-import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useUpdateQueryStat
 import com.prog2sem.server.tasks.Receiver
-import com.prog2sem.shared.persona.Person
 import com.prog2sem.shared.utils.Log
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import org.postgresql.util.PSQLException
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.nio.channels.DatagramChannel
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.ThreadFactory
 
 
 val INVOKER = NetInvoker()
@@ -38,7 +29,9 @@ val server: DatagramChannel = startServer(InetAddress.getLocalHost(), 4221)
 val fileName = "DataBaseSaveFile"
 const val AUTOSAVE_TIMEOUT = 30000L
 
-private const val receiverCount = 200
+private const val receiverCount = 5
+//private const val senderCount = 10
+//private const val schedulerCount = 10
 
 const val bufferCapacity = 1024
 
@@ -62,14 +55,15 @@ fun main(args: Array<String>) {
 
     useStatement(createTableOfPersons)
     useStatement(createTableOfLogins)
+
     try {
-        useStatement(createSequancePersons)
+        useStatement(createSequencePersons)
     }catch (e: PSQLException){
         Log.e("Уже существует")
     }
 
     try {
-        useStatement(createSequanceLogins)
+        useStatement(createSequenceLogins)
     }catch (e: PSQLException){
         Log.e("Уже существует")
     }
@@ -80,11 +74,13 @@ fun main(args: Array<String>) {
 
     initCommands()
 
-    Runtime.getRuntime().addShutdownHook(Thread {
-        saveAll()
-    })
-
-    start()
+    try {
+        start()
+    }catch (e: Exception){
+        when(e){
+            else -> Log.e("Произошла ошибка")
+        }
+    }
 
 }
 
@@ -111,12 +107,7 @@ fun initCommands(){
 }
 fun load(){
     Log.i("Server load info from file")
-    getPersonsFromTable(getAllFromTable(), personKeys)
-}
-fun saveAll(){
-    Log.i("Server save database in file")
-    Important.save()
-    LocalManager.save(fileName)
+    getPersonsFromTable(getAllFromTable(personDataBaseName), personKeys)
 }
 
 private fun start(){
@@ -133,15 +124,4 @@ private fun startServer(host: InetAddress, port: Int): DatagramChannel{
     println("Receiver started at $address")
 
     return channel
-}
-
-suspend fun checking() = coroutineScope {
-
-    async {
-        while (true) {
-            delay(AUTOSAVE_TIMEOUT)
-            saveAll()
-        }
-    }
-
 }

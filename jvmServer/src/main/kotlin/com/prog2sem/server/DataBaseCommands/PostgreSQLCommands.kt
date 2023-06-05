@@ -28,7 +28,18 @@ object PostgreSQLCommands {
 
     private lateinit var SQLConnection: Connection
 
-    const val createTableOfPersons = "CREATE TABLE IF NOT EXISTS s368793.\"TestJDBC\" \n" +
+
+    private const val dataBaseAddress = "jdbc:postgresql://localhost:5432/"
+    private const val dataBaseLogin = "postgres"
+    private const val dataBasePasswod = "prog2sem"
+
+    const val personDataBaseName = "TestJDBC"
+    const val dataBaseScheme = "s368793"
+    const val loginDataBaseName = "TestLogin"
+
+
+
+    const val createTableOfPersons = "CREATE TABLE IF NOT EXISTS $dataBaseScheme.\"$personDataBaseName\" \n" +
             "            (\n" +
             "                id integer NOT NULL,\n" +
             "                creationTime character varying,\n" +
@@ -41,34 +52,34 @@ object PostgreSQLCommands {
             "                location character varying,\n" +
             "                login character varying,\n" +
             "                pass character varying,\n" +
-            "                CONSTRAINT \"TestJDBC_pkey\" PRIMARY KEY (id)\n" +
+            "                CONSTRAINT \"${personDataBaseName}_pkey\" PRIMARY KEY (id)\n" +
             "            )"
-    const val createTableOfLogins = "CREATE TABLE IF NOT EXISTS s368793.\"TestLogin\" \n" +
+    const val createTableOfLogins = "CREATE TABLE IF NOT EXISTS $dataBaseScheme.\"$loginDataBaseName\" \n" +
             "            (\n" +
             "                id integer NOT NULL,\n" +
             "                login character varying,\n" +
             "                pass character varying,\n" +
-            "                CONSTRAINT \"TestLogin_pkey\" PRIMARY KEY (id)\n" +
+            "                CONSTRAINT \"${loginDataBaseName}_pkey\" PRIMARY KEY (id)\n" +
             "            )"
 
-    const val getAllPersons = "select * from s368793.\"TestJDBC\""
+    const val getAllPersons = "select * from $dataBaseScheme.\"$personDataBaseName\""
 
-    val createSequancePersons = "CREATE SEQUENCE s368793.id START 1"
-    val createSequanceLogins = "CREATE SEQUENCE s368793.id_log START 1"
+    const val createSequencePersons = "CREATE SEQUENCE $dataBaseScheme.id START 0"
+    const val createSequenceLogins = "CREATE SEQUENCE $dataBaseScheme.id_log START 0"
 
-   // val getId = "select s368793.id.nextval "
+   // val getId = "select $dataBaseScheme.id.nextval "
 
     val personKeys = listOf("id", "createTime", "name", "weight", "height", "birthday", "hairColor", "coordinates", "location", "login", "pass")
 
-    val loginKeys = listOf("id", "login", "password")
+    val loginKeys = listOf("id", "login", "pass")
 
-    const val addPerson = "insert into s368793.\"TestJDBC\" values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    const val addPerson = "insert into $dataBaseScheme.\"$personDataBaseName\" values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
     /*(${personKeys[1]}, ${personKeys[2]}, ${personKeys[3]}, ${personKeys[4]}, ${personKeys[5]}, " +
             "${personKeys[6]}, ${personKeys[7]}, ${personKeys[8]}, ${personKeys[9]}, ${personKeys[10]})*/
 
     fun startConnection(){
-        SQLConnection = DriverManager.getConnection("jdbc:postgresql://pg:5432/studs", "s368793", "mvw4a69sVJQ3dtlw")
+        SQLConnection = DriverManager.getConnection(dataBaseAddress, dataBaseLogin, dataBasePasswod)
 
         Log.i(if (!SQLConnection.isClosed) "Успешно подключились к базе дынных" else "Соединение не установлено")
     }
@@ -120,8 +131,14 @@ object PostgreSQLCommands {
         return statement.execute(script)
     }
 
-    fun getAllFromTable(): ResultSet? {
-        val all = "select * from s368793.\"TestJDBC\""
+    fun getResultSetStatement(script: String): ResultSet? {
+        val statement = SQLConnection.createStatement()
+
+        return if (statement.execute(script)) statement.executeQuery(script) else null
+    }
+
+    fun getAllFromTable(tableName: String): ResultSet? {
+        val all = "select * from $dataBaseScheme.\"$tableName\""
 
         val statement = SQLConnection.createStatement()
 

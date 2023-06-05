@@ -14,7 +14,7 @@ const val MAX_HISTORY_SIZE = 12
 
 val HISTORY = mutableListOf<String>()
 var ISQUIT = false
-var ISLOGIN = false
+var LOGGED = false
 var HELP = ""
 var DEFAULT_HOST = "127.0.0.1"
 var DEFAULT_PORT = 4221
@@ -50,10 +50,12 @@ fun main(args: Array<String>) {
     val invoker = ConsoleInvoker()
 
     // Создаем экземпляры команд
+
     val help = HelpCommand(clientCommands)
     val exit = ExitCommand(clientCommands)
     val history = HistoryCommand(clientCommands)
     val execute = ExecuteScriptCommand(clientCommands, invoker)
+
     val showServerAddr = ShowServerAddressCommand(inetCommands)
     val setServerAddr = SetServerAddressCommand(inetCommands)
 
@@ -70,13 +72,14 @@ fun main(args: Array<String>) {
     val removeByLocation = RemoveAllByLocationCommand(dbCommands)
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
-    val addLogin = AddLogin(dbCommands)
-    val checkLogin = CheckLogin(dbCommands)
+    val logIn = LogInCommand(dbCommands)
+    val signUp = SignUpCommand(dbCommands)
 
     // Добавляем команды в вызыватель
     invoker.putAll(
         help, info, show, add, exit, history, execute, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addRnd, showServerAddr, setServerAddr, fill, addLogin, checkLogin
+        removeByLocation, filterByColor, printHairColor, addRnd, showServerAddr, setServerAddr, fill,
+        logIn, signUp
     )
 
     invoker.genHelp() // Генерируем строку помощи

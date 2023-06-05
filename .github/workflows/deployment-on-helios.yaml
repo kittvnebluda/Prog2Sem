@@ -19,7 +19,7 @@ jobs:
       - name: Run gradle jvm server jar task
         run: ./gradlew :jvmServer:jar
 
-      - name: Copy jvmClient.jar via ssh password
+      - name: Copy jvmClient.jar via ssh password to Kit
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
@@ -28,10 +28,10 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: jvmClient/build/libs/jvmClient-1.1-SNAPSHOT.jar
-          target: lab5client/jvmClient-1.1-SNAPSHOT.jar
+          source: jvmClient/build/libs/jvmClient-1.2-SNAPSHOT.jar
+          target: lab7client/jvmClient-1.2-SNAPSHOT.jar
 
-      - name: Copy jvmServer.jar via ssh password
+      - name: Copy jvmServer.jar via ssh password to Kit
         uses: nicklasfrahm/scp-action@main
         with:
           direction: upload
@@ -40,5 +40,29 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: jvmServer/build/libs/jvmServer-1.1-SNAPSHOT.jar
-          target: lab5server/jvmServer-1.1-SNAPSHOT.jar
+          source: jvmServer/build/libs/jvmServer-1.2-SNAPSHOT.jar
+          target: lab7server/jvmServer-1.2-SNAPSHOT.jar
+
+      - name: Copy jvmClient.jar via ssh password to Pseh
+        uses: nicklasfrahm/scp-action@main
+        with:
+          direction: upload
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME_SASHA }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_SASHA }}
+          source: jvmClient/build/libs/jvmClient-1.2-SNAPSHOT.jar
+          target: lab7client/jvmClient-1.2-SNAPSHOT.jar
+
+      - name: Copy jvmServer.jar via ssh password to Pseh
+        uses: nicklasfrahm/scp-action@main
+        with:
+          direction: upload
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME_SASHA }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_SASHA }}
+          source: jvmServer/build/libs/jvmServer-1.2-SNAPSHOT.jar
+          target: lab7server/jvmServer-1.2-SNAPSHOT.jar

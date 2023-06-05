@@ -1,6 +1,6 @@
 package com.prog2sem.client.cmdpattern
 
-import com.prog2sem.client.ISLOGIN
+import com.prog2sem.client.LOGGED
 import com.prog2sem.client.io.ColorfulOut
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.RndPersonBuilder
@@ -10,8 +10,6 @@ import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
-import com.prog2sem.shared.utils.Log
-import kotlin.jvm.internal.MagicApiIntrinsics
 
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") :
@@ -212,7 +210,7 @@ class CheckLogin(
 
         if(manager.checkLogin(login.toString(), password.toString())) {
             ColorfulOut.printlnGreen("Успешно вошли")
-            ISLOGIN = true
+            LOGGED = true
         } else ColorfulOut.printlnError("Попробуйте снова")
 
     }
@@ -220,7 +218,7 @@ class CheckLogin(
 
 class AddLogin(
     private val manager: DataBaseCommands,
-    override val name: String = "sign"
+    override val name: String = "signup"
 ) : Command {
     override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
     override val methodsDesc: Map<String, String> = emptyMap()
@@ -249,7 +247,7 @@ class AddLogin(
 
         if(manager.addLogin(login.toString(), password.toString())) {
             ColorfulOut.printlnGreen("Успешно зарегистрировались")
-            ISLOGIN = true
+            LOGGED = true
         } else ColorfulOut.printlnError("Попробуйте снова")
 
     }

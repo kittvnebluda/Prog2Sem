@@ -1,7 +1,7 @@
 package com.prog2sem.client.utils
 
 import com.prog2sem.client.HISTORY
-import com.prog2sem.client.ISLOGIN
+import com.prog2sem.client.LOGGED
 import com.prog2sem.client.ISQUIT
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.io.ColorfulOut.printRandColor
@@ -70,7 +70,7 @@ object Smt {
     }
 
     private fun authorize(invoker: Invoker){
-        while (!ISLOGIN) {
+        while (!LOGGED) {
             try {
                 println("Зарегестрируйтесь или войдите используя команды:\nsign\nlogin")
                 printRandColor(">>> ") // Просто красивая штучка

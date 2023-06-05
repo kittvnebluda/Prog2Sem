@@ -72,8 +72,8 @@ fun main(args: Array<String>) {
     val removeByLocation = RemoveAllByLocationCommand(dbCommands)
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
-    val logIn = LogInCommand(dbCommands)
-    val signUp = SignUpCommand(dbCommands)
+    val logIn = CheckLogin(dbCommands)
+    val signUp = AddLogin(dbCommands)
 
     // Добавляем команды в вызыватель
     invoker.putAll(

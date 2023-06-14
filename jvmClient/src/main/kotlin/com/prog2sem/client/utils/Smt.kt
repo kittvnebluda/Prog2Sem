@@ -51,8 +51,8 @@ object Smt {
     /** Главная функция класса, реализующая постоянное "общение" с пользователем */
     fun talkWithUserForever(invoker: Invoker) {
         greetings()
-        authorize(invoker)
-        loginScreen.acsess()
+//        authorize(invoker)
+//        loginScreen.acsess()
         while (!QUIT) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
@@ -70,23 +70,23 @@ object Smt {
         }
     }
 
-    private fun authorize(invoker: Invoker){
-        while (!LOGGED) {
-            try {
-                println("Зарегестрируйтесь или войдите используя команды:\nsignup\nlogin")
-                printRandColor(">>> ") // Просто красивая штучка
-                while (Login.command == "")
-                msg = Login.command
-                println(msg)
-                invoker.proceed(getNew(), login, password)
-            } catch (e: Exception) {
-                when (e) {
-                    is InvalidUserInputException -> e.message?.let { printlnError(it) }
-                    is MsgException -> e.message?.let { loginScreen.showWarning(it) }
-                    is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
-                    else -> throw e
-                }
-            }
-        }
-    }
+//    private fun authorize(invoker: Invoker){
+//        while (!LOGGED) {
+//            try {
+//                println("Зарегестрируйтесь или войдите используя команды:\nsignup\nlogin")
+//                printRandColor(">>> ") // Просто красивая штучка
+//                while (Login.command == "")
+//                msg = Login.command
+//                println(msg)
+//                invoker.proceed(getNew(), login, password)
+//            } catch (e: Exception) {
+//                when (e) {
+//                    is InvalidUserInputException -> e.message?.let { printlnError(it) }
+//                    is MsgException -> e.message?.let { loginScreen.showWarning(it) }
+//                    is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
+//                    else -> throw e
+//                }
+//            }
+//        }
+//    }
 }

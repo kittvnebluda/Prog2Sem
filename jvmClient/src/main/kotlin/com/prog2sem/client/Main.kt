@@ -1,6 +1,6 @@
 package com.prog2sem.client
 
-import Login
+//import Login
 import com.prog2sem.client.app.TableInfo
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.ConsoleInetCommands
@@ -31,7 +31,7 @@ val invoker = ConsoleInvoker()
 
 val getTableExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
-val loginScreen = Login("Login")
+//val loginScreen = Login("Login")
 
 var msg:String? = null
 

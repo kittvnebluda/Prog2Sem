@@ -28,16 +28,13 @@ object PostgreSQLCommands {
 
     private lateinit var SQLConnection: Connection
 
-
-    private const val dataBaseAddress = "jdbc:postgresql://localhost:5432/"
-    private const val dataBaseLogin = "postgres"
-    private const val dataBasePasswod = "prog2sem"
+    private const val dataBaseAddress = "jdbc:postgresql://localhost:5432/studs"
+    private const val dataBaseLogin = "s368793"
+    private const val dataBasePassword = "mvw4a69sVJQ3dtlw"
 
     const val personDataBaseName = "TestJDBC"
     const val dataBaseScheme = "s368793"
     const val loginDataBaseName = "TestLogin"
-
-
 
     const val createTableOfPersons = "CREATE TABLE IF NOT EXISTS $dataBaseScheme.\"$personDataBaseName\" \n" +
             "            (\n" +
@@ -81,7 +78,7 @@ object PostgreSQLCommands {
     fun startConnection(){
 
 
-        SQLConnection = DriverManager.getConnection(dataBaseAddress, dataBaseLogin, dataBasePasswod)
+        SQLConnection = DriverManager.getConnection(dataBaseAddress, dataBaseLogin, dataBasePassword)
 
         Log.i(if (!SQLConnection.isClosed) "Успешно подключились к базе дынных" else "Соединение не установлено")
     }

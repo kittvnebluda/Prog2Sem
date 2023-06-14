@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.prog2sem"
-version = "1.2-SNAPSHOT"
+version = "1.3-SNAPSHOT"
 
 dependencies {
     implementation(project(":shared"))
@@ -28,7 +28,7 @@ kotlin {
 }
 
 application {
-    mainClass.set("com.prog2sem.client.MainKt")
+    mainClass.set("com.prog2sem.client.AppKt")
 }
 
 tasks.withType<Jar> {

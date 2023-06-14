@@ -1,7 +1,7 @@
 package com.prog2sem.client.cmdpattern
 
 import com.prog2sem.client.LOGGED
-import com.prog2sem.client.TableInfo.tableNow
+import com.prog2sem.client.app.TableInfo.tableNow
 import com.prog2sem.client.getNew
 import com.prog2sem.client.io.ColorfulOut
 import com.prog2sem.client.persona.FromConsolePersonBuilder

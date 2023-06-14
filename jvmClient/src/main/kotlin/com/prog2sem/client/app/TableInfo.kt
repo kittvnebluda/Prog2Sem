@@ -1,16 +1,29 @@
-package com.prog2sem.client
+package com.prog2sem.client.app
 
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
+import com.prog2sem.client.invoker
 import com.prog2sem.client.io.ColorfulOut
+import com.prog2sem.client.login
+import com.prog2sem.client.password
 import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.exceptions.MsgException
-import com.prog2sem.shared.utils.Log
 import java.util.Collections
 
 object TableInfo: Runnable {
 
-    val keys = listOf("id", "createTime", "name", "weight", "height", "birthday", "hairColor", "coordinates", "location", "login", "pass")
+    val keys = listOf(
+        "id",
+        "createTime",
+        "name",
+        "weight",
+        "height",
+        "birthday",
+        "hairColor",
+        "coordinates",
+        "location",
+        "login",
+        "pass")
 
     var tableNow: MutableList<FromServer> = Collections.synchronizedList(mutableListOf<FromServer>())
 
@@ -32,7 +45,6 @@ object TableInfo: Runnable {
         }
     }
 
-
     @Synchronized
     private fun tableNow(): List<FromServer>{
         return tableNow
@@ -48,8 +60,8 @@ object TableInfo: Runnable {
 
            val sortedList = when(sortBy) {
                 keys[0] -> list.sortedBy {it.id}
-                keys[1] -> list.sortedBy { it.creteTime}
-                keys[2] -> list.sortedBy { it.person.name}
+                keys[1] -> list.sortedBy {it.creteTime}
+                keys[2] -> list.sortedBy {it.person.name}
                 keys[3] -> list.sortedBy {it.person.weight}
                 keys[4] -> list.sortedBy {it.person.height}
                 keys[5] -> list.sortedBy {it.person.birthday}

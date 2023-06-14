@@ -1,6 +1,7 @@
 package com.prog2sem.client
 
 import Login
+import com.prog2sem.client.app.TableInfo
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.ConsoleInetCommands
 import com.prog2sem.client.net.ConsoleLocalCommands
@@ -9,12 +10,10 @@ import com.prog2sem.client.utils.Smt
 import com.prog2sem.shared.net.PacketsUDP
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.core.config.Configurator
-import java.io.*
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import javax.security.auth.login.LoginContext
 
 const val MAX_HISTORY_SIZE = 12
 
@@ -31,7 +30,6 @@ var password = "admin"
 val invoker = ConsoleInvoker()
 
 val getTableExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-val talker: ExecutorService = Executors.newSingleThreadExecutor()
 
 val loginScreen = Login("Login")
 

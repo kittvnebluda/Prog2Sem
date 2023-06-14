@@ -1,8 +1,8 @@
 package com.prog2sem.client.utils
 
 import com.prog2sem.client.*
-import com.prog2sem.client.TableInfo.getInfo
-import com.prog2sem.client.TableInfo.keys
+import com.prog2sem.client.app.TableInfo.getInfo
+import com.prog2sem.client.app.TableInfo.keys
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.io.ColorfulOut.printRandColor
 import com.prog2sem.client.io.ColorfulOut.printlnError
@@ -73,9 +73,9 @@ object Smt {
     private fun authorize(invoker: Invoker){
         while (!LOGGED) {
             try {
-                println("Зарегестрируйтесь или войдите используя команды:\nsign\nlogin")
+                println("Зарегестрируйтесь или войдите используя команды:\nsignup\nlogin")
                 printRandColor(">>> ") // Просто красивая штучка
-                while (Login.command == "") {}
+                while (Login.command == "")
                 msg = Login.command
                 println(msg)
                 invoker.proceed(getNew(), login, password)

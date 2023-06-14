@@ -1,6 +1,8 @@
 package com.prog2sem.client.cmdpattern
 
 import com.prog2sem.client.LOGGED
+import com.prog2sem.client.TableInfo.tableNow
+import com.prog2sem.client.getNew
 import com.prog2sem.client.io.ColorfulOut
 import com.prog2sem.client.persona.FromConsolePersonBuilder
 import com.prog2sem.client.persona.RndPersonBuilder
@@ -8,8 +10,10 @@ import com.prog2sem.client.utils.CreateFromStd
 import com.prog2sem.client.utils.Smt
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.cmdpattern.Command
+import com.prog2sem.shared.exceptions.MsgException
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.PersonDirector
+import com.prog2sem.shared.utils.Log
 
 /** Реализация вызова команды получения информации о коллекции */
 class InfoCommand(private val manager: DataBaseCommands, override val name: String = "info") :
@@ -188,21 +192,25 @@ class CheckLogin(
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
 
-        var login: String? = ""
-        var password: String? = ""
+        var login: String? = null
+        var password: String? = null
 
         while (true) {
-            if (login == null || login == "")
+            if (login == null)
                 println("Введите логин ")
+            else if (login == "")
+                throw MsgException("Заполните поля")
             else break
-            login = readlnOrNull()
+            login = getNew()
         }
 
         while (true) {
-            if (password == null || password == "")
+            if (password == null)
                 println("Введите пароль ")
+            else if (password == "")
+                throw MsgException("Заполните поля")
             else break
-            password = readlnOrNull()
+            password = getNew()
         }
 
         com.prog2sem.client.login = login as String
@@ -224,25 +232,32 @@ class AddLogin(
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
 
-        var login: String? = ""
-        var password: String? = ""
+        var login: String? = null
+        var password: String? = null
 
         while (true) {
-            if (login == null || login == "")
+            if (login == null)
                 println("Введите логин ")
+            else if (login == "")
+                throw MsgException("Заполните поля")
             else break
-            login = readlnOrNull()
+            login = getNew()
+            Log.d(login)
         }
 
         while (true) {
-            if (password == null || password == "")
+            if (password == null)
                 println("Введите пароль ")
+            else if (password == "")
+                throw MsgException("Заполните поля")
             else break
-            password = readlnOrNull()
+            password = getNew()
         }
 
         com.prog2sem.client.login = login as String
         com.prog2sem.client.password = password as String
+
+        println("Here")
 
 
         if(manager.addLogin(login.toString(), password.toString())) {
@@ -250,6 +265,20 @@ class AddLogin(
             LOGGED = true
         } else ColorfulOut.printlnError("Попробуйте снова")
 
+    }
+
+
+}
+
+class GetTable(
+    private val manager: DataBaseCommands,
+    override val name: String = "getTable"
+) : Command {
+    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>, login: String, password: String) {
+        tableNow.clear()
+        manager.getAllTable().forEach { tableNow.add(it) }
     }
 
 

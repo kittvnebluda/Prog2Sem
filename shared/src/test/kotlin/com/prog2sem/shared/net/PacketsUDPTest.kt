@@ -24,13 +24,13 @@ class PacketsUDPTest {
 
         // Проверяем способность отправлять клиента и получать сервера
         var text = "AYAYA.HI"
-        client.send(text, InetSocketAddress(host, port))
+
         var msg = server.receive()
         assertEquals(msg, text, "Полученное сервером $msg и отправленное клиентом $text не совпадают")
 
         // Проверяем способность отправлять сервера и получать клиента
         text = "NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP NEVER GONNA GIVE YOU UP"
-        server.send(text)
+
         msg = client.receive()!!
 
         assertEquals(msg, text, "Полученное клиентом $msg и отправленное сервером $text не совпадают")

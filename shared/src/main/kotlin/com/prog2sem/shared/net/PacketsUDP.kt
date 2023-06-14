@@ -44,7 +44,7 @@ open class PacketsUDP(
             address?.let {
                 timeStart = System.currentTimeMillis()
 
-                Log.d("RECEIVED FROM $address")
+                //Log.d("RECEIVED FROM $address")
                 sendToAddress = address
 
                 val packet = Buffer.toString(buffer)
@@ -70,7 +70,7 @@ open class PacketsUDP(
         } while (timeDiff < timeout && received < packetsCount)
 
         return if (packetsCount == received) {
-            Log.d("TOTAL PACKETS RECEIVED: $received")
+            //Log.d("TOTAL PACKETS RECEIVED: $received")
             getInfoFromToken(Packets.merge(packets)).info
         } else {
             Log.d("TOTAL PACKETS RECEIVED: $received")
@@ -90,7 +90,7 @@ open class PacketsUDP(
         val msg = generateToken(TokenPayload(login, password, msg))
 
         Packets.generate(msg, login, password).forEach {
-            Log.d("SENDING $it")
+            //Log.d("SENDING $it")
             cnt++
             val buffer: ByteBuffer = ByteBuffer.wrap(it.toByteArray())
             channel.send(buffer, address)

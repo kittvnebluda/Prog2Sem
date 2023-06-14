@@ -2,10 +2,12 @@ package com.prog2sem.server.DataBaseCommands
 
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Coordinates
+import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.io.FileWorker
 import com.prog2sem.shared.persona.Person
 import com.prog2sem.shared.utils.JsonWorker.json
+import com.prog2sem.shared.utils.Log
 import kotlinx.serialization.decodeFromString
 import java.sql.ResultSet
 import java.time.ZonedDateTime
@@ -36,6 +38,30 @@ object DataBaseConnector {
 
             localDataBase.add(person)
         }
+    }
+
+    fun getAllInfoFromTable(req: ResultSet?, keys: List<String>): List<FromServer> {
+
+        val list = mutableListOf<FromServer>()
+
+        while ((req != null) && req.next()){
+
+
+            val id = req.getInt(keys[0])
+
+            val createDate = ZonedDateTime.parse(req.getString(keys[1]))
+
+            val person = Person(req.getString(keys[2]), getCoordinatesFromTable(req.getString(keys[7])),
+                req.getLong(keys[4]), ZonedDateTime.parse(req.getString(keys[5])), req.getInt(keys[3]),
+                Color.valueOf(req.getString(keys[6])), getLocationFromTable(req.getString(keys[8]))
+            )
+
+            val fromServer = FromServer(id, createDate, person, req.getString(keys[9]), req.getString(keys[10]))
+
+            list.add(fromServer)
+        }
+
+        return list
     }
 
     private fun getCoordinatesFromTable(str: String): Coordinates{

@@ -1,15 +1,13 @@
 package com.prog2sem.client.utils
 
-import com.prog2sem.client.HISTORY
-import com.prog2sem.client.LOGGED
-import com.prog2sem.client.ISQUIT
+import com.prog2sem.client.*
+import com.prog2sem.client.TableInfo.getInfo
+import com.prog2sem.client.TableInfo.keys
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.io.ColorfulOut.printRandColor
-import com.prog2sem.client.io.ColorfulOut.printlnGreen
 import com.prog2sem.client.io.ColorfulOut.printlnError
+import com.prog2sem.client.io.ColorfulOut.printlnGreen
 import com.prog2sem.client.io.ColorfulOut.randLightANSI
-import com.prog2sem.client.login
-import com.prog2sem.client.password
 import com.prog2sem.shared.cmdpattern.Invoker
 import com.prog2sem.shared.exceptions.InvalidUserInputException
 import com.prog2sem.shared.exceptions.MsgException
@@ -53,11 +51,12 @@ object Smt {
     /** Главная функция класса, реализующая постоянное "общение" с пользователем */
     fun talkWithUserForever(invoker: Invoker) {
         greetings()
-        val pair = authorize(invoker)
+        authorize(invoker)
+        loginScreen.acsess()
         while (!ISQUIT) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
-                invoker.proceed(readln(), login, password)
+                invoker.proceed(getNew(), login, password)
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> e.message?.let { printlnError(it) }
@@ -66,6 +65,8 @@ object Smt {
                     else -> throw e
                 }
             }
+
+            println(getInfo(keys[2]))
         }
     }
 
@@ -74,11 +75,14 @@ object Smt {
             try {
                 println("Зарегестрируйтесь или войдите используя команды:\nsign\nlogin")
                 printRandColor(">>> ") // Просто красивая штучка
-                invoker.proceed(readln(), login, password)
+                while (Login.command == "") {}
+                msg = Login.command
+                println(msg)
+                invoker.proceed(getNew(), login, password)
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> e.message?.let { printlnError(it) }
-                    is MsgException -> e.message?.let { printlnError(it) }
+                    is MsgException -> e.message?.let { loginScreen.showWarning(it) }
                     is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
                     else -> throw e
                 }

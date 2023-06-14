@@ -4,11 +4,13 @@ import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.login
 import com.prog2sem.client.password
 import com.prog2sem.shared.Color
+import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.utils.MsgMarker
 import com.prog2sem.shared.net.Talker
 import com.prog2sem.shared.persona.Person
+import com.prog2sem.shared.utils.Log
 
 class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
     /**
@@ -72,5 +74,9 @@ class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
 
     override fun addLogin(login: String, password: String): Boolean {
         return funTalk("add_login")
+    }
+
+    override fun getAllTable(): List<FromServer> {
+        return funTalk("getTable")
     }
 }

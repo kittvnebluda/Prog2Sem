@@ -1,6 +1,7 @@
 package com.prog2sem.shared.net
 
 import com.prog2sem.shared.Color
+import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.persona.Person
 
@@ -85,4 +86,6 @@ interface DataBaseCommands {
     fun checkLogin(login: String, password: String): Boolean
 
     fun addLogin(login: String, password: String): Boolean
+
+    fun getAllTable(): List<FromServer>
 }

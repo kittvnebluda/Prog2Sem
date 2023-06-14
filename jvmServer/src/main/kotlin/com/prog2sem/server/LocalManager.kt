@@ -1,6 +1,7 @@
 package com.prog2sem.server
 
 import com.prog2sem.server.DataBaseCommands.DataBaseConnector
+import com.prog2sem.server.DataBaseCommands.DataBaseConnector.getAllInfoFromTable
 import com.prog2sem.server.DataBaseCommands.DataBaseConnector.localDataBase
 import com.prog2sem.server.DataBaseCommands.DataBaseConnector.getPersonsFromTable
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.addPerson
@@ -18,6 +19,7 @@ import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useUpdateQueryPre
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useUpdateQueryStat
 import com.prog2sem.shared.utils.KnowledgeFactorySHA1.encryptThisString
 import com.prog2sem.shared.Color
+import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.Location
 import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.persona.Person
@@ -195,6 +197,10 @@ object LocalManager : DataBaseCommands {
         getPersonsFromTable(getAllFromTable(personDataBaseName), personKeys)
 
         return true
+    }
+
+    override fun getAllTable(): List<FromServer> {
+        return getAllInfoFromTable(getAllFromTable(personDataBaseName), personKeys)
     }
 
 }

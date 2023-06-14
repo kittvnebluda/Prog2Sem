@@ -22,14 +22,14 @@ class UDPTest {
 
         // Проверяем способность отправлять клиента и получать сервера
         var text = "AYAYA.HI"
-        client.send(text, InetSocketAddress(host, port))
+
         var msg = server.receive()
         assertTrue(msg == "AYAYA.HI",
             "Полученное сервером $msg и отправленное клиентом $text не совпадают")
 
         // Проверяем способность отправлять сервера и получать клиента
         text = "NEVER GONNA GIVE YOU UP"
-        server.send(text)
+
         msg = client.receive()!!
         assertTrue(msg == "NEVER GONNA GIVE YOU UP",
             "Полученное клиентом $msg и отправленное сервером $text не совпадают")

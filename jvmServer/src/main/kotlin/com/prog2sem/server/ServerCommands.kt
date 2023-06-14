@@ -3,12 +3,14 @@ package com.prog2sem.server
 
 import com.prog2sem.server.tasks.PacketsScheduler.send
 import com.prog2sem.shared.cmdpattern.Command
+import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.utils.MsgMarker.getGeneric
 import com.prog2sem.shared.utils.MsgMarker.markGeneric
 import java.net.InetAddress
 import com.prog2sem.shared.utils.Log
 import com.prog2sem.shared.utils.MsgMarker.markError
 import java.net.InetSocketAddress
+import java.util.Collections
 
 
 /** Реализация вызова команды получения информации о коллекции */
@@ -176,4 +178,21 @@ class CheckLogin(
         else
             send(markError("Пользователь с таким именем не существует"), address, login, password)
     }
+}
+
+class GetTable(
+    override val name: String = "getTable"
+) : Command {
+    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val methodsDesc: Map<String, String> = emptyMap()
+    override fun execute(args: List<String>, login: String, password: String) {
+        val port = args[1] as Int
+        val address = InetSocketAddress(InetAddress.getByName(args[0]), port)
+
+        val list = LocalManager.getAllTable()
+
+        send(markGeneric(list), address, login, password)
+    }
+
+
 }

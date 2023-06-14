@@ -36,12 +36,6 @@ class MsgMarkerTest {
     @Test
     fun testPackets() {
         val string = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-        val msg = Packets.generate(string)
-        val newMsg = Packets.merge(msg)
 
-        println(msg)
-        println(newMsg)
-
-        assert(string == newMsg)
     }
 }

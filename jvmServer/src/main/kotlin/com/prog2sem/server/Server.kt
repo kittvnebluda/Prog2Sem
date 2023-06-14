@@ -99,10 +99,11 @@ fun initCommands(){
     val printHairColor = PrintFieldAscendingHairColorCommand()
     val addLogin = AddLogin()
     val checkLogin = CheckLogin()
+    val getTable = GetTable()
 
     INVOKER.putAll(
         info, show, add, update, remove, clear, addIdMax, removeGreater,
-        removeByLocation, filterByColor, printHairColor, addLogin, checkLogin
+        removeByLocation, filterByColor, printHairColor, addLogin, checkLogin, getTable
     )
 }
 fun load(){

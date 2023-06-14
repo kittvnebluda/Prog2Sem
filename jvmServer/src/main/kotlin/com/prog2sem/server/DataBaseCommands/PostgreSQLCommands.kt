@@ -69,7 +69,7 @@ object PostgreSQLCommands {
 
    // val getId = "select $dataBaseScheme.id.nextval "
 
-    val personKeys = listOf("id", "createTime", "name", "weight", "height", "birthday", "hairColor", "coordinates", "location", "login", "pass")
+    val personKeys = listOf("id", "creationTime", "name", "weight", "height", "birthday", "hairColor", "coordinates", "location", "login", "pass")
 
     val loginKeys = listOf("id", "login", "pass")
 
@@ -79,6 +79,8 @@ object PostgreSQLCommands {
             "${personKeys[6]}, ${personKeys[7]}, ${personKeys[8]}, ${personKeys[9]}, ${personKeys[10]})*/
 
     fun startConnection(){
+
+
         SQLConnection = DriverManager.getConnection(dataBaseAddress, dataBaseLogin, dataBasePasswod)
 
         Log.i(if (!SQLConnection.isClosed) "Успешно подключились к базе дынных" else "Соединение не установлено")

@@ -53,7 +53,7 @@ object Smt {
         greetings()
         authorize(invoker)
         loginScreen.acsess()
-        while (!ISQUIT) {
+        while (!QUIT) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
                 invoker.proceed(getNew(), login, password)

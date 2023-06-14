@@ -20,8 +20,16 @@ public class Login extends JFrame {
     private JButton login;
     private JLabel warning;
 
-    private int widthScreen = 400, heightScreen = 720, widthLogin = 300, heightLogin = 30, widthRegister = 300, heightRegister = 30,
-            widthPasswordField = 300, heightPasswordField = 50, widthLoginField = 300, heightLoginField = 50;
+    private final int widthScreen = 400;
+    private final int heightScreen = 720;
+    private final int widthLogin = 300;
+    private final int heightLogin = 30;
+    private final int widthRegister = 300;
+    private final int heightRegister = 30;
+    private final int widthPasswordField = 300;
+    private final int heightPasswordField = 50;
+    private final int widthLoginField = 300;
+    private final int heightLoginField = 50;
 
     private final String passwordLableName = "Password:", loginLabelName = "Login:", buttomLoginName = "Login", buttomRegisterName = "Register";
 

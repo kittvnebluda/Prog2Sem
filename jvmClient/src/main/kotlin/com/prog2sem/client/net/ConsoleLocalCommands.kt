@@ -51,7 +51,7 @@ class ConsoleLocalCommands : LocalCommands {
     }
 
     override fun exit() {
-        ISQUIT = true
+        QUIT = true
     }
 
     override fun history() {

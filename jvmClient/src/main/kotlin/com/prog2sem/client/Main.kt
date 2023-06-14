@@ -18,7 +18,7 @@ import java.util.concurrent.Executors
 const val MAX_HISTORY_SIZE = 12
 
 val HISTORY = mutableListOf<String>()
-var ISQUIT = false
+var QUIT = false
 var LOGGED = false
 var HELP = ""
 var DEFAULT_HOST = "127.0.0.1"

@@ -24,7 +24,6 @@ class NetInvoker : Invoker {
     }
 
     override fun proceed(cmd: String, login: String, password: String) {
-
         // Разделяем ввод и достаем команду
         val address = InetAddress.getByName(cmd.substringBefore(':'))
         var newCmd = cmd.substring(cmd.indexOf(':') + 1)
@@ -35,6 +34,7 @@ class NetInvoker : Invoker {
 
         val args = mutableListOf(address.hostAddress, port) as MutableList<String>
         for (el in postCmd.slice(1 until postCmd.size)) args.add(el)
+
         command.execute(args, login, password) // Выполняем команду
     }
 

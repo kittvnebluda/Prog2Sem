@@ -76,7 +76,6 @@ object PacketsScheduler {
 
         Log.d("$address ready for schedule")
 
-
         var msg = Packets.merge(packets)
 
         if (checkVer(msg)) {

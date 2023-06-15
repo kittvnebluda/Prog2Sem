@@ -28,9 +28,9 @@ object PostgreSQLCommands {
 
     private lateinit var SQLConnection: Connection
 
-    private const val dataBaseAddress = "jdbc:postgresql://localhost:5432/prog2sem"
+    private const val dataBaseAddress = "jdbc:postgresql://localhost:4224/postgres"
     private const val dataBaseLogin = "postgres"
-    private const val dataBasePassword = "prog2sem"
+    private const val dataBasePassword = "123098!@"
 
     const val personDataBaseName = "TestJDBC"
     const val dataBaseScheme = "s368793"
@@ -61,8 +61,8 @@ object PostgreSQLCommands {
 
     const val getAllPersons = "select * from $dataBaseScheme.\"$personDataBaseName\""
 
-    const val createSequencePersons = "CREATE SEQUENCE $dataBaseScheme.id START 0"
-    const val createSequenceLogins = "CREATE SEQUENCE $dataBaseScheme.id_log START 0"
+    const val createSequencePersons = "CREATE SEQUENCE $dataBaseScheme.id START 1"
+    const val createSequenceLogins = "CREATE SEQUENCE $dataBaseScheme.id_log START 1"
 
    // val getId = "select $dataBaseScheme.id.nextval "
 
@@ -116,12 +116,21 @@ object PostgreSQLCommands {
     }
 
     fun getLoginId(): Long{
-        val sql = "select nextval(\'id_log\')"
+        val sql = "select nextval('s368793.id_log')"
+                            println("YEAR")
+
         val ps: PreparedStatement = SQLConnection.prepareStatement(sql)
-        val rs = ps.executeQuery()
-        if (rs.next())
-            return rs.getLong(1)
-        return 0
+                            println("YEAR2")
+
+        try {
+            val rs = ps.executeQuery()
+            if (rs.next())
+                return rs.getLong(1)
+
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return 0L
     }
 
     fun useStatement(script: String):Boolean {

@@ -23,7 +23,7 @@ class HomePane : JPanel() {
         // create graphics
         val graphics = JPanel()
 
-        val stickman = ImageIO.read(File("/home/kit/IdeaProjects/Prog2Sem/jvmClient/src/main/resources/images/stickman.png"))
+        val stickman = ImageIO.read(File("C:\\Users\\sizgr\\IdeaProjects\\Prog2Sem\\jvmClient\\src\\main\\resources\\images\\stickman.png"))
         val picLabel = JLabel(ImageIcon(stickman))
 
         graphics.add(picLabel)

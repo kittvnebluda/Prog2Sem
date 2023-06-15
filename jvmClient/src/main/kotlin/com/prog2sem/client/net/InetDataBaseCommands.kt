@@ -68,11 +68,11 @@ class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
         return funTalk("print_field_ascending_hair_color")
     }
 
-    override fun checkLogin(login: String, password: String): Boolean {
+    override fun login(login: String, password: String): Boolean {
         return funTalk("check_login")
     }
 
-    override fun addLogin(login: String, password: String): Boolean {
+    override fun signup(login: String, password: String): Boolean {
         return funTalk("add_login")
     }
 

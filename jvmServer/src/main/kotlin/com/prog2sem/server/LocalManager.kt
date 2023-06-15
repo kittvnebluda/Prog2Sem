@@ -17,7 +17,6 @@ import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.personKeys
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useStatement
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useUpdateQueryPrepare
 import com.prog2sem.server.DataBaseCommands.PostgreSQLCommands.useUpdateQueryStat
-import com.prog2sem.shared.utils.KnowledgeFactorySHA1.encryptThisString
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.Location
@@ -157,16 +156,15 @@ object LocalManager : DataBaseCommands {
         return Person.colors.toTypedArray()
     }
 
-    override fun checkLogin(login: String, password: String): Boolean {
+    override fun login(login: String, password: String): Boolean {
         val com = "select * from $dataBaseScheme.\"$loginDataBaseName\" where ${loginKeys[1]} = '$login' and ${loginKeys[2]} = '${password}'"
 
         return getResultSetStatement(com)?.next() ?: false
     }
 
-    override fun addLogin(login: String, password: String): Boolean {
-        if (!checkLogin(login, password)) {
+    override fun signup(login: String, password: String): Boolean {
+        if (!login(login, password)) {
             val com = "insert into $dataBaseScheme.\"$loginDataBaseName\" values(?, ?, ?)"
-
             val hashMap = HashMap<String, Any>()
 
             hashMap[loginKeys[0]] = getLoginId()

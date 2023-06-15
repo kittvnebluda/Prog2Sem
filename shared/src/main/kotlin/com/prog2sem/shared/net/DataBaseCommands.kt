@@ -83,9 +83,9 @@ interface DataBaseCommands {
      */
     fun printFieldAscendingHairColor(): Array<Color>
 
-    fun checkLogin(login: String, password: String): Boolean
+    fun login(login: String, password: String): Boolean
 
-    fun addLogin(login: String, password: String): Boolean
+    fun signup(login: String, password: String): Boolean
 
     fun getAllTable(): List<FromServer>
 }

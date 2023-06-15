@@ -1,13 +1,13 @@
 package com.prog2sem.client.app
 
 import com.prog2sem.client.*
-import com.prog2sem.client.cmdpattern.CheckLogin
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
+import com.prog2sem.shared.exceptions.GotErrorMsgException
 import java.awt.*
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
 import java.util.*
 import javax.swing.*
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
 
 
 class AuthPane : JPanel() {
@@ -116,16 +116,55 @@ class AuthPane : JPanel() {
         add(tabbedPane)
 
         // add action listeners
+        usernameText.document.addDocumentListener(object : DocumentListener {
+            override fun insertUpdate(e: DocumentEvent?) {
+                login = usernameText.text
+            }
+
+            override fun removeUpdate(e: DocumentEvent?) {
+                login = usernameText.text
+            }
+
+            override fun changedUpdate(e: DocumentEvent?) {}
+        })
+
+        passwdText.document.addDocumentListener(object : DocumentListener {
+            override fun insertUpdate(e: DocumentEvent?) {
+                password = passwdText.password.toString()
+            }
+
+            override fun removeUpdate(e: DocumentEvent?) {
+                password = passwdText.password.toString()
+            }
+
+            override fun changedUpdate(e: DocumentEvent?) {}
+        })
+
         loginButton.addActionListener {
             try {
-                if(dbCommands.checkLogin(login, password)) {
+                if(dbCommands.login(login, password)) {
                     isLogged = true
-                } else
-                    errorLoginLabel.text = labels.getString("incorrect_name_or_pass")
+                    SwingApp.authDone()
+                }
+
+            } catch (e: GotErrorMsgException) {
+                rigidArea.isVisible = false
+                errorLoginLabel.text = labels.getString("incorrect_name_or_pass")
+                println(e.message)
+            }
+        }
+
+        signupButton.addActionListener {
+            try {
+                if(dbCommands.signup(login, password)) {
+                    isLogged = true
+                    SwingApp.authDone()
+                }
 
             } catch (e: ServerNotAnsweringException) {
                 rigidArea.isVisible = false
-                errorLoginLabel.text = labels.getString("server_not_answering")
+                errorLoginLabel.text = labels.getString("try_again")
+                println(e.message)
             }
         }
     }

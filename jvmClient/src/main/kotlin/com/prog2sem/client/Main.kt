@@ -1,7 +1,5 @@
 package com.prog2sem.client
 
-//import Login
-import com.prog2sem.client.app.TableInfo
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.ConsoleInetCommands
 import com.prog2sem.client.net.ConsoleLocalCommands
@@ -22,7 +20,7 @@ var commandsHelp = ""
 var doQuit = false
 var isLogged = false
 
-var host = "127.0.0.1"
+var host = "192.168.43.213"
 var port = 4221
 
 var login = "admin"
@@ -31,8 +29,6 @@ var password = "admin"
 val invoker = ConsoleInvoker()
 
 val getTableExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-
-//val loginScreen = Login("Login")
 
 var msg:String? = null
 
@@ -86,8 +82,8 @@ fun main(args: Array<String>) {
     val removeByLocation = RemoveAllByLocationCommand(dbCommands)
     val filterByColor = FilterGreaterThanHairColorCommand(dbCommands)
     val printHairColor = PrintFieldAscendingHairColorCommand(dbCommands)
-    val logIn = CheckLogin(dbCommands)
-    val signUp = AddLogin(dbCommands)
+    val logIn = LogIn(dbCommands)
+    val signUp = SignUp(dbCommands)
     val getTable = GetTable(dbCommands)
 
     // Добавляем команды в вызыватель

@@ -59,13 +59,13 @@ fun main(args: Array<String>) {
     try {
         useStatement(createSequencePersons)
     }catch (e: PSQLException){
-        Log.e("Уже существует")
+        Log.e(e.message!!)
     }
 
     try {
         useStatement(createSequenceLogins)
     }catch (e: PSQLException){
-        Log.e("Уже существует")
+        Log.e(e.message!!)
     }
 
     load()

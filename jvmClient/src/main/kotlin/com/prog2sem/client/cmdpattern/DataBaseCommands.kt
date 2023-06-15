@@ -184,7 +184,7 @@ class PrintFieldAscendingHairColorCommand(
     }
 }
 
-class CheckLogin(
+class LogIn(
     private val manager: DataBaseCommands,
     override val name: String = "login"
 ) : Command {
@@ -216,7 +216,7 @@ class CheckLogin(
         com.prog2sem.client.login = login as String
         com.prog2sem.client.password = password as String
 
-        if(manager.checkLogin(login.toString(), password.toString())) {
+        if(manager.login(login.toString(), password.toString())) {
             ColorfulOut.printlnGreen("Успешно вошли")
             isLogged = true
         } else ColorfulOut.printlnError("Попробуйте снова")
@@ -224,7 +224,7 @@ class CheckLogin(
     }
 }
 
-class AddLogin(
+class SignUp(
     private val manager: DataBaseCommands,
     override val name: String = "signup"
 ) : Command {
@@ -260,13 +260,12 @@ class AddLogin(
         println("Here")
 
 
-        if(manager.addLogin(login.toString(), password.toString())) {
+        if(manager.signup(login.toString(), password.toString())) {
             ColorfulOut.printlnGreen("Успешно зарегистрировались")
             isLogged = true
         } else ColorfulOut.printlnError("Попробуйте снова")
 
     }
-
 
 }
 
@@ -274,12 +273,11 @@ class GetTable(
     private val manager: DataBaseCommands,
     override val name: String = "getTable"
 ) : Command {
-    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val desc: String = ""
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
         tableNow.clear()
         manager.getAllTable().forEach { tableNow.add(it) }
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.prog2sem.client
 
 import com.prog2sem.client.app.AuthPane
+import com.prog2sem.client.app.HomePane
 import java.awt.BorderLayout
 import java.net.InetSocketAddress
 import javax.swing.*
@@ -11,39 +12,44 @@ var region = "RU"
 fun main() {
     client.sendToAddress = InetSocketAddress(host, port)
 
-    SwingUtilities.invokeLater { gui() }
+    SwingUtilities.invokeLater { SwingApp }
 }
 
-fun gui() {
-    val f = JFrame()
+object SwingApp : JFrame() {
+    init {
+//      preferredSize = Dimension(500, 500)
+        title = "Eights laboratory of java's second semester programming course"
+        defaultCloseOperation = EXIT_ON_CLOSE
 
-//    f.preferredSize = Dimension(500, 500)
-    f.title = "Eights laboratory of java's second semester programming course"
-    f.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        contentPane = AuthPane()
 
-    // create menu
-    val menu = BorderLayout()
+        isResizable = false
 
-    val rightMenu = JPanel()
+        pack() // установка размеров фрейма
 
-    rightMenu.add(JLabel(login))
-    rightMenu.add(JSeparator(SwingConstants.VERTICAL))
-    rightMenu.add(JLabel("${lang}_$region"))
+        isVisible = true
+    }
 
-    f.jMenuBar = JMenuBar()
-    f.jMenuBar.layout = menu
+    fun authDone() {
+        isResizable = true
 
-    f.jMenuBar.add(JLabel("PROJECT PROG2SEM"), BorderLayout.LINE_START)
-    f.jMenuBar.add(rightMenu, BorderLayout.LINE_END)
+        // create menu
+        val menu = BorderLayout()
 
-    f.contentPane = AuthPane()
+        val rightMenu = JPanel()
 
-    f.jMenuBar.isVisible = false
-    f.jMenuBar.isEnabled = false
+        rightMenu.add(JLabel(login))
+        rightMenu.add(JSeparator(SwingConstants.VERTICAL))
+        rightMenu.add(JLabel("${lang}_$region"))
 
-    f.isResizable = false
+        jMenuBar = JMenuBar()
+        jMenuBar.layout = menu
 
-    f.pack() // установка размеров фрейма
+        jMenuBar.add(JLabel("PROJECT PROG2SEM"), BorderLayout.LINE_START)
+        jMenuBar.add(rightMenu, BorderLayout.LINE_END)
 
-    f.isVisible = true
+        contentPane = HomePane()
+
+        pack() // установка размеров фрейма
+    }
 }

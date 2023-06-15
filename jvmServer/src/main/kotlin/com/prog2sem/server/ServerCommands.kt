@@ -3,14 +3,12 @@ package com.prog2sem.server
 
 import com.prog2sem.server.tasks.PacketsScheduler.send
 import com.prog2sem.shared.cmdpattern.Command
-import com.prog2sem.shared.net.DataBaseCommands
 import com.prog2sem.shared.utils.MsgMarker.getGeneric
 import com.prog2sem.shared.utils.MsgMarker.markGeneric
 import java.net.InetAddress
 import com.prog2sem.shared.utils.Log
 import com.prog2sem.shared.utils.MsgMarker.markError
 import java.net.InetSocketAddress
-import java.util.Collections
 
 
 /** Реализация вызова команды получения информации о коллекции */
@@ -151,29 +149,31 @@ class PrintFieldAscendingHairColorCommand(
 class AddLogin(
     override val name: String = "add_login"
 ) : Command {
-    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val desc: String = ""
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
         val port = args[1] as Int
         val address = InetSocketAddress(InetAddress.getByName(args[0]), port)
-
-        if (LocalManager.addLogin(login, password))
+        val res = LocalManager.signup(login, password)
+        if (res) {
             send(markGeneric(true), address, login, password)
-        else
+        }
+        else {
             send(markError("Пользователь с таким именем уже существует"), address, login, password)
+        }
     }
 }
 
 class CheckLogin(
     override val name: String = "check_login"
 ) : Command {
-    override val desc: String = "вывести значения поля hairColor всех элементов в порядке возрастания"
+    override val desc: String = ""
     override val methodsDesc: Map<String, String> = emptyMap()
     override fun execute(args: List<String>, login: String, password: String) {
         val port = args[1] as Int
         val address = InetSocketAddress(InetAddress.getByName(args[0]), port)
 
-        if (LocalManager.checkLogin(login, password))
+        if (LocalManager.login(login, password))
             send(markGeneric(true), address, login, password)
         else
             send(markError("Пользователь с таким именем не существует"), address, login, password)

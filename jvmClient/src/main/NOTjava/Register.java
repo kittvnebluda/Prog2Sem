@@ -37,7 +37,7 @@ public class Register extends JFrame {
         register.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MainKt.getLOGGED()) {
+                if (MainKt.isLogged()) {
                     Info.userName = registerField.getText();
                     setVisible(false);
                     new MainMenu("MainMenu", MainKt.getLogin());

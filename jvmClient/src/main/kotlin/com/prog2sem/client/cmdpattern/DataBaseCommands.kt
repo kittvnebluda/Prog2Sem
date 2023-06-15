@@ -1,6 +1,6 @@
 package com.prog2sem.client.cmdpattern
 
-import com.prog2sem.client.LOGGED
+import com.prog2sem.client.isLogged
 import com.prog2sem.client.app.TableInfo.tableNow
 import com.prog2sem.client.getNew
 import com.prog2sem.client.io.ColorfulOut
@@ -218,7 +218,7 @@ class CheckLogin(
 
         if(manager.checkLogin(login.toString(), password.toString())) {
             ColorfulOut.printlnGreen("Успешно вошли")
-            LOGGED = true
+            isLogged = true
         } else ColorfulOut.printlnError("Попробуйте снова")
 
     }
@@ -262,7 +262,7 @@ class AddLogin(
 
         if(manager.addLogin(login.toString(), password.toString())) {
             ColorfulOut.printlnGreen("Успешно зарегистрировались")
-            LOGGED = true
+            isLogged = true
         } else ColorfulOut.printlnError("Попробуйте снова")
 
     }

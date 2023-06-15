@@ -17,7 +17,7 @@ class ConsoleLocalCommands : LocalCommands {
     }
 
     override fun help() {
-        println(HELP)
+        println(commandsHelp)
     }
 
     override fun executeScript(
@@ -51,11 +51,11 @@ class ConsoleLocalCommands : LocalCommands {
     }
 
     override fun exit() {
-        QUIT = true
+        doQuit = true
     }
 
     override fun history() {
-        HISTORY.forEachIndexed { index, s ->
+        commandsHistoryList.forEachIndexed { index, s ->
             println("${index + 1}. $s")
         }
     }

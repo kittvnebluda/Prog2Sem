@@ -28,9 +28,9 @@ object PostgreSQLCommands {
 
     private lateinit var SQLConnection: Connection
 
-    private const val dataBaseAddress = "jdbc:postgresql://localhost:5432/studs"
-    private const val dataBaseLogin = "s368793"
-    private const val dataBasePassword = "mvw4a69sVJQ3dtlw"
+    private const val dataBaseAddress = "jdbc:postgresql://localhost:5432/prog2sem"
+    private const val dataBaseLogin = "postgres"
+    private const val dataBasePassword = "prog2sem"
 
     const val personDataBaseName = "TestJDBC"
     const val dataBaseScheme = "s368793"

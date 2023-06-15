@@ -44,8 +44,8 @@ object Smt {
 
     /** Добавление сложного аргумента в историю для последней команды */
     fun addArgToHistory(arg: String) {
-        val lastCmd = HISTORY[HISTORY.lastIndex]
-        HISTORY[HISTORY.lastIndex] = "$lastCmd\n$arg"
+        val lastCmd = commandsHistoryList[commandsHistoryList.lastIndex]
+        commandsHistoryList[commandsHistoryList.lastIndex] = "$lastCmd\n$arg"
     }
 
     /** Главная функция класса, реализующая постоянное "общение" с пользователем */
@@ -53,7 +53,7 @@ object Smt {
         greetings()
 //        authorize(invoker)
 //        loginScreen.acsess()
-        while (!QUIT) {
+        while (!doQuit) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
                 invoker.proceed(getNew(), login, password)
@@ -71,7 +71,7 @@ object Smt {
     }
 
 //    private fun authorize(invoker: Invoker){
-//        while (!LOGGED) {
+//        while (!isLogged) {
 //            try {
 //                println("Зарегестрируйтесь или войдите используя команды:\nsignup\nlogin")
 //                printRandColor(">>> ") // Просто красивая штучка

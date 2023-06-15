@@ -17,12 +17,13 @@ import java.util.concurrent.Executors
 
 const val MAX_HISTORY_SIZE = 12
 
-val HISTORY = mutableListOf<String>()
-var QUIT = false
-var LOGGED = false
-var HELP = ""
-var DEFAULT_HOST = "127.0.0.1"
-var DEFAULT_PORT = 4221
+val commandsHistoryList = mutableListOf<String>()
+var commandsHelp = ""
+var doQuit = false
+var isLogged = false
+
+var host = "127.0.0.1"
+var port = 4221
 
 var login = "admin"
 var password = "admin"
@@ -35,8 +36,13 @@ val getTableExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
 var msg:String? = null
 
+val client = PacketsUDP()
+
+val dbCommands = InetDataBaseCommands(client)
+val clientCommands = ConsoleLocalCommands()
+val inetCommands = ConsoleInetCommands(client)
+
 fun main(args: Array<String>) {
-    val client = PacketsUDP()
 
     val host: InetAddress
     val port: Int
@@ -45,8 +51,8 @@ fun main(args: Array<String>) {
         host = InetAddress.getByName(args[0])
         port = args[1].toInt()
     } else {
-        host = InetAddress.getByName(DEFAULT_HOST)
-        port = DEFAULT_PORT
+        host = InetAddress.getByName(com.prog2sem.client.host)
+        port = com.prog2sem.client.port
     }
 
     client.sendToAddress = InetSocketAddress(host, port)
@@ -56,10 +62,6 @@ fun main(args: Array<String>) {
     } else {
         Configurator.setRootLevel(Level.getLevel("INFO"))
     }
-
-    val dbCommands = InetDataBaseCommands(client)
-    val clientCommands = ConsoleLocalCommands()
-    val inetCommands = ConsoleInetCommands(client)
 
     // Создаем экземпляры команд
 
@@ -96,8 +98,6 @@ fun main(args: Array<String>) {
     )
 
     invoker.genHelp() // Генерируем строку помощи
-
-    getTableExecutor.submit(TableInfo)
 
     Smt.talkWithUserForever(invoker)
 }

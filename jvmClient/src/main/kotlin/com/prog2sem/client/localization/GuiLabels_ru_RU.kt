@@ -17,7 +17,13 @@ class GuiLabels_ru_RU : ListResourceBundle() {
         arrayOf<Any>("username", "Имя пользователя"),
         arrayOf<Any>("password", "Пароль"),
         arrayOf<Any>("login", "ВОЙТИ"),
-        arrayOf<Any>("signup", "ЗАРЕГИСТРИРОВАТЬСЯ")
+        arrayOf<Any>("signup", "ЗАРЕГИСТРИРОВАТЬСЯ"),
+        arrayOf<Any>("server address", "Адрес сервера"),
+        arrayOf<Any>("server port", "Порт"),
+        arrayOf<Any>("auth tab", "Аутентификация"),
+        arrayOf<Any>("server settings tab", "Настройки сервера"),
+        arrayOf<Any>("server_not_answering", "Сервер молчит."),
+        arrayOf<Any>("incorrect_name_or_pass", "Неверное имя пользователя или пароль.")
     )
     override fun getContents(): Array<Array<Any>> {
         return contents

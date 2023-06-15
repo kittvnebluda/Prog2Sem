@@ -1,7 +1,7 @@
 package com.prog2sem.client.cmdpattern
 
-import com.prog2sem.client.HELP
-import com.prog2sem.client.HISTORY
+import com.prog2sem.client.commandsHelp
+import com.prog2sem.client.commandsHistoryList
 import com.prog2sem.client.MAX_HISTORY_SIZE
 import com.prog2sem.client.utils.StringWorker.splitSpaces
 import com.prog2sem.shared.cmdpattern.Invoker
@@ -31,9 +31,9 @@ class ConsoleInvoker : Invoker {
         val args = postCmd.slice(1 until postCmd.size)
 
         // Добавляем команду в историю
-        HISTORY.add("${command.name} ${args.joinToString(" ")}")
-        if (HISTORY.size > MAX_HISTORY_SIZE)
-            HISTORY.removeFirst()
+        commandsHistoryList.add("${command.name} ${args.joinToString(" ")}")
+        if (commandsHistoryList.size > MAX_HISTORY_SIZE)
+            commandsHistoryList.removeFirst()
 
         command.execute(args, login, password) // Выполняем команду
     }
@@ -51,9 +51,9 @@ class ConsoleInvoker : Invoker {
         // Делаем красивый хэлп
         cmdMap.values.forEach { command ->
             val methods = command.methodsDesc.keys.joinToString(" ")
-            HELP += "${command.name} $methods ${" ".repeat(maxNameLen - command.name.length - methods.length)} : ${command.desc}\n"
+            commandsHelp += "${command.name} $methods ${" ".repeat(maxNameLen - command.name.length - methods.length)} : ${command.desc}\n"
             command.methodsDesc.forEach { (name, desc) ->
-                HELP += "${" ".repeat(command.name.length)} $name : $desc\n"
+                commandsHelp += "${" ".repeat(command.name.length)} $name : $desc\n"
             }
         }
     }

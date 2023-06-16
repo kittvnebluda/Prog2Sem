@@ -98,7 +98,7 @@ fun main(args: Array<String>) {
 
     invoker.genHelp() // Генерируем строку помощи
 
-    Smt.talkWithUserForever(invoker)
+//    Smt.talkWithUserForever(invoker)
 }
 
 fun getNew(): String {

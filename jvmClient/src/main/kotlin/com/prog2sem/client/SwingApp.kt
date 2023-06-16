@@ -19,6 +19,8 @@ fun main() {
     client.sendToAddress = InetSocketAddress(host, port)
 
     SwingUtilities.invokeLater { SwingApp }
+
+    main(arrayOf())
 }
 
 object SwingApp : JFrame() {

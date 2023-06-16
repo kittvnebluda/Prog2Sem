@@ -1,5 +1,6 @@
 package com.prog2sem.client
 
+import com.prog2sem.client.app.TableInfo
 import com.prog2sem.client.cmdpattern.*
 import com.prog2sem.client.net.ConsoleInetCommands
 import com.prog2sem.client.net.ConsoleLocalCommands
@@ -58,6 +59,8 @@ fun main(args: Array<String>) {
     } else {
         Configurator.setRootLevel(Level.getLevel("INFO"))
     }
+
+    getTableExecutor.submit(TableInfo)
 
     // Создаем экземпляры команд
 

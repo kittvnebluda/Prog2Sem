@@ -103,8 +103,6 @@ object HomePane : JPanel() {
             AddWorker().execute()
         }
 
-        val infoTimer = Timer(1, InfoListener())
-        infoTimer.start()
     }
 
     fun updateHistory() {

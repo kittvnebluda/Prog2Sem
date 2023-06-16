@@ -1,5 +1,6 @@
 package com.prog2sem.client.app
 
+import com.prog2sem.client.dbCommands
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.client.invoker
 import com.prog2sem.client.io.ColorfulOut
@@ -27,12 +28,15 @@ object TableInfo: Runnable {
 
     var tableNow: MutableList<FromServer> = Collections.synchronizedList(mutableListOf<FromServer>())
 
+    //val info: MutableList<String> = Collections.synchronizedList(mutableListOf<String>())
+
     private var previousKey = keys[0]
 
     override fun run() {
         while (true) {
             try {
-                invoker.proceed("getTable", login, password)
+                dbCommands.getAllTable()
+                HomePane.infoPane.text = dbCommands.info()
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> e.message?.let { ColorfulOut.printlnError(it) }

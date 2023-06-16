@@ -107,7 +107,7 @@ object PostgreSQLCommands {
     }
 
     fun getId(): Long{
-        val sql = "select nextval(\'id\')"
+        val sql = "select nextval(\'s368793.id\')"
         val ps: PreparedStatement = SQLConnection.prepareStatement(sql)
         val rs = ps.executeQuery()
         if (rs.next())

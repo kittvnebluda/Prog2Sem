@@ -1,14 +1,10 @@
 package com.prog2sem.client.app
 
 import com.prog2sem.client.*
-import com.prog2sem.client.persona.RndPersonBuilder
-import com.prog2sem.shared.persona.PersonDirector
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.GridLayout
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -17,6 +13,12 @@ import javax.swing.Timer
 object HomePane : JPanel() {
     val infoPane = JTextArea(labels.getString("no db info"))
     private val historyPane = JTextArea(labels.getString("empty history"))
+
+    private val addButton = JButton(labels.getString("add"))
+    private val removeButton = JButton(labels.getString("remove"))
+    private val clearButton = JButton(labels.getString("clear"))
+    private val addIfMinButton = JButton(labels.getString("add if min"))
+    private val removeGreaterButton = JButton(labels.getString("remove greater"))
 
     init {
         // create table
@@ -48,25 +50,20 @@ object HomePane : JPanel() {
         val historyScroll = JScrollPane(historyPane)
         historyScroll.minimumSize = Dimension(50, 100)
 
-        // create buttons
-        val buttonAdd = JButton(labels.getString("add"))
-        val buttonRemove = JButton(labels.getString("remove"))
-        buttonRemove.isEnabled = false
-        val buttonClear = JButton(labels.getString("clear"))
-        buttonClear.isEnabled = false
-        val buttonAddIfMin = JButton(labels.getString("add if min"))
-        buttonAddIfMin.isEnabled = false
-        val buttonRemoveGreater = JButton(labels.getString("remove greater"))
-        buttonRemoveGreater.isEnabled = false
+        // edit buttons
+        removeButton.isEnabled = false
+        clearButton.isEnabled = false
+        addIfMinButton.isEnabled = false
+        removeGreaterButton.isEnabled = false
 
         val buttonsPanel = JPanel()
         val buttonsLayout = GridLayout(5, 1)
         buttonsPanel.layout = buttonsLayout
-        buttonsPanel.add(buttonAdd)
-        buttonsPanel.add(buttonRemove)
-        buttonsPanel.add(buttonClear)
-        buttonsPanel.add(buttonAddIfMin)
-        buttonsPanel.add(buttonRemoveGreater)
+        buttonsPanel.add(addButton)
+        buttonsPanel.add(removeButton)
+        buttonsPanel.add(clearButton)
+        buttonsPanel.add(addIfMinButton)
+        buttonsPanel.add(removeGreaterButton)
 
         // create contentPane
         val horizontalSeparator = JSeparator(SwingConstants.HORIZONTAL)
@@ -99,7 +96,7 @@ object HomePane : JPanel() {
                         .addComponent(buttonsPanel)))))
 
         // create listeners
-        buttonAdd.addActionListener {
+        addButton.addActionListener {
             AddWorker().execute()
         }
 
@@ -107,5 +104,13 @@ object HomePane : JPanel() {
 
     fun updateHistory() {
         historyPane.text = commandsHistoryList.reversed().joinToString("\n")
+    }
+
+    fun updateLabels() {
+        addButton.text = labels.getString("add")
+        removeButton.text = labels.getString("remove")
+        clearButton.text = labels.getString("clear")
+        addIfMinButton.text = labels.getString("add if min")
+        removeGreaterButton.text = labels.getString("remove greater")
     }
 }

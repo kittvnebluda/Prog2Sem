@@ -49,7 +49,7 @@ open class PacketsUDP(
 
                 val packet = Buffer.toString(buffer)
                 packets.add(packet)
-                //Log.d("RECEIVED CONTENT: $packet")
+//                Log.d("RECEIVED CONTENT: $packet")
 
                 if (packet.length > 7) {
                     received++

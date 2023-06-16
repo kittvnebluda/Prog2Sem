@@ -1,11 +1,10 @@
 package com.prog2sem.client.app
 
-import com.prog2sem.client.dbCommands
-import com.prog2sem.client.login
-import com.prog2sem.client.password
+import com.prog2sem.client.*
 import com.prog2sem.client.persona.RndPersonBuilder
 import com.prog2sem.shared.persona.PersonDirector
 import com.prog2sem.shared.utils.Log
+import java.net.InetSocketAddress
 import java.util.concurrent.ExecutionException
 import javax.swing.SwingWorker
 

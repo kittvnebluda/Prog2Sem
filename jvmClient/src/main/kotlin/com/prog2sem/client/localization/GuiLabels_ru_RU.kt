@@ -26,7 +26,14 @@ class GuiLabels_ru_RU : ListResourceBundle() {
         arrayOf<Any>("incorrect_name_or_pass", "Неверное имя пользователя или пароль."),
         arrayOf<Any>("try_again", "Попробуйте снова."),
         arrayOf<Any>("user_exists", "Пользователь с таким именем уже существует."),
-        arrayOf<Any>("sort", "СОРТИРОВАТЬ")
+        arrayOf<Any>("sort", "СОРТИРОВАТЬ"),
+        arrayOf<Any>("name", "Имя:"),
+        arrayOf<Any>("coordinates", "Координаты:"),
+        arrayOf<Any>("height", "Высота:"),
+        arrayOf<Any>("birthday", "День рождения:"),
+        arrayOf<Any>("weight", "Вес:"),
+        arrayOf<Any>("hair_color", "Цвет волос:"),
+        arrayOf<Any>("location", "Местоположение:")
     )
     override fun getContents(): Array<Array<Any>> {
         return contents

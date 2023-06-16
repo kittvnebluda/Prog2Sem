@@ -1,17 +1,17 @@
 package com.prog2sem.client.app
 
-import com.prog2sem.client.*
 import com.prog2sem.client.app.TableInfo.keysWithNoLogin
 import com.prog2sem.client.app.TableInfo.previousKey
 import com.prog2sem.client.app.TableInfo.tableNow
 import com.prog2sem.client.app.Workers.*
-import com.prog2sem.shared.Coordinates
 import java.awt.*
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.io.File
 import javax.imageio.ImageIO
+import com.prog2sem.client.commandsHistoryList
+import com.prog2sem.client.labels
+import com.prog2sem.shared.Coordinates
+import java.awt.Dimension
+import java.awt.GridLayout
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
 
@@ -30,26 +30,9 @@ object HomePane : JPanel() {
 
     val sortNow = mutableListOf<Int>()
 
-    val graphicsPane = DisplayPerson(Coordinates(100f, 100.0), Color.CYAN)
+    val graphicsPane = CreatePersonPane // DisplayPerson(Coordinates(100f, 100.0), Color.CYAN)
 
     init {
-
-        // create graphics
-        val graphics = JPanel()
-
-        val stickman = ImageIO.read(File("C:\\ItmoProject2023\\Prog2Sem\\jvmClient\\src\\main\\resources\\images\\stickman.png"))
-        val picLabel = JLabel(ImageIcon(stickman))
-
-        graphics.add(picLabel)
-
-        graphics.background = Color.WHITE
-        graphics.maximumSize = Dimension(200, 400)
-
-        val graphicsPane = JPanel()
-        val graphicsLayout = BorderLayout()
-        graphicsPane.layout = graphicsLayout
-        graphicsPane.add(graphics, BorderLayout.CENTER)
-
         // change the info panel
         infoPane.minimumSize = Dimension(50, 100)
 
@@ -65,15 +48,15 @@ object HomePane : JPanel() {
         //addIfMinButton.isEnabled = false
         //removeGreaterButton.isEnabled = false
 
-        val buttonsPanel = JPanel()
+        val buttonsPane = JPanel()
         val buttonsLayout = GridLayout(6, 1)
-        buttonsPanel.layout = buttonsLayout
-        buttonsPanel.add(addButton)
-        buttonsPanel.add(removeButton)
-        buttonsPanel.add(clearButton)
-        buttonsPanel.add(addIfMinButton)
-        buttonsPanel.add(removeGreaterButton)
-        buttonsPanel.add(sortButton)
+        buttonsPane.layout = buttonsLayout
+        buttonsPane.add(addButton)
+        buttonsPane.add(removeButton)
+        buttonsPane.add(clearButton)
+        buttonsPane.add(addIfMinButton)
+        buttonsPane.add(removeGreaterButton)
+        buttonsPane.add(sortButton)
 
         // create contentPane
         val horizontalSeparator = JSeparator(SwingConstants.HORIZONTAL)
@@ -93,7 +76,7 @@ object HomePane : JPanel() {
                         .addComponent(horizontalSeparator)
                         .addComponent(historyScroll))
                     .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addComponent(buttonsPanel)))))
+                        .addComponent(buttonsPane)))))
 
         contentPane.setVerticalGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
             .addComponent(tablePane)
@@ -106,7 +89,7 @@ object HomePane : JPanel() {
                         .addComponent(horizontalSeparator)
                         .addComponent(historyScroll))
                     .addGroup(contentPane.createSequentialGroup()
-                        .addComponent(buttonsPanel)))))
+                        .addComponent(buttonsPane)))))
 
         // create listeners
         addButton.addActionListener {

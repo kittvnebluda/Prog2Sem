@@ -1,6 +1,7 @@
 package com.prog2sem.client
 
 import com.prog2sem.client.app.AuthPane
+import com.prog2sem.client.app.CreatePersonPane
 import com.prog2sem.client.app.HomePane
 import com.prog2sem.client.app.LangPane
 import java.awt.BorderLayout
@@ -70,5 +71,6 @@ object SwingApp : JFrame() {
 
         AuthPane.updateLabels()
         HomePane.updateLabels()
+        CreatePersonPane.updateLabels()
     }
 }

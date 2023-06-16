@@ -25,7 +25,8 @@ class GuiLabels_ru_RU : ListResourceBundle() {
         arrayOf<Any>("server_not_answering", "Сервер молчит."),
         arrayOf<Any>("incorrect_name_or_pass", "Неверное имя пользователя или пароль."),
         arrayOf<Any>("try_again", "Попробуйте снова."),
-        arrayOf<Any>("user_exists", "Пользователь с таким именем уже существует.")
+        arrayOf<Any>("user_exists", "Пользователь с таким именем уже существует."),
+        arrayOf<Any>("sort", "СОРТИРОВАТЬ")
     )
     override fun getContents(): Array<Array<Any>> {
         return contents

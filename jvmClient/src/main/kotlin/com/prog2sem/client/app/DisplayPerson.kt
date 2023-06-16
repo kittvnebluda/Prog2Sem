@@ -11,7 +11,7 @@ class DisplayPerson(
     private val coords: Coordinates,
     private val hairColor: Color
 ) : Canvas() {
-    private val stickman = ImageIO.read(File("C:\\Users\\sizgr\\IdeaProjects\\Prog2Sem\\jvmClient\\src\\main\\resources\\images\\stickman.png"))
+    private val stickman = ImageIO.read(File("C:\\ItmoProject2023\\Prog2Sem\\jvmClient\\src\\main\\resources\\images\\stickman.png"))
     private val hairPoly = Polygon(
         arrayOf(130, 150, 200, 260, 280, 275, 170, 160, 122).toIntArray(),
         arrayOf(35, 30, 25, 40, 100, 120, 50, 70, 100).toIntArray(),

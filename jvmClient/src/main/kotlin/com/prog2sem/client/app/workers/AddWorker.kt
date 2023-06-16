@@ -1,4 +1,4 @@
-package com.prog2sem.client.app.workers
+package com.prog2sem.client.app.Workers
 
 import com.prog2sem.client.*
 import com.prog2sem.client.persona.RndPersonBuilder
@@ -8,11 +8,9 @@ import java.util.concurrent.ExecutionException
 import javax.swing.SwingWorker
 
 class AddWorker : SwingWorker<Boolean, Unit>() {
-    companion object {
-        var person = PersonDirector(RndPersonBuilder()).createPerson()
-    }
     override fun doInBackground(): Boolean {
             // TODO add not random persons
+            val person = PersonDirector(RndPersonBuilder()).createPerson()
             return dbCommands.add(person, login, password)
     }
 

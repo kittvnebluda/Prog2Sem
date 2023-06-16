@@ -1,21 +1,24 @@
 package com.prog2sem.client.app
 
-import com.prog2sem.client.lang
-import com.prog2sem.client.region
+import com.prog2sem.client.*
+import com.prog2sem.client.persona.RndPersonBuilder
+import com.prog2sem.shared.persona.PersonDirector
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.GridLayout
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.io.File
-import java.util.*
 import javax.imageio.ImageIO
 import javax.swing.*
+import javax.swing.Timer
 
-class HomePane : JPanel() {
+object HomePane : JPanel() {
+    val infoPane = JTextArea(labels.getString("no db info"))
+    private val historyPane = JTextArea(labels.getString("empty history"))
+
     init {
-        val loc = Locale.Builder().setLanguage(lang).setRegion(region).build()
-        val labels = ResourceBundle.getBundle("com.prog2sem.client.localization.GuiLabels", loc)
-
         // create table
         val table = JTable(100, 9)
         val tablePane = JScrollPane(table)
@@ -36,20 +39,25 @@ class HomePane : JPanel() {
         graphicsPane.layout = graphicsLayout
         graphicsPane.add(graphics, BorderLayout.CENTER)
 
-        // create info panel
-        val infoPanel = JLabel(labels.getString("no db info"))
-        infoPanel.minimumSize = Dimension(50, 100)
+        // change the info panel
+        infoPane.minimumSize = Dimension(50, 100)
 
-        // create a history panel
-        val historyPanel = JLabel(labels.getString("empty history"))
-        historyPanel.minimumSize = Dimension(50, 100)
+        // change the history panel
+        historyPane.isEditable = false
+        historyPane.minimumSize = Dimension(50, 100)
+        val historyScroll = JScrollPane(historyPane)
+        historyScroll.minimumSize = Dimension(50, 100)
 
         // create buttons
         val buttonAdd = JButton(labels.getString("add"))
         val buttonRemove = JButton(labels.getString("remove"))
+        buttonRemove.isEnabled = false
         val buttonClear = JButton(labels.getString("clear"))
+        buttonClear.isEnabled = false
         val buttonAddIfMin = JButton(labels.getString("add if min"))
+        buttonAddIfMin.isEnabled = false
         val buttonRemoveGreater = JButton(labels.getString("remove greater"))
+        buttonRemoveGreater.isEnabled = false
 
         val buttonsPanel = JPanel()
         val buttonsLayout = GridLayout(5, 1)
@@ -72,12 +80,11 @@ class HomePane : JPanel() {
                 .addComponent(graphicsPane)
                 .addGroup(contentPane.createSequentialGroup()
                     .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addComponent(infoPanel)
+                        .addComponent(infoPane)
                         .addComponent(horizontalSeparator)
-                        .addComponent(historyPanel))
+                        .addComponent(historyScroll))
                     .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addComponent(buttonsPanel)
-                    ))))
+                        .addComponent(buttonsPanel)))))
 
         contentPane.setVerticalGroup(contentPane.createParallelGroup(GroupLayout.Alignment.BASELINE)
             .addComponent(tablePane)
@@ -85,11 +92,24 @@ class HomePane : JPanel() {
                 .addComponent(graphicsPane)
                 .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addGroup(contentPane.createSequentialGroup()
-                        .addComponent(infoPanel)
+                        .addComponent(infoPane)
                         .addComponent(horizontalSeparator)
-                        .addComponent(historyPanel))
+                        .addComponent(historyScroll))
                     .addGroup(contentPane.createSequentialGroup()
-                        .addComponent(buttonsPanel)
-                ))))
+                        .addComponent(buttonsPanel)))))
+
+        // create listeners
+        buttonAdd.addActionListener {
+            // TODO add not random persons
+            val person = PersonDirector(RndPersonBuilder()).createPerson()
+            dbCommands.add(person, login, password)
+        }
+
+        val infoTimer = Timer(1, InfoListener())
+        infoTimer.start()
+    }
+
+    fun updateHistory() {
+        historyPane.text = commandsHistoryList.reversed().joinToString("\n")
     }
 }

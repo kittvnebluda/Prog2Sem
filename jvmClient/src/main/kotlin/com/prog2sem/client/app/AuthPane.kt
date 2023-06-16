@@ -12,9 +12,6 @@ import javax.swing.event.DocumentListener
 
 class AuthPane : JPanel() {
     init {
-        val loc = Locale.Builder().setLanguage(lang).setRegion(region).build()
-        val labels = ResourceBundle.getBundle("com.prog2sem.client.localization.GuiLabels", loc)
-
         val usernameText = JTextField()
         val passwdText = JPasswordField()
         val addressText = JTextField(host)
@@ -41,29 +38,27 @@ class AuthPane : JPanel() {
         background = Color.WHITE
 
         val serverPane = JPanel()
-        val serverLayout = GridBagLayout()
+        val serverLayout = GroupLayout(serverPane)
         serverPane.layout = serverLayout
+        serverPane.background = Color.CYAN
 
-        val c = GridBagConstraints()
+        addressText.preferredSize.height = addressLabel.minimumSize.height
 
-        c.gridx = 0
-        c.gridy = 0
-        c.gridwidth = 2
-        serverPane.add(addressLabel, c)
+        serverLayout.setHorizontalGroup(serverLayout.createSequentialGroup()
+            .addGroup(serverLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addComponent(addressLabel)
+                .addComponent(portLabel))
+            .addGroup(serverLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(addressText)
+                .addComponent(portText)))
 
-        c.gridx = 1
-        c.gridy = 0
-        c.gridwidth = 2
-        serverPane.add(addressText, c)
-
-        c.gridx = 0
-        c.gridy = 1
-        serverPane.add(portLabel, c)
-
-        c.gridx = 1
-        c.gridy = 1
-        c.gridwidth = 2
-        serverPane.add(portText, c)
+        serverLayout.setVerticalGroup(serverLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addGroup(serverLayout.createSequentialGroup()
+                .addComponent(addressLabel)
+                .addComponent(portLabel))
+            .addGroup(serverLayout.createSequentialGroup()
+                .addComponent(addressText)
+                .addComponent(portText)))
 
         val loginPane = JPanel()
         val loginLayout = GroupLayout(loginPane)
@@ -160,10 +155,13 @@ class AuthPane : JPanel() {
                     isLogged = true
                     SwingApp.authDone()
                 }
-
             } catch (e: ServerNotAnsweringException) {
                 rigidArea.isVisible = false
                 errorLoginLabel.text = labels.getString("try_again")
+                println(e.message)
+            } catch (e: GotErrorMsgException) {
+                rigidArea.isVisible = false
+                errorLoginLabel.text = labels.getString("user_exists")
                 println(e.message)
             }
         }

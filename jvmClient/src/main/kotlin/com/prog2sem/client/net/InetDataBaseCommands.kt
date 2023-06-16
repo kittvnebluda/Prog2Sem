@@ -1,8 +1,8 @@
 package com.prog2sem.client.net
 
+import com.prog2sem.client.*
+import com.prog2sem.client.app.HomePane
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
-import com.prog2sem.client.login
-import com.prog2sem.client.password
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.FromServer
 import com.prog2sem.shared.Location
@@ -12,15 +12,20 @@ import com.prog2sem.shared.net.Talker
 import com.prog2sem.shared.persona.Person
 import com.prog2sem.shared.utils.Log
 
-class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
+open class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
     /**
      * @throws ServerNotAnsweringException
      */
     private inline fun <reified T> funTalk(funName: String, vararg params: String): T {
         client.send(MsgMarker.markFun(funName, *params), login, password)
         client.receive()?.let {
+            if (funName !in arrayOf("info"))
+                commandsHistoryList.add(funName)
+            SwingApp.errorLabel.text = ""
+            HomePane.updateHistory()
             return MsgMarker.getGenOrException(it)
         }
+        SwingApp.errorLabel.text = labels.getString("server_not_answering")
         throw ServerNotAnsweringException()
     }
 

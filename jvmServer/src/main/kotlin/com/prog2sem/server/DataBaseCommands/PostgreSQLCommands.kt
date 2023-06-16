@@ -117,10 +117,8 @@ object PostgreSQLCommands {
 
     fun getLoginId(): Long{
         val sql = "select nextval('s368793.id_log')"
-                            println("YEAR")
 
         val ps: PreparedStatement = SQLConnection.prepareStatement(sql)
-                            println("YEAR2")
 
         try {
             val rs = ps.executeQuery()

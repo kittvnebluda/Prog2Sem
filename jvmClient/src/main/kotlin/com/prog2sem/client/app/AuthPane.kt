@@ -201,6 +201,7 @@ object AuthPane : JPanel() {
             try {
                 if(dbCommands.signup(login, password)) {
                     isLogged = true
+
                     SwingApp.authDone()
                 }
             } catch (e: ServerNotAnsweringException) {

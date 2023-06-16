@@ -51,12 +51,12 @@ object Smt {
     /** Главная функция класса, реализующая постоянное "общение" с пользователем */
     fun talkWithUserForever(invoker: Invoker) {
         greetings()
-        authorize(invoker)
+//        authorize(invoker)
 //        loginScreen.acsess()
         while (!doQuit) {
             try {
                 printRandColor(">>> ") // Просто красивая штучка
-                invoker.proceed(readln(), login, password)
+                invoker.proceed(getNew(), login, password)
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> e.message?.let { printlnError(it) }
@@ -66,24 +66,27 @@ object Smt {
                 }
             }
 
-            println(getInfo(keys[2]))
+            //println(getInfo(keys[2]))
         }
     }
 
-    private fun authorize(invoker: Invoker){
-        while (!isLogged) {
-            try {
-                println("Зарегестрируйтесь или войдите используя команды:\nsign\nlogin")
-                printRandColor(">>> ") // Просто красивая штучка
-                invoker.proceed(readln(), login, password)
-            } catch (e: Exception) {
-                when (e) {
-                    is InvalidUserInputException -> e.message?.let { printlnError(it) }
-                    is MsgException -> e.message?.let { printlnError(it) }
-                    is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
-                    else -> throw e
-                }
-            }
-        }
-    }
+//    private fun authorize(invoker: Invoker){
+//        while (!isLogged) {
+//            try {
+//                println("Зарегестрируйтесь или войдите используя команды:\nsignup\nlogin")
+//                printRandColor(">>> ") // Просто красивая штучка
+//                while (Login.command == "")
+//                msg = Login.command
+//                println(msg)
+//                invoker.proceed(getNew(), login, password)
+//            } catch (e: Exception) {
+//                when (e) {
+//                    is InvalidUserInputException -> e.message?.let { printlnError(it) }
+//                    is MsgException -> e.message?.let { loginScreen.showWarning(it) }
+//                    is ServerNotAnsweringException -> e.message?.let { printlnError(it) }
+//                    else -> throw e
+//                }
+//            }
+//        }
+//    }
 }

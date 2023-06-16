@@ -100,7 +100,7 @@ object HomePane : JPanel() {
             AddWorker().execute()
         }
 
-        val infoTimer = Timer(1, InfoListener())
+        val infoTimer = Timer(5, InfoListener())
         infoTimer.start()
     }
 

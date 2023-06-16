@@ -34,7 +34,6 @@ class NetInvoker : Invoker {
 
         val args = mutableListOf(address.hostAddress, port) as MutableList<String>
         for (el in postCmd.slice(1 until postCmd.size)) args.add(el)
-
         command.execute(args, login, password) // Выполняем команду
     }
 

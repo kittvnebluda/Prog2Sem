@@ -4,6 +4,7 @@ import com.prog2sem.client.*
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.shared.exceptions.GotErrorMsgException
 import java.awt.*
+import java.net.InetSocketAddress
 import javax.swing.*
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
@@ -125,10 +126,12 @@ object AuthPane : JPanel() {
         addressText.document.addDocumentListener(object : DocumentListener {
             override fun insertUpdate(e: DocumentEvent?) {
                 host = addressText.text
+                client.sendToAddress = InetSocketAddress(host, port)
             }
 
             override fun removeUpdate(e: DocumentEvent?) {
                 host = addressText.text
+                client.sendToAddress = InetSocketAddress(host, port)
             }
 
             override fun changedUpdate(e: DocumentEvent?) {}
@@ -138,6 +141,7 @@ object AuthPane : JPanel() {
             override fun insertUpdate(e: DocumentEvent?) {
                 try {
                     port = portText.text.toInt()
+                    client.sendToAddress = InetSocketAddress(host, port)
                 } catch (e: NumberFormatException) {
                     println(e.message)
                 }
@@ -146,6 +150,7 @@ object AuthPane : JPanel() {
             override fun removeUpdate(e: DocumentEvent?) {
                 try {
                     port = portText.text.toInt()
+                    client.sendToAddress = InetSocketAddress(host, port)
                 } catch (e: NumberFormatException) {
                     println(e.message)
                 }

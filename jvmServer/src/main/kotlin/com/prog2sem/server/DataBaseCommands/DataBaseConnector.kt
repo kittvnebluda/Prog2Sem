@@ -74,7 +74,7 @@ object DataBaseConnector {
         return Coordinates(x, y)
     }
 
-    private fun getLocationFromTable(str: String): Location{
+    fun getLocationFromTable(str: String): Location{
         val x: Float
         val y: Float
         val z: Int

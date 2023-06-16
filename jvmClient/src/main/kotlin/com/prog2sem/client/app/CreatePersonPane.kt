@@ -31,19 +31,20 @@ object CreatePersonPane : JPanel(GridBagLayout()) {
     private val hairColorLabel = JLabel(labels.getString("hair_color"))
     private val locationLabel = JLabel(labels.getString("location"))
 
+
+    val nameText = JTextField(name)
+    val coordinatesXText = JTextField(coordinates.x.toString())
+    val coordinatesYText = JTextField(coordinates.y.toString())
+    val heightText = JTextField(height.toString())
+    val birthdayText = JTextField(birthday.toString())
+    val weightText = JTextField(weight.toString())
+    val hairColorText = JTextField(hairColor.toString())
+    val locationText = JTextField(location.toTable())
+
     val errorLabel = JLabel()
 
     init {
         errorLabel.foreground = java.awt.Color.RED
-
-        val nameText = JTextField(name)
-        val coordinatesXText = JTextField(coordinates.x.toString())
-        val coordinatesYText = JTextField(coordinates.y.toString())
-        val heightText = JTextField(height.toString())
-        val birthdayText = JTextField(birthday.toString())
-        val weightText = JTextField(weight.toString())
-        val hairColorText = JTextField(hairColor.toString())
-        val locationText = JTextField(location.toString())
 
         val coordinatesPane = JPanel(FlowLayout())
         coordinatesPane.add(coordinatesXText)

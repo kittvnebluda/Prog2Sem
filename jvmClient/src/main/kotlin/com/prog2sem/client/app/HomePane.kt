@@ -1,5 +1,12 @@
 package com.prog2sem.client.app
-
+import com.prog2sem.client.app.CreatePersonPane.birthdayText
+import com.prog2sem.client.app.CreatePersonPane.coordinatesXText
+import com.prog2sem.client.app.CreatePersonPane.coordinatesYText
+import com.prog2sem.client.app.CreatePersonPane.hairColorText
+import com.prog2sem.client.app.CreatePersonPane.heightText
+import com.prog2sem.client.app.CreatePersonPane.locationText
+import com.prog2sem.client.app.CreatePersonPane.nameText
+import com.prog2sem.client.app.CreatePersonPane.weightText
 import com.prog2sem.client.app.TableInfo.keysWithNoLogin
 import com.prog2sem.client.app.TableInfo.previousKey
 import com.prog2sem.client.app.TableInfo.tableNow
@@ -9,9 +16,13 @@ import java.io.File
 import javax.imageio.ImageIO
 import com.prog2sem.client.commandsHistoryList
 import com.prog2sem.client.labels
+import com.prog2sem.server.DataBaseCommands.DataBaseConnector
 import com.prog2sem.shared.Coordinates
+import com.prog2sem.shared.Location
+import com.prog2sem.shared.persona.Person
 import java.awt.Dimension
 import java.awt.GridLayout
+import java.time.ZonedDateTime
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
 
@@ -27,8 +38,6 @@ object HomePane : JPanel() {
     private val sortButton = JButton(labels.getString("sort"))
     var table = JTable(DefaultTableModel(arrayOf(), keysWithNoLogin))
     var tablePane = JScrollPane(table)
-
-    val sortNow = mutableListOf<Int>()
 
     val graphicsPane = CreatePersonPane // DisplayPerson(Coordinates(100f, 100.0), Color.CYAN)
 
@@ -92,7 +101,18 @@ object HomePane : JPanel() {
                         .addComponent(buttonsPane)))))
 
         // create listeners
+
         addButton.addActionListener {
+            val person = Person(
+                nameText.text,
+                Coordinates(coordinatesXText.text.toFloat(), coordinatesYText.text.toDouble()),
+                heightText.text.toLong(),
+                ZonedDateTime.parse(birthdayText.text),
+                weightText.text.toInt(),
+                com.prog2sem.shared.Color.valueOf(hairColorText.text),
+                DataBaseConnector.getLocationFromTable(locationText.text)
+            )
+            AddWorker.person = person
             AddWorker().execute()
         }
 

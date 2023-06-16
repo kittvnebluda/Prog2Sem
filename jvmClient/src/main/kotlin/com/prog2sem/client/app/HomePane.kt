@@ -1,14 +1,12 @@
 package com.prog2sem.client.app
 
-import com.prog2sem.client.*
-import java.awt.BorderLayout
+import com.prog2sem.client.commandsHistoryList
+import com.prog2sem.client.labels
+import com.prog2sem.shared.Coordinates
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.GridLayout
-import java.io.File
-import javax.imageio.ImageIO
 import javax.swing.*
-import javax.swing.Timer
 
 object HomePane : JPanel() {
     val infoPane = JTextArea(labels.getString("no db info"))
@@ -20,26 +18,12 @@ object HomePane : JPanel() {
     private val addIfMinButton = JButton(labels.getString("add if min"))
     private val removeGreaterButton = JButton(labels.getString("remove greater"))
 
+    val graphicsPane = DisplayPerson(Coordinates(100f, 100.0), Color.CYAN)
+
     init {
         // create table
         val table = JTable(100, 9)
         val tablePane = JScrollPane(table)
-
-        // create graphics
-        val graphics = JPanel()
-
-        val stickman = ImageIO.read(File("C:\\Users\\sizgr\\IdeaProjects\\Prog2Sem\\jvmClient\\src\\main\\resources\\images\\stickman.png"))
-        val picLabel = JLabel(ImageIcon(stickman))
-
-        graphics.add(picLabel)
-
-        graphics.background = Color.WHITE
-        graphics.maximumSize = Dimension(200, 400)
-
-        val graphicsPane = JPanel()
-        val graphicsLayout = BorderLayout()
-        graphicsPane.layout = graphicsLayout
-        graphicsPane.add(graphics, BorderLayout.CENTER)
 
         // change the info panel
         infoPane.minimumSize = Dimension(50, 100)
@@ -67,6 +51,7 @@ object HomePane : JPanel() {
 
         // create contentPane
         val horizontalSeparator = JSeparator(SwingConstants.HORIZONTAL)
+        val anotherHorizontalSeparator = JSeparator(SwingConstants.HORIZONTAL)
         val contentPane = GroupLayout(this)
 
         layout = contentPane
@@ -75,6 +60,7 @@ object HomePane : JPanel() {
             .addComponent(tablePane)
             .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addComponent(graphicsPane)
+                .addComponent(anotherHorizontalSeparator)
                 .addGroup(contentPane.createSequentialGroup()
                     .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(infoPane)
@@ -83,11 +69,12 @@ object HomePane : JPanel() {
                     .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(buttonsPanel)))))
 
-        contentPane.setVerticalGroup(contentPane.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        contentPane.setVerticalGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
             .addComponent(tablePane)
             .addGroup(contentPane.createSequentialGroup()
                 .addComponent(graphicsPane)
-                .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(anotherHorizontalSeparator)
+                .addGroup(contentPane.createParallelGroup(GroupLayout.Alignment.CENTER)
                     .addGroup(contentPane.createSequentialGroup()
                         .addComponent(infoPane)
                         .addComponent(horizontalSeparator)

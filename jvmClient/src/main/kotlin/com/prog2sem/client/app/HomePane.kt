@@ -10,15 +10,11 @@ import com.prog2sem.client.app.CreatePersonPane.weightText
 import com.prog2sem.client.app.TableInfo.keysWithNoLogin
 import com.prog2sem.client.app.TableInfo.previousKey
 import com.prog2sem.client.app.TableInfo.tableNow
-import com.prog2sem.client.app.Workers.*
-import java.awt.*
-import java.io.File
-import javax.imageio.ImageIO
+import com.prog2sem.client.app.workers.*
 import com.prog2sem.client.commandsHistoryList
 import com.prog2sem.client.labels
 import com.prog2sem.server.DataBaseCommands.DataBaseConnector
 import com.prog2sem.shared.Coordinates
-import com.prog2sem.shared.Location
 import com.prog2sem.shared.persona.Person
 import java.awt.Dimension
 import java.awt.GridLayout

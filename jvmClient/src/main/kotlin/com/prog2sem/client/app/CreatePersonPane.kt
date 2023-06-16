@@ -5,6 +5,7 @@ import com.prog2sem.client.labels
 import com.prog2sem.shared.Color
 import com.prog2sem.shared.Coordinates
 import com.prog2sem.shared.Location
+import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout

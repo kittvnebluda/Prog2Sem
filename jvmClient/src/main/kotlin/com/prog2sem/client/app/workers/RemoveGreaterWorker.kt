@@ -1,4 +1,4 @@
-package com.prog2sem.client.app.Workers
+package com.prog2sem.client.app.workers
 
 import com.prog2sem.client.SwingApp
 import com.prog2sem.client.dbCommands

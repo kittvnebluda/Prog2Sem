@@ -25,7 +25,15 @@ class GuiLabels_es_EC : ListResourceBundle() {
         arrayOf<Any>("server_not_answering", "El servidor está en silencio."),
         arrayOf<Any>("incorrect_name_or_pass", "Nombre de usuario o contraseña incorrecta."),
         arrayOf<Any>("try_again", "Intentar otra vez."),
-        arrayOf<Any>("user_exists", "Ya existe un usuario con el mismo nombre.")
+        arrayOf<Any>("user_exists", "Ya existe un usuario con el mismo nombre."),
+        arrayOf<Any>("sort", "ORDENAR"),
+        arrayOf<Any>("name", "nombre:"),
+        arrayOf<Any>("coordinates", "coordenadas:"),
+        arrayOf<Any>("height", "altura:"),
+        arrayOf<Any>("birthday", "cumpleaños:"),
+        arrayOf<Any>("weight", "peso:"),
+        arrayOf<Any>("hair_color", "color de cabello:"),
+        arrayOf<Any>("location", "ubicación:")
     )
     override fun getContents(): Array<Array<Any>> {
         return contents

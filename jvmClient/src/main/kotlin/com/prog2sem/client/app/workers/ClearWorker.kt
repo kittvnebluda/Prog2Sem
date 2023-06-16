@@ -1,12 +1,9 @@
-package com.prog2sem.client.app.Workers
+package com.prog2sem.client.app.workers
 
 import com.prog2sem.client.SwingApp
 import com.prog2sem.client.app.HomePane
 import com.prog2sem.client.dbCommands
-import com.prog2sem.client.login
-import com.prog2sem.client.password
 import com.prog2sem.shared.utils.Log
-import java.util.*
 import java.util.concurrent.ExecutionException
 import javax.swing.SwingWorker
 import javax.swing.table.DefaultTableModel

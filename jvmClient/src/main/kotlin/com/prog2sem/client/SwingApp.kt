@@ -2,18 +2,16 @@ package com.prog2sem.client
 
 import com.prog2sem.client.app.AuthPane
 import com.prog2sem.client.app.HomePane
+import com.prog2sem.client.app.LangPane
 import java.awt.BorderLayout
 import java.awt.Color
-import java.awt.Font
 import java.net.InetSocketAddress
 import java.util.*
 import javax.swing.*
 
-var lang = "ru"
-var region = "RU"
 
-val loc: Locale = Locale.Builder().setLanguage(lang).setRegion(region).build()
-val labels: ResourceBundle = ResourceBundle.getBundle("com.prog2sem.client.localization.GuiLabels", loc)
+var loc: Locale = Locale.Builder().setLanguage("ru").setRegion("RU").build()
+var labels: ResourceBundle = ResourceBundle.getBundle("com.prog2sem.client.localization.GuiLabels", loc)
 
 fun main() {
     client.sendToAddress = InetSocketAddress(host, port)
@@ -29,7 +27,7 @@ object SwingApp : JFrame() {
         title = "Eights laboratory of java's second semester programming course"
         defaultCloseOperation = EXIT_ON_CLOSE
 
-        contentPane = AuthPane()
+        contentPane = AuthPane
 
         isResizable = false
 
@@ -48,7 +46,7 @@ object SwingApp : JFrame() {
 
         rightMenu.add(JLabel(login))
         rightMenu.add(JSeparator(SwingConstants.VERTICAL))
-        rightMenu.add(JLabel("${lang}_$region"))
+        rightMenu.add(LangPane())
 
         val menu = BorderLayout()
         menu.hgap = 30
@@ -63,5 +61,12 @@ object SwingApp : JFrame() {
         contentPane = HomePane
 
         pack() // установка размеров фрейма
+    }
+
+    fun updateLang() {
+        labels = ResourceBundle.getBundle("com.prog2sem.client.localization.GuiLabels", loc)
+
+        AuthPane.updateLabels()
+        HomePane.updateLabels()
     }
 }

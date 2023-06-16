@@ -9,29 +9,33 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
 
-class AuthPane : JPanel() {
+object AuthPane : JPanel() {
+    private val usernameLabel = JLabel(labels.getString("username"))
+    private val passwdLabel = JLabel(labels.getString("password"))
+    private val addressLabel = JLabel(labels.getString("server address"))
+    private val portLabel = JLabel(labels.getString("server port"))
+
+    private val errorLoginLabel = JLabel()
+
+    private val loginButton = JButton(labels.getString("login"))
+    private val signupButton = JButton(labels.getString("signup"))
+
+    private val tabbedPane = JTabbedPane()
+
     init {
+        val projectLabel = JLabel("PROJECT PROG2SEM")
+        val projectLabelPane = JPanel()
+
         val usernameText = JTextField()
         val passwdText = JPasswordField()
         val addressText = JTextField(host)
         val portText = JTextField(port.toString())
 
-        val usernameLabel = JLabel(labels.getString("username"))
-        val passwdLabel = JLabel(labels.getString("password"))
-        val addressLabel = JLabel(labels.getString("server address"))
-        val portLabel = JLabel(labels.getString("server port"))
-
-        val projectLabel = JLabel("PROJECT PROG2SEM")
-        val projectLabelPane = JPanel()
         projectLabelPane.add(projectLabel)
         projectLabelPane.background = Color.WHITE
 
-        val errorLoginLabel = JLabel()
         errorLoginLabel.font = Font("Serif", Font.PLAIN, 11)
         errorLoginLabel.foreground = Color.RED
-
-        val loginButton = JButton(labels.getString("login"))
-        val signupButton = JButton(labels.getString("signup"))
 
         minimumSize = Dimension(100, 400)
         background = Color.WHITE
@@ -90,6 +94,13 @@ class AuthPane : JPanel() {
         loginButtonsPane.add(loginButton)
         loginButtonsPane.add(signupButton)
 
+        val langPane = JPanel()
+        val langLayout = BorderLayout()
+        langPane.layout = langLayout
+        langPane.background = Color.WHITE
+        langPane.add(LangPane(), BorderLayout.LINE_END)
+
+
         val box = Box(BoxLayout.Y_AXIS)
 
         box.add(Box.createRigidArea(Dimension(0, 15)))
@@ -98,12 +109,13 @@ class AuthPane : JPanel() {
         box.add(loginPane)
         box.add(Box.createRigidArea(Dimension(0, 15)))
         box.add(loginButtonsPane)
+        box.add(Box.createRigidArea(Dimension(0, 7)))
+        box.add(langPane)
 
         val boxPane = JPanel()
         boxPane.add(box)
-        boxPane.background=  Color.WHITE
+        boxPane.background = Color.WHITE
 
-        val tabbedPane = JTabbedPane()
         tabbedPane.addTab(labels.getString("auth tab"), boxPane)
         tabbedPane.addTab(labels.getString("server settings tab"), serverPane)
 
@@ -196,5 +208,18 @@ class AuthPane : JPanel() {
                 println(e.message)
             }
         }
+    }
+
+    fun updateLabels() {
+        usernameLabel.text = labels.getString("username")
+        passwdLabel.text = labels.getString("password")
+        addressLabel.text = labels.getString("server address")
+        portLabel.text = labels.getString("server port")
+
+        loginButton.text = labels.getString("login")
+        signupButton.text = labels.getString("signup")
+
+        tabbedPane.setTitleAt(0, labels.getString("auth tab"))
+        tabbedPane.setTitleAt(1, labels.getString("server settings tab"))
     }
 }

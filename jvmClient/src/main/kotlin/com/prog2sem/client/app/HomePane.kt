@@ -1,4 +1,5 @@
 package com.prog2sem.client.app
+
 import com.prog2sem.client.app.CreatePersonPane.birthdayText
 import com.prog2sem.client.app.CreatePersonPane.coordinatesXText
 import com.prog2sem.client.app.CreatePersonPane.coordinatesYText
@@ -7,24 +8,28 @@ import com.prog2sem.client.app.CreatePersonPane.heightText
 import com.prog2sem.client.app.CreatePersonPane.locationText
 import com.prog2sem.client.app.CreatePersonPane.nameText
 import com.prog2sem.client.app.CreatePersonPane.weightText
+
+import com.prog2sem.client.SwingApp
 import com.prog2sem.client.app.TableInfo.keysWithNoLogin
 import com.prog2sem.client.app.TableInfo.previousKey
 import com.prog2sem.client.app.TableInfo.tableNow
 import com.prog2sem.client.app.Workers.*
-import java.awt.*
-import java.io.File
-import javax.imageio.ImageIO
+import com.prog2sem.client.app.workers.AddWorker
 import com.prog2sem.client.commandsHistoryList
 import com.prog2sem.client.labels
 import com.prog2sem.server.DataBaseCommands.DataBaseConnector
 import com.prog2sem.shared.Coordinates
-import com.prog2sem.shared.Location
 import com.prog2sem.shared.persona.Person
+import java.awt.BorderLayout
+import java.awt.Color
 import java.awt.Dimension
 import java.awt.GridLayout
 import java.time.ZonedDateTime
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
+
 
 object HomePane : JPanel() {
     val infoPane = JTextArea(labels.getString("no db info"))
@@ -36,12 +41,17 @@ object HomePane : JPanel() {
     private val addIfMinButton = JButton(labels.getString("add if min"))
     private val removeGreaterButton = JButton(labels.getString("remove greater"))
     private val sortButton = JButton(labels.getString("sort"))
-    var table = JTable(DefaultTableModel(arrayOf(), keysWithNoLogin))
-    var tablePane = JScrollPane(table)
 
-    val graphicsPane = CreatePersonPane // DisplayPerson(Coordinates(100f, 100.0), Color.CYAN)
+    var table = JTable(DefaultTableModel(arrayOf(), keysWithNoLogin))
+
+    private var tablePane = JScrollPane(table)
+
+    private var graphicsPane = JPanel(BorderLayout())
 
     init {
+        // change graphics
+        graphicsPane.add(CreatePersonPane)
+
         // change the info panel
         infoPane.minimumSize = Dimension(50, 100)
 
@@ -101,7 +111,6 @@ object HomePane : JPanel() {
                         .addComponent(buttonsPane)))))
 
         // create listeners
-
         addButton.addActionListener {
             val person = Person(
                 nameText.text,
@@ -139,7 +148,23 @@ object HomePane : JPanel() {
             previousKey = keysWithNoLogin[index]
         }
 
-
+        table.addMouseListener(object : MouseListener {
+            override fun mouseClicked(e: MouseEvent?) {
+                val coordsString = table.getValueAt(table.selectedRow, 7).toString()
+                val ls = coordsString.split("\n")
+                val x = ls[0].substring(ls[0].indexOf('X') + 2).toFloat()
+                val y = ls[1].substring(ls[1].indexOf('Y') + 2).toDouble()
+                graphicsPane.removeAll()
+                graphicsPane.add(DisplayPerson(
+                    Coordinates(x, y),
+                    getColor(table.getValueAt(table.selectedRow, 6).toString())))
+                SwingApp.pack()
+            }
+            override fun mousePressed(e: MouseEvent?) {}
+            override fun mouseReleased(e: MouseEvent?) {}
+            override fun mouseEntered(e: MouseEvent?) {}
+            override fun mouseExited(e: MouseEvent?) {}
+        })
     }
 
     fun updateHistory() {
@@ -179,5 +204,15 @@ object HomePane : JPanel() {
         clearButton.text = labels.getString("clear")
         addIfMinButton.text = labels.getString("add if min")
         removeGreaterButton.text = labels.getString("remove greater")
+    }
+
+    fun getColor(color: String): Color {
+        return when (color) {
+            "BROWN" -> Color(60, 40, 30)
+            "YELLOW" -> Color.YELLOW
+            "GREEN" -> Color.GREEN
+            "RED" -> Color.RED
+            else -> Color.BLACK
+        }
     }
 }

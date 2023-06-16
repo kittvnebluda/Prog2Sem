@@ -100,9 +100,7 @@ object HomePane : JPanel() {
 
         // create listeners
         buttonAdd.addActionListener {
-            // TODO add not random persons
-            val person = PersonDirector(RndPersonBuilder()).createPerson()
-            dbCommands.add(person, login, password)
+            AddWorker().execute()
         }
 
         val infoTimer = Timer(1, InfoListener())

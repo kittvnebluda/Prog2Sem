@@ -14,7 +14,6 @@ import com.prog2sem.client.app.TableInfo.keysWithNoLogin
 import com.prog2sem.client.app.TableInfo.previousKey
 import com.prog2sem.client.app.TableInfo.tableNow
 import com.prog2sem.client.app.Workers.*
-import com.prog2sem.client.app.workers.AddWorker
 import com.prog2sem.client.commandsHistoryList
 import com.prog2sem.client.labels
 import com.prog2sem.server.DataBaseCommands.DataBaseConnector

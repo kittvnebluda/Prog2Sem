@@ -8,6 +8,9 @@ import java.util.concurrent.ExecutionException
 import javax.swing.SwingWorker
 
 class AddWorker : SwingWorker<Boolean, Unit>() {
+    companion object {
+        var person = PersonDirector(RndPersonBuilder()).createPerson()
+    }
     override fun doInBackground(): Boolean {
             // TODO add not random persons
             val person = PersonDirector(RndPersonBuilder()).createPerson()

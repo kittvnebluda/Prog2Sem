@@ -4,7 +4,6 @@ import com.prog2sem.client.*
 import com.prog2sem.client.exceptions.ServerNotAnsweringException
 import com.prog2sem.shared.exceptions.GotErrorMsgException
 import java.awt.*
-import java.util.*
 import javax.swing.*
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
@@ -111,6 +110,38 @@ class AuthPane : JPanel() {
         add(tabbedPane)
 
         // add action listeners
+        addressText.document.addDocumentListener(object : DocumentListener {
+            override fun insertUpdate(e: DocumentEvent?) {
+                host = addressText.text
+            }
+
+            override fun removeUpdate(e: DocumentEvent?) {
+                host = addressText.text
+            }
+
+            override fun changedUpdate(e: DocumentEvent?) {}
+        })
+
+        portText.document.addDocumentListener(object : DocumentListener {
+            override fun insertUpdate(e: DocumentEvent?) {
+                try {
+                    port = portText.text.toInt()
+                } catch (e: NumberFormatException) {
+                    println(e.message)
+                }
+            }
+
+            override fun removeUpdate(e: DocumentEvent?) {
+                try {
+                    port = portText.text.toInt()
+                } catch (e: NumberFormatException) {
+                    println(e.message)
+                }
+            }
+
+            override fun changedUpdate(e: DocumentEvent?) {}
+        })
+
         usernameText.document.addDocumentListener(object : DocumentListener {
             override fun insertUpdate(e: DocumentEvent?) {
                 login = usernameText.text
@@ -125,11 +156,11 @@ class AuthPane : JPanel() {
 
         passwdText.document.addDocumentListener(object : DocumentListener {
             override fun insertUpdate(e: DocumentEvent?) {
-                password = passwdText.password.toString()
+                password = passwdText.text
             }
 
             override fun removeUpdate(e: DocumentEvent?) {
-                password = passwdText.password.toString()
+                password = passwdText.text
             }
 
             override fun changedUpdate(e: DocumentEvent?) {}

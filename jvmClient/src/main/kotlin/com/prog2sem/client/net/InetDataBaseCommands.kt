@@ -81,7 +81,7 @@ open class InetDataBaseCommands(val client: Talker) : DataBaseCommands {
         return funTalk("add_login")
     }
 
-    override fun getAllTable(): List<FromServer> {
+    override fun getAllTable(): MutableList<FromServer> {
         return funTalk("getTable")
     }
 }

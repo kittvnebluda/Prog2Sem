@@ -1,18 +1,20 @@
-package com.prog2sem.client.app
+package com.prog2sem.client.app.Workers
 
-import com.prog2sem.client.*
+import com.prog2sem.client.SwingApp
+import com.prog2sem.client.dbCommands
+import com.prog2sem.client.login
+import com.prog2sem.client.password
 import com.prog2sem.client.persona.RndPersonBuilder
 import com.prog2sem.shared.persona.PersonDirector
 import com.prog2sem.shared.utils.Log
-import java.net.InetSocketAddress
 import java.util.concurrent.ExecutionException
 import javax.swing.SwingWorker
 
-class AddWorker : SwingWorker<Boolean, Unit>() {
+class RemoveGreaterWorker : SwingWorker<Boolean, Unit>() {
     override fun doInBackground(): Boolean {
-            // TODO add not random persons
-            val person = PersonDirector(RndPersonBuilder()).createPerson()
-            return dbCommands.add(person, login, password)
+        // TODO add not random persons
+        val person = PersonDirector(RndPersonBuilder()).createPerson()
+        return dbCommands.removeGreater(person, login, password)
     }
 
     override fun done() {
@@ -21,14 +23,13 @@ class AddWorker : SwingWorker<Boolean, Unit>() {
         try {
             val success = get()
             if (success)
-                Log.i("Добавлено")
+                Log.i("Удалено")
             else
-                Log.i("Неудача")
+                SwingApp.errorLabel.text = "Неудача"
         } catch (e: InterruptedException) {
             e.printStackTrace()
         } catch (e: ExecutionException) {
             e.printStackTrace()
         }
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.Collections
 
 object TableInfo: Runnable {
 
-    val keys = listOf(
+    val keys = arrayOf(
         "id",
         "createTime",
         "name",
@@ -26,6 +26,17 @@ object TableInfo: Runnable {
         "login",
         "pass")
 
+    val keysWithNoLogin = arrayOf(
+        "id",
+        "createTime",
+        "name",
+        "weight",
+        "height",
+        "birthday",
+        "hairColor",
+        "coordinates",
+        "location")
+
     var tableNow: MutableList<FromServer> = Collections.synchronizedList(mutableListOf<FromServer>())
 
     //val info: MutableList<String> = Collections.synchronizedList(mutableListOf<String>())
@@ -35,8 +46,9 @@ object TableInfo: Runnable {
     override fun run() {
         while (true) {
             try {
-                dbCommands.getAllTable()
+                tableNow = Collections.synchronizedList(dbCommands.getAllTable())
                 HomePane.infoPane.text = dbCommands.info()
+                HomePane.updateTable()
             } catch (e: Exception) {
                 when (e) {
                     is InvalidUserInputException -> e.message?.let { ColorfulOut.printlnError(it) }

@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutionException
 import javax.swing.SwingWorker
 
 class AddWorker : SwingWorker<Boolean, Unit>() {
-
     companion object {
         var person = PersonDirector(RndPersonBuilder()).createPerson()
     }
